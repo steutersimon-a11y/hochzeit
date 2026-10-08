@@ -1,84 +1,67 @@
-# Unsere Hochzeit · Embroidered Garden
+# Marie & Simon · Embroidered Garden
 
-Eine vollständig überarbeitete digitale Hochzeitseinladung aus HTML, CSS und JavaScript. Fotorealistische Stickmotive mit Seidenrosen und Perlensäumen, zwei auf Handy und Desktop abgestimmte Leinenhüllen, eine räumliche Öffnung mit überstehendem Elfenbeinsiegel und lokal eingebettete Kalligrafie. Inspiriert von [Embroidered Garden](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
+Eine digitale Hochzeitseinladung mit einer zusammenhängenden Stickserie: eigene Kirche unter Perlenvorhängen, Glyzinien und Schwäne, individuelle Blütenrahmen, neue Mago-Illustration und sechs passende Ablaufmotive. Salbeifarbene Leinenflügel öffnen direkt auf die fertige Kirchenszene. Inspiriert vom tatsächlichen Bildaufbau von [The Digital Yes](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
 
-[Desktop-Vorschau](preview-desktop.png) · [Handy-Vorschau](preview-mobile.png) · [Eure Fotos](preview-fotos.png) · [Die Locations](preview-locations.png)
+[Neuer Auftakt](preview-opener.png) · [Handy-Vorschau](preview-mobile.png) · [Desktop-Vorschau](preview-desktop.png) · [Die Locations](preview-locations.png) · [Eure Fotos](preview-fotos.png)
 
-[Das M-&-S-Siegel](preview-siegel-mobile.png) · [Öffnung der Leinenflügel](preview-ouverture.png) · [Animation als Video](preview-oeffnung.mp4)
+[Siegel](preview-siegel-mobile.png) · [Während der Öffnung](preview-ouverture.png) · [Öffnung als Video](preview-oeffnung.mp4)
 
-## Neu gestaltet und geprüft
+## Neue Gestaltung
 
-Die Live-Vorlage wurde erneut geöffnet und analysiert. Verzerrte Schmuckgrafiken und die verdeckte Szene während der Kartenöffnung sind behoben. Neue zusammengehörige Gartenbilder, Kalligrafie, Blütenornamente und sanfte Bewegung bilden die Gestaltung. Eure Angaben in `wedding-config.js` bleiben unverändert. [Referenzanalyse und Umsetzung](DESIGN-REFERENZ.md).
+Die öffentliche Referenz und ihre vollständige Live-Einladung wurden erneut geöffnet und visuell untersucht. Acht neu erzeugte Bilddateien übernehmen die gemeinsame Materialwelt aus hellem Leinen, Salbeigrün, Mauve, Perlen und Stickstichen. Der Opener wurde anhand der eigenen Kirchenillustration gestaltet; das neue Mago-Bild anhand der eigenen Restaurantillustration. Der Ablauf zeigt Kirche, Ringe, Sektgläser, Cocktail, Dinner und Discokugel.
 
-Die Browserprüfungen lassen sich mit `node scripts/visual-check.cjs` und `node scripts/export-check.cjs` wiederholen, wenn die Seite unter `http://localhost:8000` läuft. Playwright und Chromium werden dafür benötigt; die Einladung selbst braucht keine Installation.
+Jede große dekorative Szene erscheint einmal. Die alten mehrfach eingesetzten Rosen und Girlanden sind entfernt. Bilder behalten ihre Proportionen, Text bleibt in den freien Bildbereichen. Dresscode und Geschenkhinweis werden jeweils einmal gezeigt. Ruhige Einblendungen verbinden die Abschnitte beim Scrollen.
 
-## Sofort ansehen
+Alle vorhandenen Texte und Sachangaben in `wedding-config.js` sind erhalten. Nur der Mago-Bildpfad verweist jetzt auf die neue Illustration. Paarfoto und Ringfoto bleiben unverändert. [Analyse und Umsetzung](DESIGN-REFERENZ.md) · [Neue Bildserie](assets/loom/README.md).
 
-1. [Unsere-Hochzeit.html herunterladen](https://github.com/steutersimon-a11y/hochzeit/raw/refs/heads/main/Unsere-Hochzeit.html) und auf dem Computer speichern. Wenn der Browser Quelltext zeigt: den Link mit der rechten Maustaste anklicken und „Link speichern unter …“ wählen. Der Dateiname muss auf `.html` enden.
-2. Die gespeicherte Datei mit Chrome, Edge, Firefox oder Safari öffnen, zum Beispiel per Rechtsklick → „Öffnen mit“ → Browser.
-3. Auf das Siegel oder „Zum Öffnen berühren“ klicken. Danach durch die gesamte Seite scrollen. Die Brieföffnung lässt sich im Footer wiederholen.
+## Einladung ansehen
 
-Die einzelne HTML-Datei enthält die komplette Gestaltung und funktioniert ohne Installation und ohne Internet. Die Dateivorschau von GitHub oder eine Handy-Dateivorschau kann stattdessen Code anzeigen oder die Animationen nicht ausführen. Am Handy ist die veröffentlichte GitHub-Pages-Adresse deshalb der einfachste Weg; die Aktivierung steht weiter unten.
+[Unsere-Hochzeit.html herunterladen](https://github.com/steutersimon-a11y/hochzeit/raw/refs/heads/main/Unsere-Hochzeit.html), als `.html` speichern und in einem Browser öffnen. Falls der Browser Quelltext anzeigt, den Link mit „Link speichern unter …“ herunterladen. Die einzelne Datei enthält Bilder, Schriften und Gestaltung und funktioniert ohne Installation und ohne weitere Netzwerkanfragen.
 
-Das plastische Elfenbein-Siegel mit euren Initialen ragt vor beiden Leinenflügeln über die Mittelkante hinaus. Seine eigene Trägerebene bewegt sich mit dem rechten Flügel. Dieser öffnet etwas früher als der linke, damit das Siegel frei mitgenommen wird. Nach einem Klick schwenken beide Flügel räumlich nach außen und enthüllen die Karte. Die Öffnung dauert etwa 3,15 Sekunden. Der fertig geladene Garten ist dabei von Anfang an unmittelbar hinter den Leinenflügeln sichtbar. Bei aktivierter Einstellung für reduzierte Bewegung erscheint die Karte sofort. Die Öffnung lässt sich per Tastatur bedienen und am Seitenende wiederholen.
+Auf das Siegel oder „Zum Öffnen berühren“ klicken, anschließend durch die Einladung scrollen. Im Footer lässt sich die Öffnung wiederholen. Die Kartenöffnung dauert etwa 3,15 Sekunden; bei reduzierter Bewegung erscheint die Einladung sofort. Tastaturbedienung, modale Dialoge und sichtbare Fokusmarkierungen sind vorhanden.
 
-Für den Bearbeitungsmodus `?edit=1` an die Adresse hängen, zum Beispiel:
+Der Bearbeitungsmodus wird mit `?edit=1` an der Adresse geöffnet. Dort können Namen, Datum, Kontaktadresse und die vier Bildplätze angepasst werden. „HTML mit Bildern speichern“ erzeugt eine neue vollständige Datei. Die Bearbeitung erfolgt im Browser.
 
-```text
-file:///…/Unsere-Hochzeit.html?edit=1
-```
+## Angaben und Build
 
-Im Bearbeitungsmodus lassen sich Namen, Datum, Kontaktadresse und alle vier Bilder einfügen. „HTML mit Bildern speichern“ lädt anschließend eine vollständige HTML-Datei mit eingebetteten Bildern herunter. Nichts wird dafür an einen Dienst hochgeladen. Die Datei kann wieder bearbeitet werden, indem `?edit=1` angehängt wird.
+Die Einladung ist für **Marie & Simon am Samstag, 28. August 2027** eingerichtet, mit Reformierter Kirche und Mago Restaurant & Bar in Schermbeck. Die bereits vorhandenen Zeiten, Rückmeldefrist und weitere Hinweise sind weiterhin Beispielangaben. Exakte Adressen und eine Rückmelde-E-Mail sind noch offen.
 
-## Alle Details ändern
-
-Die Einladung ist für **Marie & Simon am Samstag, 28. August 2027** eingerichtet. Vorgegeben sind außerdem die Reformierte Kirche in Schermbeck und Mago Restaurant & Bar. Zeiten, Rückmeldefrist und weitere Details sind weiterhin **erfundene Beispielangaben**. Genaue Adressen wurden bewusst nicht erfunden.
-
-Alle Texte, Orte, Zeiten, Bilder und Angaben sind in **`wedding-config.js`** gesammelt. Nach Änderungen an dieser Datei nutzt `index.html` sofort die neuen Angaben. Mit
+Alle Angaben stehen in `wedding-config.js`. `index.html` nutzt Änderungen sofort. Anschließend erstellt
 
 ```sh
 python3 build.py
 ```
 
-werden zusätzlich die einzelne HTML-Datei und die Exportvorlage neu erstellt. Python benötigt dafür keine Zusatzpakete. `scripts/create-art.py` kann die ursprünglichen SVG-Ersatzmotive ohne Zusatzpakete neu erstellen. Die vier neu erzeugten Garten- und Blütenmotive liegen in `assets/art/` als `garden-new-landscape.webp`, `garden-new-portrait.webp`, `rose-new.webp` und `garland-new.webp`. `style.css` enthält die vollständig erneuerte Gestaltung; `opening.css` die Öffnung. `atelier.css` ist eine nicht mehr eingebundene ältere Variante.
+die eigenständige `Unsere-Hochzeit.html` und `export-template.js` neu. Python benötigt keine Zusatzpakete. `style.css` enthält die Seitengestaltung, `opening.css` die Kartenöffnung. Die aktuelle Bildserie liegt in `assets/loom/`. Frühere Designvarianten bleiben im Repository und sind nicht eingebunden.
 
-## Eure Bilder
+Die vier bearbeitbaren Bildplätze:
 
-Euer Paarfoto, das Ringfoto und die beiden Stickillustrationen aus `Hochzeit.rar` sind eingebunden. Die Originaldateien liegen in `assets/images/`; die einzelne HTML-Datei enthält zusätzlich alle vier Bilder direkt und benötigt deshalb keinen separaten Bildordner. Die Dateien wurden unverändert aus dem Archiv übernommen.
-
-Die vier Plätze sind:
-
-| Platz | Bild |
+| Platz | Aktuelles Bild |
 | --- | --- |
-| `couple` | Schwarzweißfoto des Paares |
-| `hands` | Schwarzweißfoto der Hände mit Ring |
-| `church` | Die gestickte Kirchenillustration |
-| `party` | Die gestickte Mago-Illustration oder das Originalfoto |
+| `couple` | Eigenes Schwarzweißfoto des Paares |
+| `hands` | Eigenes Schwarzweißfoto der Hände mit Ring |
+| `church` | Vorhandene Kirchenstickerei |
+| `party` | Neu erzeugte Mago-Stickerei |
 
-Zum Austauschen neue Bilder im Bearbeitungsmodus auswählen oder in `assets/images/` speichern und die entsprechenden Pfade in `wedding-config.js` eintragen. JPG, PNG und WebP funktionieren. Die Fotoflächen schneiden ausschließlich in der Darstellung zu; Originaldateien werden nicht verändert. Die beiden Location-Illustrationen werden vollständig angezeigt.
+Die Originalbilder liegen unverändert in `assets/images/`. Fotoflächen verwenden einen bewussten Ausschnitt; Locationbilder werden vollständig dargestellt. Neue JPG-, PNG- oder WebP-Dateien können im Editor gewählt oder über Bildpfade in der Konfiguration eingebunden werden.
 
-## Kostenlos veröffentlichen
+## Veröffentlichung und Rückmeldung
 
-Die fertige Seite braucht keinen Servercode, kein zusätzliches Abo und keine bezahlte API. Grafiken und Schriften werden lokal ausgeliefert. Google Maps wird nur nach einem Klick auf einen Routenlink geöffnet.
+Die Seite ist statisch und braucht keinen Servercode, kein Abo und keine laufende Bildgenerierungs-API. Bilder und Schriften werden lokal ausgeliefert. Google Maps öffnet erst nach einem Klick auf einen Routenlink.
 
-Für GitHub Pages bei diesem öffentlichen Repository:
+Für GitHub Pages im öffentlichen Repository unter **Settings → Pages** „Deploy from a branch“, Branch **main**, Ordner **/(root)** wählen. Die vorgesehene Adresse lautet `https://steutersimon-a11y.github.io/hochzeit/`. Pages muss in den Repository-Einstellungen aktiviert sein.
 
-1. **Settings → Pages** öffnen.
-2. Unter **Build and deployment** „Deploy from a branch“ wählen.
-3. Branch **main**, Ordner **/(root)** auswählen und speichern.
+Ohne `rsvpEmail` ist die Rückmeldung eine Vorschau und verschickt nichts. Mit Kontaktadresse bereitet sie eine E-Mail im E-Mail-Programm der Gäste vor; die Gäste senden sie selbst ab. Der Kalenderbutton lädt eine ICS-Datei und berücksichtigt `Europe/Berlin` samt Sommerzeit.
 
-Die vorgesehene Adresse ist dann `https://steutersimon-a11y.github.io/hochzeit/`. Pages muss erst in den Einstellungen aktiviert werden; das Erstellen des Codes aktiviert oder veröffentlicht die Seite nicht automatisch. Ein privates Repository kann je nach GitHub-Tarif andere Pages-Voraussetzungen haben.
+## Herkunft und Prüfung
 
-## Rückmeldung und Kalender
+Die neuen Grafiken wurden intern erzeugt. Als Quellen wurden die öffentliche Referenz und eigene Repository-Bilder verwendet; weitere Daten vom Computer des Nutzers wurden nicht abgerufen. Grafikdateien, Film und Code der Referenzwebsite werden nicht als Produktassets übernommen. Cormorant Garamond und Manrope sind frei nutzbare Schriften mit Lizenztexten in `assets/fonts/`.
 
-Die Rückmeldung ist ohne eingetragene Kontaktadresse eine klar gekennzeichnete Vorschau. Sie speichert und verschickt keine Daten. Mit `rsvpEmail` bereitet sie eine E-Mail im E-Mail-Programm der Gäste vor; die Gäste müssen diese selbst absenden. Es gibt keine Datenbank und keine automatische Gästeliste.
+Mit laufender Seite unter `http://localhost:8000`:
 
-Der Kalenderbutton lädt eine ICS-Datei herunter. Die Zeit wird für `Europe/Berlin` inklusive Sommerzeit berechnet. Auch Datum und Zeiten sind anpassbar.
+```sh
+node scripts/visual-check.cjs
+node scripts/export-check.cjs
+```
 
-## Gestaltung und Lizenzen
-
-Sieben neue Materialgrafiken wurden mit der integrierten ChatGPT-Bilderstellung für diese Einladung erstellt: Gartenrahmen für Handy und Desktop, Leinenhülle für Handy und Desktop, Elfenbeinsiegel, Blütengirlande und Rosenspray. Namen, Initialen und Datum bleiben bearbeitbarer HTML-Text. Die ursprünglichen SVG-Ersatzmotive sind ebenfalls eigene Zeichnungen. Die bezahlte Vorlage wurde nicht gekauft oder als Asset übernommen. Pinyon Script, Cormorant Garamond und Manrope sind frei nutzbare Schriften; ihre Lizenztexte liegen in `assets/fonts/`. Die fertige Seite benötigt keine Bildgenerierungs-API oder andere laufende Design-Dienste.
-
-Die Gestaltung berücksichtigt Mobilgeräte, Tastaturbedienung, sichtbare Fokusmarkierungen, modale Dialoge und die Betriebssystemeinstellung für reduzierte Bewegung. Fotos können per Klick oder Tastatur vergrößert werden, sobald Originalbilder eingebunden sind.
-
-Geprüft im Chromium-Browser: sechs Bildschirmbreiten von 320 bis 1440 Pixeln ohne horizontales Überlaufen; echte Überdeckung des linken Flügels durch das Siegel während der Öffnung, synchroner rechter Scharnierverlauf, Tastaturbedienung, wiederholte Öffnung und reduzierte Bewegung; erhaltene Bildproportionen; Editor-Export mit allen vier Fotos, neuen Couture-Motiven und Schriften. Die exportierte Datei lädt keine weiteren Dateien nach. In diesen Prüfungen traten keine JavaScript-Fehler auf. Die Berliner Kalenderzeiten einschließlich Sommerzeit und die Rückmeldedialoge wurden zuvor geprüft und sind unverändert.
+Die Prüfungen benötigen Playwright und Chromium. Sie erfassen fünf Breiten von 320 bis 1440 Pixeln, Bildproportionen, Textpositionen, eindeutige Dekorationen, erhaltene Angaben, horizontales Überlaufen, Öffnung, Tastatur, Dialoge, Kalender und reduzierte Bewegung. Beide HTML-Exportvarianten werden auf vollständige Bildeinbettung ohne weitere Netzwerkanfragen geprüft. Zusätzlich werden die endgültigen Screenshots visuell beurteilt.

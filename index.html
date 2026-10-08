@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f4ec">
-  <meta name="description" content="Wir heiraten. Eine Einladung voller Liebe, Lieblingsmenschen und eines Gartens in voller Blüte.">
+  <meta name="theme-color" content="#f6f3ed">
+  <meta name="description" content="Wir heiraten. Marie und Simon heiraten. Eine gestickte Einladung mit unserer Kirche, Lieblingsmenschen und einer Feier im Mago.">
   <title>Marie &amp; Simon · Wir heiraten</title>
   <link rel="icon" href="assets/wreath.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -29,83 +29,80 @@
   </div>
   <main id="einladung">
     <section class="hero" aria-labelledby="hero-title">
-      <picture class="hero-art"><source media="(max-width: 700px)" srcset="assets/art/garden-new-portrait.webp"><img class="garden-frame" src="assets/art/garden-new-landscape.webp" alt="" width="1536" height="1024" fetchpriority="high"></picture>
-      <div class="garden-light" aria-hidden="true"></div>
-      <div class="garden-motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <picture class="hero-art"><img class="garden-frame" src="assets/loom/opener.webp" alt="" width="1024" height="1536" fetchpriority="high"></picture>
       <div class="hero-copy">
-        <p class="eyebrow">EINLADUNG ZU UNSERER HOCHZEIT</p>
-        <h1 id="hero-title"><span data-name="0">Marie</span><em>&</em><span data-name="1">Simon</span></h1>
-        <div class="hero-rule"><span></span><i aria-hidden="true">✧</i><span></span></div>
-        <p class="hero-promise">Wir sagen Ja.<br>Und am liebsten mit euch.</p>
+        <h1 id="hero-title"><span data-name="0">Marie</span><em>&amp;</em><span data-name="1">Simon</span></h1>
         <p class="hero-date" data-bind="dateLabel">28. August 2027</p>
         <p class="hero-place" data-bind="region">Schermbeck</p>
-        <a class="hero-discover" href="#willkommen">Unsere Einladung entdecken <span aria-hidden="true">↓</span></a>
       </div>
-      <div class="hero-bottom"><span data-bind="weekday">Samstag</span><span>Ein Tag. Ein Ja. Für immer.</span></div>
+      <a class="hero-discover" href="#willkommen">Unsere Einladung entdecken <span aria-hidden="true">↓</span></a>
+
     </section>
 
   <header class="site-header">
-    <a class="brand" href="#einladung" aria-label="Zum Anfang"><span class="initials">M · S</span><span class="brand-leaf" aria-hidden="true">❦</span></a>
+    <a class="brand" href="#einladung" aria-label="Zum Anfang"><span class="initials">M · S</span></a>
     <nav aria-label="Einladung">
       <a href="#unser-tag">Unser Tag</a><a href="#orte">Die Orte</a><a href="#gut-zu-wissen">Gut zu wissen</a>
     </nav>
     <button class="nav-rsvp" data-rsvp>Wir sind dabei <span aria-hidden="true">↗︎</span></button>
   </header>
-    <section class="welcome section-pad" id="willkommen">
-      <div class="section-kicker reveal"> EINE EINLADUNG VON HERZEN</div>
-      <div class="welcome-layout">
-        <div class="welcome-title reveal"><p class="handwritten">Unser schönstes Kapitel</p><h2 data-bind="invitation">Ein Tag voller Liebe.<br>Und ihr mittendrin.</h2></div>
-        <div class="welcome-copy reveal"><p data-bind="intro"></p><span class="signature names-inline">Marie & Simon</span><img class="welcome-sprig" src="assets/art/rose-new.webp" alt="" width="1254" height="1254" loading="lazy"></div>
-      </div>
+    <section class="welcome textile-panel" id="willkommen" aria-labelledby="welcome-title">
+      <img class="panel-art" src="assets/loom/welcome.webp" alt="" width="1024" height="1536" loading="lazy">
+      <div class="welcome-copy panel-copy reveal"><h2 id="welcome-title" data-bind="invitation"></h2><p data-bind="intro"></p><span class="signature names-inline">Marie &amp; Simon</span></div>
     </section>
 
     <section class="date-section section-pad" id="datum" aria-labelledby="date-title">
-      <div class="date-ornament" aria-hidden="true"><img src="assets/art/garland-new.webp" alt="" width="2172" height="724" loading="lazy"></div>
-      <p class="eyebrow reveal">EIN TAG. UNSER TAG.</p>
-      <h2 id="date-title" class="reveal">Haltet euch die Liebe frei.</h2>
+
+      <p class="eyebrow reveal">BIS ZU UNSEREM GROSSEN TAG</p>
+      <h2 id="date-title" class="reveal">Countdown</h2>
       <div class="date-display reveal"><span data-bind="weekday">Samstag</span><strong data-bind="dateLabel">28. August 2027</strong><span data-bind="region">Schermbeck</span></div>
       <button class="text-button calendar-button reveal" id="save-date">In meinem Kalender vormerken <span aria-hidden="true">↗︎</span></button>
-      <div class="countdown reveal" aria-label="Zeit bis zur Hochzeit"><div><strong id="count-days">254</strong><span>TAGE</span></div><i>·</i><div><strong id="count-hours">00</strong><span>STUNDEN</span></div><i>·</i><div><strong id="count-minutes">00</strong><span>MINUTEN</span></div></div>
+      <div class="countdown reveal" aria-label="Zeit bis zur Hochzeit"><div><img src="assets/loom/medallion.webp" alt="" width="1024" height="1024" loading="lazy"><strong id="count-days">254</strong><span>TAGE</span></div><i>·</i><div><img src="assets/loom/medallion.webp" alt="" width="1024" height="1024" loading="lazy"><strong id="count-hours">00</strong><span>STUNDEN</span></div><i>·</i><div><img src="assets/loom/medallion.webp" alt="" width="1024" height="1024" loading="lazy"><strong id="count-minutes">00</strong><span>MINUTEN</span></div></div>
       <p class="countdown-note" id="countdown-note">Bis wir gemeinsam Erinnerungen sammeln.</p>
     </section>
 
     <section class="venues section-pad" id="orte" aria-labelledby="venues-title">
-      <div class="section-kicker reveal"> ZWEI ORTE. EINE GESCHICHTE.</div>
-      <div class="section-heading reveal"><h2 id="venues-title">Zwei Orte. Unser Für immer.</h2><p>Vom ersten Ja bis zum letzten Tanz.</p></div>
+
+      <div class="venues-intro textile-panel"><img class="panel-art" src="assets/loom/venues-frame.webp" alt="" width="1024" height="1536" loading="lazy"><div class="panel-copy reveal"><p class="eyebrow">ZWEI ORTE. EINE GESCHICHTE.</p><h2 id="venues-title">Trauung &amp; Feier</h2><p class="venue-intro-date" data-bind="dateLabel"></p><p class="venue-intro-line"><span data-bind="ceremony.name"></span><br><span data-bind="ceremony.time"></span></p><span class="venue-intro-amp" aria-hidden="true">&amp;</span><p class="venue-intro-line"><span data-bind="party.name"></span><br><span data-bind="party.time"></span></p><p class="venue-intro-note">Vom ersten Ja bis zum letzten Tanz.</p></div></div>
       <div class="venue-grid">
         <article class="venue-card reveal">
-          <div class="venue-art venue-church"><img data-photo="church" alt="Gestickte Illustration der Reformierten Kirche in Schermbeck" hidden><img class="venue-fallback" src="assets/church.svg" alt="Florale Illustration der Reformierten Kirche" width="420" height="370" loading="lazy"><span class="venue-number">01 · Das Ja</span></div>
+          <div class="venue-art venue-church"><img data-photo="church" alt="Gestickte Illustration der Reformierten Kirche in Schermbeck" hidden><img class="venue-fallback" src="assets/church.svg" alt="Florale Illustration der Reformierten Kirche" width="420" height="370" loading="lazy"></div>
           <div class="venue-info"><p class="eyebrow" data-bind="ceremony.type"></p><h3 data-bind="ceremony.name"></h3><p class="venue-time" data-bind="ceremony.time"></p><p class="venue-arrival" data-bind="ceremony.arrival"></p><p class="venue-description" data-bind="ceremony.text"></p><p class="venue-address" data-bind="ceremony.address"></p><a class="text-button map-link" data-map="ceremony" target="_blank" rel="noopener noreferrer">Den Weg zur Trauung finden <span aria-hidden="true">↗︎</span></a></div>
         </article>
         <article class="venue-card reveal">
-          <div class="venue-art venue-party"><img data-photo="party" alt="Gestickte Illustration des Mago Restaurant & Bar" hidden><img class="venue-fallback" src="assets/mago.svg" alt="Florale Illustration des Mago Restaurant & Bar" width="400" height="320" loading="lazy"><span class="venue-number">02 · Die Feier</span></div>
+          <div class="venue-art venue-party"><img data-photo="party" alt="Gestickte Illustration des Mago Restaurant & Bar" hidden><img class="venue-fallback" src="assets/mago.svg" alt="Florale Illustration des Mago Restaurant & Bar" width="400" height="320" loading="lazy"></div>
           <div class="venue-info"><p class="eyebrow" data-bind="party.type"></p><h3 data-bind="party.name"></h3><p class="venue-time" data-bind="party.time"></p><p class="venue-arrival" data-bind="party.arrival"></p><p class="venue-description" data-bind="party.text"></p><p class="venue-address" data-bind="party.address"></p><a class="text-button map-link" data-map="party" target="_blank" rel="noopener noreferrer">Den Weg zur Feier finden <span aria-hidden="true">↗︎</span></a></div>
         </article>
       </div>
     </section>
 
-    <section class="story section-pad" id="unsere-geschichte" aria-labelledby="story-title">
+    <section class="dresscode section-pad" aria-labelledby="dresscode-title"><p class="eyebrow reveal">FÜR EINEN BESONDEREN TAG</p><h2 id="dresscode-title" class="reveal" data-detail-title="0"></h2><p class="reveal" data-detail-text="0"></p></section>
+
+    <section class="story" id="unsere-geschichte" aria-labelledby="story-title">
+      <div class="story-framed textile-panel"><img class="panel-art" src="assets/loom/story-frame.webp" alt="" width="1024" height="1536" loading="lazy"><div class="story-copy panel-copy reveal"><p class="eyebrow">UNSERE LIEBLINGSGESCHICHTE</p><h2>Unsere Geschichte</h2><p data-bind="story"></p></div></div>
+      <div class="story-photos section-pad">
       <div class="photo-duo reveal">
         <figure class="photo-main photo-frame"><img data-photo="couple" alt="Marie und Simon, ein gemeinsamer Lieblingsmoment" hidden><div class="photo-fallback"><img src="assets/wreath.svg" alt=""><span>Wir zwei.</span><small>Unser Lieblingsmoment</small></div><figcaption>DU. ICH. UND ALLES, WAS KOMMT.</figcaption></figure>
         <figure class="photo-detail photo-frame"><img data-photo="hands" alt="Unsere Hände und der Verlobungsring" hidden><div class="photo-fallback"><span class="fallback-amp">&</span><span>Für immer.</span></div><figcaption>Ein kleines Versprechen.</figcaption></figure>
-        <img class="photo-flower" src="assets/art/rose-new.webp" alt="" width="1254" height="1254" loading="lazy">
       </div>
-      <div class="story-copy reveal"><p class="eyebrow">UNSERE LIEBLINGSGESCHICHTE</p><h2 id="story-title" data-bind="quote"></h2><p data-bind="story"></p><div class="small-ornament" aria-hidden="true">❦</div></div>
+      <h2 class="story-quote reveal" id="story-title" data-bind="quote"></h2>
+      </div>
     </section>
 
-
     <section class="timeline-section section-pad" id="unser-tag" aria-labelledby="timeline-title">
-      <div class="timeline-header reveal"><div class="section-kicker"> VOM JA BIS ZUM LETZTEN LIED</div><h2 id="timeline-title">Ein Tag, der bleibt.</h2><p>Ein bisschen Aufregung. Ganz viel Liebe.<br>Und hoffentlich eine sehr volle Tanzfläche.</p><img src="assets/art/rose-new.webp" alt="" width="1254" height="1254" loading="lazy"></div>
+      <div class="timeline-header reveal"><p class="eyebrow">VOM JA BIS ZUM LETZTEN LIED</p><h2 id="timeline-title">Ein Tag, der bleibt.</h2><p>Ein bisschen Aufregung. Ganz viel Liebe.<br>Und hoffentlich eine sehr volle Tanzfläche.</p></div>
       <ol class="timeline" id="timeline"></ol>
     </section>
 
     <section class="details section-pad" id="gut-zu-wissen" aria-labelledby="details-title">
-      <div class="section-kicker reveal"> DIE KLEINEN DETAILS</div>
-      <div class="details-layout"><div class="details-title reveal"><p class="handwritten">Damit ihr einfach genießen könnt</p><h2 id="details-title">Gut zu wissen.</h2><p>Alles, was euren Tag mit uns<br>noch ein bisschen schöner macht.</p><img src="assets/art/rose-new.webp" alt="" width="1254" height="1254" loading="lazy"></div><div class="faq-list reveal" id="faq-list"></div></div>
+
+      <div class="details-layout"><div class="details-title reveal"><h2 id="details-title">Gut zu wissen.</h2><p>Alles, was euren Tag mit uns<br>noch ein bisschen schöner macht.</p></div><div class="faq-list reveal" id="faq-list"></div></div>
     </section>
 
+    <section class="gift-section textile-panel" aria-labelledby="gift-title"><img class="panel-art" src="assets/loom/gift-frame.webp" alt="" width="1024" height="1536" loading="lazy"><div class="gift-copy panel-copy reveal"><h2 id="gift-title" data-detail-title="3"></h2><p data-detail-text="3"></p></div></section>
+
     <section class="rsvp-section section-pad" id="rueckmeldung" aria-labelledby="rsvp-title">
-      <img class="rsvp-garland" src="assets/art/garland-new.webp" alt="" width="2172" height="724" loading="lazy">
+
       <p class="eyebrow reveal">DER SCHÖNSTE TEIL? IHR SEID DABEI.</p>
       <h2 id="rsvp-title" class="reveal">Mit euch wird es<br><em>unvergesslich.</em></h2>
       <p class="reveal">Lasst uns bis zum <span data-bind="rsvpDeadline"></span> wissen,<br>ob wir mit euch feiern dürfen.</p>
@@ -117,7 +114,7 @@
 
   <dialog id="rsvp-dialog" aria-labelledby="rsvp-dialog-title">
     <button class="dialog-close" data-close aria-label="Schließen">×</button>
-    <img class="dialog-flower" src="assets/art/rose-new.webp" alt="" width="1254" height="1254">
+
     <p class="eyebrow">EIN PLATZ FÜR EUCH</p><h2 id="rsvp-dialog-title">Feiert ihr mit uns?</h2>
     <form id="rsvp-form">
       <label>Eure Namen<input name="names" autocomplete="name" required placeholder="Vor- und Nachnamen"></label>

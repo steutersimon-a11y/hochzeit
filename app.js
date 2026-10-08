@@ -6,14 +6,6 @@
   const $$ = (s) => [...document.querySelectorAll(s)];
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let activeTrigger = null;
-  const icons = {
-    sun:'<circle cx="16" cy="16" r="5"/><path d="M16 3v4m0 18v4M3 16h4m18 0h4M7 7l3 3m12 12 3 3M7 25l3-3M22 10l3-3"/>',
-    rings:'<circle cx="12" cy="18" r="7"/><circle cx="21" cy="18" r="7"/><path d="m8 7 4-4 4 4-4 5Z"/>',
-    glasses:'<path d="m7 5 6 3-4 10c-3 4-9 0-6-4Zm18 0-6 3 4 10c3 4 9 0 6-4ZM6 19l-3 7m-3-1 7 3M26 19l3 7m-4 2 7-3M14 4l2 3 2-3"/>',
-    leaf:'<path d="M7 26C8 12 17 5 27 4c1 12-6 22-20 22ZM7 26 23 8M13 18l9 1M18 12l-1-6"/>',
-    dinner:'<circle cx="17" cy="17" r="9"/><circle cx="17" cy="17" r="6"/><path d="M3 4v9m3-9v9M1 4v6q2 6 6 0V4M4 14v15M30 4v25m0-25q-5 4-4 12h4"/>',
-    music:'<path d="M12 23V8l14-4v17M12 12l14-4"/><ellipse cx="8" cy="24" rx="4" ry="3"/><ellipse cx="22" cy="22" rx="4" ry="3"/>'
-  };
   const pathValue = (path) => path.split('.').reduce((v,k) => v?.[k], config);
   const inlineNames = () => config.names.join(' & ');
 
@@ -30,12 +22,14 @@
       const li = document.createElement('li'); li.className = 'reveal';
       const time = document.createElement('time'); time.textContent = item.time; time.dateTime = item.time;
       const icon = document.createElement('span'); icon.className = 'timeline-icon'; icon.setAttribute('aria-hidden','true');
-      icon.innerHTML = '<svg viewBox="0 0 32 32">' + (icons[item.icon] || icons.leaf) + '</svg>';
+      icon.dataset.icon = item.icon;
       const copy = document.createElement('div'), title = document.createElement('h3'), text = document.createElement('p');
       title.textContent = item.title; text.textContent = item.text; copy.append(title,text); li.append(time,icon,copy); $('#timeline').append(li);
     });
     $('#faq-list').replaceChildren();
-    config.details.forEach((item,i) => {
+    $$('[data-detail-title]').forEach(el => { el.textContent = config.details[+el.dataset.detailTitle]?.title || ''; });
+    $$('[data-detail-text]').forEach(el => { el.textContent = config.details[+el.dataset.detailText]?.text || ''; });
+    config.details.filter((_, i) => i !== 0 && i !== 3).forEach((item,i) => {
       const details = document.createElement('details'), summary = document.createElement('summary'), text = document.createElement('p');
       summary.textContent = item.title; text.textContent = item.text; details.append(summary,text); if (i === 0) details.open = true; $('#faq-list').append(details);
     });
@@ -101,7 +95,7 @@
       $$('.skip-link,.site-header,main,footer').forEach(el => { el.inert = false; });
       $('.hero-discover').focus({ preventScroll: true });
     }, reducedMotion ? 0 : 3150);
-    try { sessionStorage.setItem('invitation-opened-garden-v4', 'yes'); } catch (error) {}
+    try { sessionStorage.setItem('invitation-opened-loom-v5', 'yes'); } catch (error) {}
   }
   function showOpening() {
     $$('.skip-link,.site-header,main,footer').forEach(el=>{el.inert=true;});window.scrollTo({top:0,behavior:'instant'});
@@ -118,7 +112,7 @@
   $('#open-invitation').addEventListener('click',openInvitation); $('#open-text').addEventListener('click',openInvitation);
   $('#replay').addEventListener('click',showOpening);
   let alreadyOpened = false;
-  try { alreadyOpened = sessionStorage.getItem('invitation-opened-garden-v4') === 'yes'; } catch(e) {}
+  try { alreadyOpened = sessionStorage.getItem('invitation-opened-loom-v5') === 'yes'; } catch(e) {}
   const editMode = new URLSearchParams(location.search).has('edit');
   if(!alreadyOpened && !location.hash && !editMode) showOpening();
 
@@ -200,17 +194,6 @@
       const html=source.replace(/<script id="wedding-config">[\s\S]*?<\/script>/,()=>script);
       download(html,'text/html;charset=utf-8','Unsere-Hochzeit.html');
     };
-  }
-  if (!reducedMotion && window.matchMedia('(pointer: fine)').matches) {
-    $('.hero').addEventListener('pointermove', event => {
-      const box = event.currentTarget.getBoundingClientRect();
-      event.currentTarget.style.setProperty('--garden-x', ((event.clientX - box.left) / box.width - .5) * 7 + 'px');
-      event.currentTarget.style.setProperty('--garden-y', ((event.clientY - box.top) / box.height - .5) * 5 + 'px');
-    });
-    $('.hero').addEventListener('pointerleave', event => {
-      event.currentTarget.style.setProperty('--garden-x', '0px');
-      event.currentTarget.style.setProperty('--garden-y', '0px');
-    });
   }
   render();setInterval(updateCountdown,30000);if(editMode)setupEditor();
 })();

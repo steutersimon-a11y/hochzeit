@@ -8,4 +8,4 @@ Die sieben Motive sind zwei Leinenhüllen für Handy und Desktop, Elfenbeinsiege
 
 ## Erneute Gestaltung vom 8. Oktober 2026
 
-`garden-new-landscape.webp`, `garden-new-portrait.webp`, `rose-new.webp` und `garland-new.webp` wurden intern neu erzeugt. Die beiden Gartenbilder sind getrennte Kompositionen im Quer- und Hochformat; ihr Seitenverhältnis wird in der Darstellung erhalten. Sie und die neuen Blütenornamente bilden die aktuell verwendete Gestaltung. Die ursprünglichen Motive bleiben als frühere Versionen im Repository.
+`garden-new-landscape.webp`, `garden-new-portrait.webp`, `rose-new.webp` und `garland-new.webp` wurden intern neu erzeugt. Die beiden Gartenbilder sind getrennte Kompositionen im Quer- und Hochformat; ihr Seitenverhältnis wird in der Darstellung erhalten. Diese Garten- und Blütenmotive sind inzwischen frühere Varianten und werden nicht mehr auf der Seite angezeigt. Die aktuelle Stickserie liegt in `../loom/`; aus diesem Ordner wird weiterhin das Elfenbeinsiegel verwendet.

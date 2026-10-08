@@ -17,7 +17,7 @@ def embed_photo(match):
  path=match[2]
  photos[path]=data_uri(path)
  return match[1]+photos[path]+match[1]
-config=re.sub(r"(['\"])(assets/images/[^'\"]+)\1",embed_photo,config)
+config=re.sub(r"(['\"])(assets/(?:images|loom)/[^'\"]+)\1",embed_photo,config)
 html=html.replace('<script src="wedding-config.js" defer></script>','<script id="wedding-config">'+config+'</script>')
 html=html.replace('<script src="export-template.js" defer></script>','')
 html=html.replace('<script src="app.js" defer></script>','')

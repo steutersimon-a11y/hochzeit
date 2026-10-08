@@ -15,7 +15,7 @@ window.WEDDING = {
     couple: 'assets/images/paar.jpg',
     hands: 'assets/images/haende.jpg',
     church: 'assets/images/kirche-stickerei.jpg',
-    party: 'assets/images/mago.jpg',
+    party: 'assets/loom/mago-location.webp',
   },
   ceremony: {
     name: 'Reformierte Kirche',
