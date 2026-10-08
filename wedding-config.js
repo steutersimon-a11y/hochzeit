@@ -14,8 +14,8 @@ window.WEDDING = {
   photos: {
     couple: 'assets/images/paar.jpg',
     hands: 'assets/images/haende.jpg',
-    church: 'assets/images/kirche-stickerei.jpg',
-    party: 'assets/loom/mago-location.webp',
+    church: 'assets/loom/church-flow.webp',
+    party: 'assets/loom/mago-flow.webp',
   },
   ceremony: {
     name: 'Reformierte Kirche',
@@ -44,7 +44,6 @@ window.WEDDING = {
     { time: '20:30', title: 'Barfuß wäre auch okay', text: 'Erster Tanz. Gute Musik. Eine lange Nacht.', icon: 'music' }
   ],
   details: [
-    { title: 'Was ziehen wir an?', text: 'Festlich & entspannt. Zarte Farben, leichte Stoffe und etwas, in dem ihr euch wohlfühlt. Bringt eure schönsten Tanzschuhe mit.' },
     { title: 'Wie kommen wir hin?', text: 'Beide Locations liegen in Schermbeck. Details zu Parkplätzen und einem möglichen Shuttle ergänzen wir hier rechtzeitig.' },
     { title: 'Wo können wir bleiben?', text: 'Macht ein kleines Wochenende daraus. Unsere Hotelempfehlungen und Informationen zu reservierten Zimmern folgen hier.' },
     { title: 'Ein Geschenk für euch?', text: 'Das schönste Geschenk ist, dass ihr dabei seid. Wer uns darüber hinaus eine Freude machen möchte, darf etwas zu unserer nächsten gemeinsamen Reise beitragen.' },

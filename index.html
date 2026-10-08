@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f6f3ed">
-  <meta name="description" content="Wir heiraten. Marie und Simon heiraten. Eine gestickte Einladung mit unserer Kirche, Lieblingsmenschen und einer Feier im Mago.">
+  <meta name="description" content="Marie und Simon heiraten. Eine gestickte Einladung mit unserer Kirche, Lieblingsmenschen und einer Feier im Mago.">
   <title>Marie &amp; Simon · Wir heiraten</title>
   <link rel="icon" href="assets/wreath.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -27,9 +27,10 @@
     <div class="opening-note"><span>FÜR UNSERE LIEBLINGSMENSCHEN</span><p class="opening-names names-inline">Marie &amp; Simon</p></div>
     <div class="opening-bottom"><p class="opening-prompt">Ein kleiner Moment. Ein großes Ja.</p><button class="text-button" id="open-text">Zum Öffnen berühren <span aria-hidden="true">↗︎</span></button><p class="opening-date" data-bind="dateLabel">28. August 2027</p></div>
   </div>
+  <div class="invitation-sheet">
   <main id="einladung">
     <section class="hero" aria-labelledby="hero-title">
-      <picture class="hero-art"><img class="garden-frame" src="assets/loom/opener.webp" alt="" width="1024" height="1536" fetchpriority="high"></picture>
+      <picture class="hero-art"><source media="(min-width:701px)" srcset="assets/loom/opener-flow-desktop.webp" width="1448" height="1086"><img class="garden-frame" src="assets/loom/opener-flow.webp" alt="" width="1024" height="1536" fetchpriority="high"></picture>
       <div class="hero-copy">
         <h1 id="hero-title"><span data-name="0">Marie</span><em>&amp;</em><span data-name="1">Simon</span></h1>
         <p class="hero-date" data-bind="dateLabel">28. August 2027</p>
@@ -47,7 +48,7 @@
     <button class="nav-rsvp" data-rsvp>Wir sind dabei <span aria-hidden="true">↗︎</span></button>
   </header>
     <section class="welcome textile-panel" id="willkommen" aria-labelledby="welcome-title">
-      <img class="panel-art" src="assets/loom/welcome.webp" alt="" width="1024" height="1536" loading="lazy">
+      <img class="panel-art" src="assets/loom/welcome-flow.webp" alt="" width="1024" height="1536" loading="lazy">
       <div class="welcome-copy panel-copy reveal"><h2 id="welcome-title" data-bind="invitation"></h2><p data-bind="intro"></p><span class="signature names-inline">Marie &amp; Simon</span></div>
     </section>
 
@@ -63,7 +64,7 @@
 
     <section class="venues section-pad" id="orte" aria-labelledby="venues-title">
 
-      <div class="venues-intro textile-panel"><img class="panel-art" src="assets/loom/venues-frame.webp" alt="" width="1024" height="1536" loading="lazy"><div class="panel-copy reveal"><p class="eyebrow">ZWEI ORTE. EINE GESCHICHTE.</p><h2 id="venues-title">Trauung &amp; Feier</h2><p class="venue-intro-date" data-bind="dateLabel"></p><p class="venue-intro-line"><span data-bind="ceremony.name"></span><br><span data-bind="ceremony.time"></span></p><span class="venue-intro-amp" aria-hidden="true">&amp;</span><p class="venue-intro-line"><span data-bind="party.name"></span><br><span data-bind="party.time"></span></p><p class="venue-intro-note">Vom ersten Ja bis zum letzten Tanz.</p></div></div>
+      <div class="venues-intro textile-panel"><img class="panel-art" src="assets/loom/venues-flow.webp" alt="" width="1024" height="1536" loading="lazy"><div class="panel-copy reveal"><p class="eyebrow">ZWEI ORTE. EINE GESCHICHTE.</p><h2 id="venues-title">Trauung &amp; Feier</h2><p class="venue-intro-date" data-bind="dateLabel"></p><p class="venue-intro-line"><span data-bind="ceremony.name"></span><br><span data-bind="ceremony.time"></span></p><span class="venue-intro-amp" aria-hidden="true">&amp;</span><p class="venue-intro-line"><span data-bind="party.name"></span><br><span data-bind="party.time"></span></p><p class="venue-intro-note">Vom ersten Ja bis zum letzten Tanz.</p></div></div>
       <div class="venue-grid">
         <article class="venue-card reveal">
           <div class="venue-art venue-church"><img data-photo="church" alt="Gestickte Illustration der Reformierten Kirche in Schermbeck" hidden><img class="venue-fallback" src="assets/church.svg" alt="Florale Illustration der Reformierten Kirche" width="420" height="370" loading="lazy"></div>
@@ -76,10 +77,8 @@
       </div>
     </section>
 
-    <section class="dresscode section-pad" aria-labelledby="dresscode-title"><p class="eyebrow reveal">FÜR EINEN BESONDEREN TAG</p><h2 id="dresscode-title" class="reveal" data-detail-title="0"></h2><p class="reveal" data-detail-text="0"></p></section>
-
     <section class="story" id="unsere-geschichte" aria-labelledby="story-title">
-      <div class="story-framed textile-panel"><img class="panel-art" src="assets/loom/story-frame.webp" alt="" width="1024" height="1536" loading="lazy"><div class="story-copy panel-copy reveal"><p class="eyebrow">UNSERE LIEBLINGSGESCHICHTE</p><h2>Unsere Geschichte</h2><p data-bind="story"></p></div></div>
+      <div class="story-framed textile-panel"><img class="panel-art" src="assets/loom/story-flow.webp" alt="" width="1024" height="1536" loading="lazy"><div class="story-copy panel-copy reveal"><p class="eyebrow">UNSERE LIEBLINGSGESCHICHTE</p><h2>Unsere Geschichte</h2><p data-bind="story"></p></div></div>
       <div class="story-photos section-pad">
       <div class="photo-duo reveal">
         <figure class="photo-main photo-frame"><img data-photo="couple" alt="Marie und Simon, ein gemeinsamer Lieblingsmoment" hidden><div class="photo-fallback"><img src="assets/wreath.svg" alt=""><span>Wir zwei.</span><small>Unser Lieblingsmoment</small></div><figcaption>DU. ICH. UND ALLES, WAS KOMMT.</figcaption></figure>
@@ -99,7 +98,7 @@
       <div class="details-layout"><div class="details-title reveal"><h2 id="details-title">Gut zu wissen.</h2><p>Alles, was euren Tag mit uns<br>noch ein bisschen schöner macht.</p></div><div class="faq-list reveal" id="faq-list"></div></div>
     </section>
 
-    <section class="gift-section textile-panel" aria-labelledby="gift-title"><img class="panel-art" src="assets/loom/gift-frame.webp" alt="" width="1024" height="1536" loading="lazy"><div class="gift-copy panel-copy reveal"><h2 id="gift-title" data-detail-title="3"></h2><p data-detail-text="3"></p></div></section>
+    <section class="gift-section textile-panel" aria-labelledby="gift-title"><img class="panel-art" src="assets/loom/gift-flow.webp" alt="" width="1024" height="1536" loading="lazy"><div class="gift-copy panel-copy reveal"><h2 id="gift-title" data-detail-title="2"></h2><p data-detail-text="2"></p></div></section>
 
     <section class="rsvp-section section-pad" id="rueckmeldung" aria-labelledby="rsvp-title">
 
@@ -110,7 +109,8 @@
       <p class="rsvp-signature names-inline reveal">Marie & Simon</p>
     </section>
   </main>
-  <footer><a class="footer-monogram initials" href="#einladung">M · S</a><p data-bind="footer"></p><span><span data-bind="dateLabel"></span> · <span data-bind="region"></span></span><button class="footer-replay" id="replay">Einladung noch einmal öffnen</button></footer>
+  <footer><a class="footer-monogram initials" href="#einladung">M · S</a><p data-bind="footer"></p><span><span data-bind="dateLabel"></span> · <span data-bind="region"></span></span><button class="footer-replay" id="replay">Einladung noch einmal öffnen</button><img class="farewell-art" data-farewell-art src="assets/loom/farewell-swans.webp" alt="Zwei gestickte Schwäne, deren Hälse ein Herz bilden" width="1536" height="1024" loading="lazy"></footer>
+  </div>
 
   <dialog id="rsvp-dialog" aria-labelledby="rsvp-dialog-title">
     <button class="dialog-close" data-close aria-label="Schließen">×</button>

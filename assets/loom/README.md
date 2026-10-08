@@ -1,16 +1,22 @@
-# Neue Stickserie für Marie & Simon
+# Durchgehendes Leinen für Marie & Simon
 
-Diese acht Originalgrafiken wurden am 8. Oktober 2026 mit der integrierten Bilderstellung erzeugt. Vorher wurden die tatsächlichen Grafiken und der Seitenaufbau der öffentlichen Embroidered-Garden-Demo visuell geprüft. Eigene Kirchen- und Mago-Bilder aus `../images/` dienten als Architekturvorlagen. Die Grafikdateien der Referenzseite werden nicht eingebunden.
+Die aktuelle Gestaltung setzt freigestellte Originalmotive auf eine einzige durchgehende Leinentextur. Die bisherigen vollständigen Leinenbilder bleiben als frühere Versionen im Ordner, sind aber nicht mehr eingebunden. Alle neuen Dateien wurden intern mit der Bilderstellung erzeugt beziehungsweise aus den eigenen Stickmotiven freigestellt. Kirchen- und Restaurantarchitektur stammen aus den eigenen Repository-Bildern.
 
-| Datei | Motiv und Platz |
+| Aktuelle Datei | Verwendung |
 | --- | --- |
-| `opener.webp` | Perlenvorhänge und eigene Kirche im Auftakt |
-| `welcome.webp` | Glyzinien, Seidenrosen und Schwäne für die Begrüßung |
-| `venues-frame.webp` | Rechteckiger Blüten- und Spitzenrahmen für Trauung und Feier |
-| `story-frame.webp` | Ovaler Stickrahmen für die Geschichte |
-| `gift-frame.webp` | Goldener Fadenrahmen mit Elfenbeinschleife für den Geschenkhinweis |
-| `medallion.webp` | Transparentes Perlenmedaillon für die drei Countdown-Werte |
-| `timeline-icons.webp` | Sechs verschiedene Ablaufmotive auf einem 3×2-Bogen |
-| `mago-location.webp` | Neue Darstellung des eigenen Mago-Gebäudes |
+| `linen-ivory.webp` | Gemeinsamer heller, feiner Leinenhintergrund des ganzen Dokuments |
+| `opener-flow.webp` | Transparente Hochformat-Komposition mit Perlenvorhängen und eigener Kirche |
+| `opener-flow-desktop.webp` | Breite transparente Desktop-Komposition derselben Motive |
+| `welcome-flow.webp` | Glyzinien, Perlen und Seitenrosen, ohne Schwäne oder Leinenfläche |
+| `venues-flow.webp` | Freigestellter Blüten- und Spitzenrahmen für Trauung und Feier |
+| `story-flow.webp` | Transparenter ovaler Stickrahmen für die Geschichte |
+| `gift-flow.webp` | Transparenter goldener Fadenrahmen mit Schleife |
+| `medallion.webp` | Bestehendes transparentes Perlenmedaillon für drei Countdown-Werte |
+| `timeline-flow.webp` | Sechs freigestellte Ablaufmotive im proportionalen 3×2-Bogen |
+| `church-flow.webp` | Freigestellte eigene Kirche mit Treppe und Pflanzen |
+| `mago-flow.webp` | Freigestelltes Mago mit Terrasse |
+| `farewell-swans.webp` | Die zwei Schwäne als einziges Schlussmotiv im Footer |
 
-Die großen Textszenen sind 2:3-Hochformate. Die quadratische Icondatei enthält sechs Zellen mit jeweils 2:3-Seitenverhältnis; CSS zeigt jede Zelle proportional und mit eigener Position. Das Mago-Bild und das Medaillon sind quadratisch. Bilder bleiben unverzerrt, Namen und Angaben bleiben bearbeitbarer HTML-Text.
+Mit Ausnahme der Leinentextur besitzen die Motive transparente Hintergründe. Große Rahmen und mobiler Opener haben ein 2:3-Seitenverhältnis. Der Desktop-Opener ist 4:3, die Schwäne 3:2. Die quadratische Icondatei enthält sechs 2:3-Zellen. CSS erhält alle Proportionen. Namen und Angaben bleiben bearbeitbarer HTML-Text.
+
+Die Grafikdateien der Referenzwebsite werden nicht eingebunden. Die Analyse des tatsächlichen Seitenaufbaus ist in `../../DESIGN-REFERENZ.md` dokumentiert. Originale und frühere eigene Gestaltungen bleiben erhalten.

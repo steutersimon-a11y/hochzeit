@@ -1,18 +1,18 @@
 # Marie & Simon · Embroidered Garden
 
-Eine digitale Hochzeitseinladung mit einer zusammenhängenden Stickserie: eigene Kirche unter Perlenvorhängen, Glyzinien und Schwäne, individuelle Blütenrahmen, neue Mago-Illustration und sechs passende Ablaufmotive. Salbeifarbene Leinenflügel öffnen direkt auf die fertige Kirchenszene. Inspiriert vom tatsächlichen Bildaufbau von [The Digital Yes](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
+Eine digitale Hochzeitseinladung auf einem durchgehenden Leinentuch: eigene Kirche unter Perlenvorhängen, Glyzinien, individuelle Blütenrahmen, passende Ortsillustrationen und sechs Ablaufmotive. Die beiden Schwäne bilden ganz unten den Abschied. Opener und weiterer Verlauf haben dieselbe Breite. Salbeifarbene Leinenflügel öffnen direkt auf die fertige Kirchenszene. Inspiriert vom tatsächlichen Bildaufbau von [The Digital Yes](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
 
 [Neuer Auftakt](preview-opener.png) · [Handy-Vorschau](preview-mobile.png) · [Desktop-Vorschau](preview-desktop.png) · [Die Locations](preview-locations.png) · [Eure Fotos](preview-fotos.png)
 
-[Siegel](preview-siegel-mobile.png) · [Während der Öffnung](preview-ouverture.png) · [Öffnung als Video](preview-oeffnung.mp4)
+[Abschied mit Schwänen](preview-abschied.png) · [Siegel](preview-siegel-mobile.png) · [Während der Öffnung](preview-ouverture.png) · [Öffnung als Video](preview-oeffnung.mp4)
 
 ## Neue Gestaltung
 
-Die öffentliche Referenz und ihre vollständige Live-Einladung wurden erneut geöffnet und visuell untersucht. Acht neu erzeugte Bilddateien übernehmen die gemeinsame Materialwelt aus hellem Leinen, Salbeigrün, Mauve, Perlen und Stickstichen. Der Opener wurde anhand der eigenen Kirchenillustration gestaltet; das neue Mago-Bild anhand der eigenen Restaurantillustration. Der Ablauf zeigt Kirche, Ringe, Sektgläser, Cocktail, Dinner und Discokugel.
+Die öffentliche Referenz und ihre vollständige Live-Einladung wurden erneut geöffnet und visuell untersucht. Die gemeinsame Materialwelt besteht aus hellem Leinen, Salbeigrün, Mauve, Perlen und Stickstichen. Eine einzige gekachelte Leinentextur läuft hinter der gesamten Einladung durch. Die Stickmotive sind transparente Auflagen ohne eigene rechteckige Leinenfläche. Der Opener wurde anhand der eigenen Kirchenillustration gestaltet; das neue Mago-Bild anhand der eigenen Restaurantillustration. Der Ablauf zeigt Kirche, Ringe, Sektgläser, Cocktail, Dinner und Discokugel.
 
-Jede große dekorative Szene erscheint einmal. Die alten mehrfach eingesetzten Rosen und Girlanden sind entfernt. Bilder behalten ihre Proportionen, Text bleibt in den freien Bildbereichen. Dresscode und Geschenkhinweis werden jeweils einmal gezeigt. Ruhige Einblendungen verbinden die Abschnitte beim Scrollen.
+Jede große dekorative Szene erscheint einmal. Die alten mehrfach eingesetzten Rosen und Girlanden sind entfernt. Bilder behalten ihre Proportionen, Text bleibt in den freien Bildbereichen. Der Dresscode wurde auf Wunsch vollständig entfernt. Der Geschenkhinweis erscheint einmal. Ruhige Einblendungen verbinden die Abschnitte beim Scrollen.
 
-Alle vorhandenen Texte und Sachangaben in `wedding-config.js` sind erhalten. Nur der Mago-Bildpfad verweist jetzt auf die neue Illustration. Paarfoto und Ringfoto bleiben unverändert. [Analyse und Umsetzung](DESIGN-REFERENZ.md) · [Neue Bildserie](assets/loom/README.md).
+Alle übrigen Texte und Sachangaben in `wedding-config.js` sind erhalten. Die Ortsbilder verweisen auf freigestellte Stickmotive. Die angefragten neuen Fotoanhänge waren in der Nachricht nicht verfügbar; die vorhandenen Paar- und Ringfotos sind bis zum Austausch weiterhin eingebunden. [Analyse und Umsetzung](DESIGN-REFERENZ.md) · [Neue Bildserie](assets/loom/README.md).
 
 ## Einladung ansehen
 
@@ -40,8 +40,8 @@ Die vier bearbeitbaren Bildplätze:
 | --- | --- |
 | `couple` | Eigenes Schwarzweißfoto des Paares |
 | `hands` | Eigenes Schwarzweißfoto der Hände mit Ring |
-| `church` | Vorhandene Kirchenstickerei |
-| `party` | Neu erzeugte Mago-Stickerei |
+| `church` | Freigestellte eigene Kirchenstickerei |
+| `party` | Freigestellte Mago-Stickerei |
 
 Die Originalbilder liegen unverändert in `assets/images/`. Fotoflächen verwenden einen bewussten Ausschnitt; Locationbilder werden vollständig dargestellt. Neue JPG-, PNG- oder WebP-Dateien können im Editor gewählt oder über Bildpfade in der Konfiguration eingebunden werden.
 
@@ -64,4 +64,4 @@ node scripts/visual-check.cjs
 node scripts/export-check.cjs
 ```
 
-Die Prüfungen benötigen Playwright und Chromium. Sie erfassen fünf Breiten von 320 bis 1440 Pixeln, Bildproportionen, Textpositionen, eindeutige Dekorationen, erhaltene Angaben, horizontales Überlaufen, Öffnung, Tastatur, Dialoge, Kalender und reduzierte Bewegung. Beide HTML-Exportvarianten werden auf vollständige Bildeinbettung ohne weitere Netzwerkanfragen geprüft. Zusätzlich werden die endgültigen Screenshots visuell beurteilt.
+Die Prüfungen benötigen Playwright und Chromium. Sie erfassen fünf Breiten von 320 bis 1440 Pixeln, Bildproportionen, Textpositionen, durchgehende Leinenfläche, gleiche Breiten, Schwäne nur am Abschied, fehlenden Dresscode, eindeutige Dekorationen, erhaltene Angaben und horizontales Überlaufen, Öffnung, Tastatur, Dialoge, Kalender und reduzierte Bewegung. Beide HTML-Exportvarianten werden auf vollständige Bildeinbettung ohne weitere Netzwerkanfragen geprüft. Zusätzlich werden die endgültigen Screenshots visuell beurteilt.

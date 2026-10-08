@@ -17,8 +17,9 @@ if (!playwright) throw new Error('Playwright or playwright-core is required.');
 
 const root = path.resolve(__dirname, '..');
 const output = process.env.INVITATION_QA_OUTPUT || '/tmp/wedding-qa';
-const requiredArt = ['opener.webp', 'welcome.webp', 'venues-frame.webp', 'story-frame.webp',
-  'gift-frame.webp', 'medallion.webp', 'timeline-icons.webp', 'mago-location.webp'];
+const requiredArt = ['opener-flow.webp', 'opener-flow-desktop.webp', 'welcome-flow.webp',
+  'farewell-swans.webp', 'venues-flow.webp', 'story-flow.webp',
+  'gift-flow.webp', 'medallion.webp', 'timeline-flow.webp', 'mago-flow.webp', 'church-flow.webp', 'linen-ivory.webp'];
 const missing = requiredArt.filter(file => !fs.existsSync(path.join(root, 'assets/loom', file)));
 if (missing.length) {
   console.error('WAITING FOR ART: ' + missing.join(', '));
@@ -41,10 +42,11 @@ for (const [src, count] of sourceCounts) {
   check(count === (src === 'assets/loom/medallion.webp' ? 3 : 1),
     `Static markup repeats a decorative scene: ${src} appears ${count} times`);
 }
-for (const file of ['opener.webp', 'welcome.webp', 'venues-frame.webp', 'story-frame.webp', 'gift-frame.webp']) {
+for (const file of ['opener-flow.webp', 'welcome-flow.webp', 'farewell-swans.webp', 'venues-flow.webp', 'story-flow.webp', 'gift-flow.webp']) {
   check(sourceCounts.get('assets/loom/' + file) === 1, `Missing unique textile scene: ${file}`);
 }
-// The contextual Mago artwork is the sole intended configuration change.
+// Guests' own information stays intact; the requested Dresscode is removed,
+// and uploaded personal photos may replace the two existing story photographs.
 function readConfig(code) {
   const context = { window: {} };
   vm.runInNewContext(code, context);
@@ -54,9 +56,12 @@ const currentConfig = readConfig(fs.readFileSync(path.join(root, 'wedding-config
 const previous = spawnSync('git', ['show', 'HEAD:wedding-config.js'], { cwd: root, encoding: 'utf8' });
 if (previous.status === 0) {
   const baseline = readConfig(previous.stdout);
-  baseline.photos.party = currentConfig.photos.party;
-  check(isDeepStrictEqual(baseline, currentConfig), 'Invitation inputs changed beyond the contextual Mago artwork');
+  baseline.photos = currentConfig.photos;
+  baseline.details = baseline.details.filter(detail => !/dresscode|was ziehen wir an/i.test(detail.title));
+  check(isDeepStrictEqual(baseline, currentConfig), 'Invitation inputs changed beyond Dresscode removal and requested photographic/illustrated assets');
 }
+check(!currentConfig.details.some(detail => /dresscode|was ziehen wir an/i.test(detail.title)), 'Dresscode remains in the invitation configuration');
+check(!/class=["'][^"']*\bdresscode\b/i.test(source), 'Dresscode section remains in the markup');
 async function overflow(page, label) {
   const dimensions = await page.evaluate(() => ({
     viewport: innerWidth,
@@ -118,7 +123,7 @@ async function exerciseViewport(browser, baseURL, width) {
   const diversity = centerDiversity(midFile);
   check(mid.y === 0 && mid.loaded && mid.opacity > .7, `${width}: live first scene missing during opening ${JSON.stringify(mid)}`);
   check(diversity > 150, `${width}: mid-opening central scene is blank (${diversity} sampled colors)`);
-  check(mid.source.includes('assets/loom/opener.webp'), `${width}: wrong first-scene artwork source`);
+  check(mid.source.includes('assets/loom/opener-flow'), `${width}: wrong first-scene artwork source`);
   check(mid.pseudoContent === 'none' || mid.pseudoBackground === 'rgba(0, 0, 0, 0)', `${width}: opaque page pseudo-element covers opener`);
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
   check(await page.evaluate(() => !document.querySelector('main').inert), `${width}: page stays inert after opening`);
@@ -134,15 +139,52 @@ async function exerciseViewport(browser, baseURL, width) {
     const artworkTop = imageBox.top + (imageBox.height - artworkHeight) / 2;
     return { top: (copy.top-artworkTop)/artworkHeight, bottom: (copy.bottom-artworkTop)/artworkHeight };
   });
-  // The chapel cross begins at 48% of this specific scene; text belongs above it.
-  check(heroPlacement.bottom <= .475, `${width}: opening text overlaps the chapel ${JSON.stringify(heroPlacement)}`);
+  // Portrait and landscape compositions share the same chapel and clear upper text area.
+  check(heroPlacement.bottom <= (width <= 700 ? .475 : .365), `${width}: opening text overlaps the chapel ${JSON.stringify(heroPlacement)}`);
+  const linenFlow = await page.evaluate(() => {
+    const main = document.querySelector('main');
+    const mainBox = main.getBoundingClientRect();
+    const hero = document.querySelector('.hero');
+    const heroBox = hero.getBoundingClientRect();
+    const heroImage = document.querySelector('.garden-frame');
+    const imageBox = heroImage.getBoundingClientRect();
+    const imageScale = Math.min(imageBox.width / heroImage.naturalWidth, imageBox.height / heroImage.naturalHeight);
+    const layers = [document.body, main, document.querySelector('.invitation-sheet')].filter(Boolean).flatMap(element => [null, '::before', '::after'].map(pseudo => {
+      const style = getComputedStyle(element, pseudo);
+      return { element: element.tagName, pseudo, image: style.backgroundImage };
+    }));
+    const sections = [...document.querySelectorAll('.hero,.site-header,.welcome,.date-section,#orte,.story,.timeline-section,.details,.gift-section,.rsvp-section,footer')]
+      .map(element => ({ element: element.className || element.tagName, background: getComputedStyle(element).backgroundColor,
+        image: getComputedStyle(element).backgroundImage }));
+    const panels = [...document.querySelectorAll('.textile-panel')].map(panel => {
+      const box = panel.getBoundingClientRect();
+      return { class: panel.className, left: box.left, width: box.width };
+    });
+    return { main: { left: mainBox.left, width: mainBox.width }, hero: { left: heroBox.left, width: heroBox.width },
+      renderedArtWidth: heroImage.naturalWidth * imageScale, layers, sections, panels,
+      dresscodeText: /dresscode|was ziehen wir an/i.test(main.innerText), dresscodeNodes: document.querySelectorAll('.dresscode,#dresscode-title').length };
+  });
+  check(Math.abs(linenFlow.hero.left-linenFlow.main.left) <= 1 && Math.abs(linenFlow.hero.width-linenFlow.main.width) <= 1,
+    `${width}: church opener and scrolling canvas have different widths ${JSON.stringify(linenFlow)}`);
+  check(Math.abs(linenFlow.renderedArtWidth-linenFlow.main.width) <= 1,
+    `${width}: the visible church artwork is narrower than the invitation canvas (${linenFlow.renderedArtWidth} vs ${linenFlow.main.width})`);
+  for (const panel of linenFlow.panels) {
+    check(Math.abs(panel.left-linenFlow.main.left) <= 1 && Math.abs(panel.width-linenFlow.main.width) <= 1,
+      `${width}: textile scene has a segmented width ${JSON.stringify(panel)}`);
+  }
+  check(linenFlow.layers.some(layer => /url\(/.test(layer.image)), `${width}: no shared linen texture on the invitation canvas`);
+  for (const section of linenFlow.sections) {
+    check(section.background === 'rgba(0, 0, 0, 0)' && section.image === 'none',
+      `${width}: a scrolling section covers the continuous linen canvas ${JSON.stringify(section)}`);
+  }
+  check(!linenFlow.dresscodeText && linenFlow.dresscodeNodes === 0, `${width}: Dresscode still shown to guests`);
   await page.evaluate(() => document.activeElement?.blur());
   await page.screenshot({ path: path.join(output, `opened-${width}.png`) });
   await page.locator('.hero').screenshot({ path: path.join(output, `hero-${width}.png`) });
 
   // Scroll each real section to exercise lazy loading, reveal animation, and layout.
-  for (const selector of ['#willkommen', '#datum', '.venues-intro', '.venue-grid', '.dresscode',
-    '.story-framed', '.story-photos', '#unser-tag', '#gut-zu-wissen', '.gift-section', '#rueckmeldung']) {
+  for (const selector of ['#willkommen', '#datum', '.venues-intro', '.venue-grid',
+    '.story-framed', '.story-photos', '#unser-tag', '#gut-zu-wissen', '.gift-section', '#rueckmeldung', 'footer']) {
     await page.locator(selector).scrollIntoViewIfNeeded();
     await page.waitForTimeout(80);
     await overflow(page, `${width} ${selector}`);
@@ -194,7 +236,7 @@ async function exerciseViewport(browser, baseURL, width) {
   for (const panel of panels) {
     check(!panel.clipped && panel.top >= 0 && panel.bottom <= 1 && panel.left >= 0 && panel.right <= 1,
       `${width}: panel text clips outside its textile scene ${JSON.stringify(panel)}`);
-    const safeBand = panel.class.includes('welcome') ? [.30, .69]
+    const safeBand = panel.class.includes('welcome') ? [0, 1]
       : panel.class.includes('venues-intro') ? [.22, .81]
       : panel.class.includes('story-framed') ? [.28, .73] : [.15, .90];
     check(panel.top >= safeBand[0]-.002 && panel.bottom <= safeBand[1]+.002,
@@ -202,10 +244,33 @@ async function exerciseViewport(browser, baseURL, width) {
   }
   const textBindings = await page.evaluate(() => {
     const get = key => key.split('.').reduce((value, part) => value?.[part], window.WEDDING);
-    return [...document.querySelectorAll('[data-bind]')].filter(element => element.textContent !== String(get(element.dataset.bind) ?? ''))
+    const mismatches = [...document.querySelectorAll('[data-bind]')].filter(element => element.textContent !== String(get(element.dataset.bind) ?? ''))
       .map(element => element.dataset.bind);
+    for (const element of document.querySelectorAll('[data-detail-title],[data-detail-text]')) {
+      const title = element.hasAttribute('data-detail-title');
+      const index = Number(element.getAttribute(title ? 'data-detail-title' : 'data-detail-text'));
+      const expected = window.WEDDING.details[index]?.[title ? 'title' : 'text'] ?? '';
+      if (element.textContent !== expected) mismatches.push(`details.${index}.${title ? 'title' : 'text'}`);
+    }
+    const renderedTitles = [...document.querySelectorAll('main [data-detail-title],#faq-list summary')].map(element => element.textContent.trim());
+    for (const detail of window.WEDDING.details) {
+      if (renderedTitles.filter(title => title === detail.title).length !== 1) mismatches.push(`details title ${detail.title} missing or duplicated`);
+    }
+    return mismatches;
   });
   check(textBindings.length === 0, `${width}: missing or changed invitation text ${textBindings.join(', ')}`);
+  const farewell = await page.evaluate(() => {
+    const artwork = [...document.querySelectorAll('img')].filter(image => image.matches('[data-farewell-art],.farewell-art') || /swans|swan|schwaene|schwan|farewell/i.test(image.getAttribute('src') || ''));
+    const rsvp = document.querySelector('#rueckmeldung').getBoundingClientRect();
+    return artwork.map(image => ({ src: image.getAttribute('src'), footer: !!image.closest('footer'),
+      top: image.getBoundingClientRect().top, rsvpBottom: rsvp.bottom, loaded: image.complete && image.naturalWidth > 0,
+      lastScene: image.closest('footer')?.parentElement?.lastElementChild === image.closest('footer') }));
+  });
+  check(farewell.length === 1, `${width}: swans must have one farewell home, found ${farewell.length}`);
+  for (const image of farewell) {
+    check(image.footer && image.top >= image.rsvpBottom - 1 && image.loaded && image.lastScene,
+      `${width}: swans are not the final farewell after RSVP ${JSON.stringify(image)}`);
+  }
   const timelineIcons = await page.evaluate(() => [...document.querySelectorAll('.timeline-icon')].map(icon => {
     const style = getComputedStyle(icon), box = icon.getBoundingClientRect();
     return { icon: icon.dataset.icon, position: style.backgroundPosition, source: style.backgroundImage,
@@ -214,7 +279,7 @@ async function exerciseViewport(browser, baseURL, width) {
   check(new Set(timelineIcons.map(icon => icon.position)).size === timelineIcons.length,
     `${width}: timeline repeats a sprite cell`);
   for (const icon of timelineIcons) {
-    check(icon.source.includes('timeline-icons.webp') && Math.abs(icon.ratio-2/3) < .01 && icon.overlays === 0,
+    check(icon.source.includes('timeline-flow.webp') && Math.abs(icon.ratio-2/3) < .01 && icon.overlays === 0,
       `${width}: distorted or doubled timeline icon ${JSON.stringify(icon)}`);
   }
   const venueImages = await page.evaluate(() => [...document.querySelectorAll('.venue-art>[data-photo]')].map(image => {
@@ -234,10 +299,12 @@ async function exerciseViewport(browser, baseURL, width) {
   }
   await page.evaluate(() => { document.activeElement?.blur(); scrollTo({ top: 0, behavior: 'instant' }); });
   await page.screenshot({ path: path.join(output, `page-${width}.png`), fullPage: true });
-  for (const selector of ['.welcome', '.venues-intro', '.story-framed', '.gift-section', '.timeline-section']) {
+  for (const [selector, filename] of [['.welcome', 'welcome'], ['.venues-intro', 'venues-intro'],
+    ['.venue-grid', 'locations'], ['.story-framed', 'story-framed'], ['.story-photos', 'photos'],
+    ['.gift-section', 'gift-section'], ['.timeline-section', 'timeline-section'], ['footer', 'farewell']]) {
     await page.locator(selector).evaluate(element => element.scrollIntoView({ block: 'start', behavior: 'instant' }));
     await page.waitForTimeout(50);
-    await page.locator(selector).screenshot({ path: path.join(output, `${selector.slice(1)}-${width}.png`) });
+    await page.locator(selector).screenshot({ path: path.join(output, `${filename}-${width}.png`) });
   }
 
   const faq = page.locator('#faq-list summary').nth(1);
@@ -292,9 +359,9 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.keyboard.press('Escape');
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
   check(errors.length === 0, `${width}: browser errors ${errors.join('; ')}`);
-  results.push({ width, height, centerColors: diversity, ornaments: ornaments.length, heroPlacement, panels,
-    timelineIcons, fallbackVisibility, errors });
-  console.log(`${failures.length === startingFailures ? 'PASS' : 'FAIL'} viewport ${width}×${height}: opener, art, overflow, keyboard, dialogs, replay`);
+  results.push({ width, height, centerColors: diversity, ornaments: ornaments.length, heroPlacement, linenFlow, panels,
+    farewell, timelineIcons, fallbackVisibility, errors });
+  console.log(`${failures.length === startingFailures ? 'PASS' : 'FAIL'} viewport ${width}×${height}: continuous linen, equal widths, farewell swans, opener, art, keyboard, dialogs`);
   await context.close();
 }
 

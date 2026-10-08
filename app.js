@@ -29,7 +29,7 @@
     $('#faq-list').replaceChildren();
     $$('[data-detail-title]').forEach(el => { el.textContent = config.details[+el.dataset.detailTitle]?.title || ''; });
     $$('[data-detail-text]').forEach(el => { el.textContent = config.details[+el.dataset.detailText]?.text || ''; });
-    config.details.filter((_, i) => i !== 0 && i !== 3).forEach((item,i) => {
+    config.details.filter((_, i) => i !== 2).forEach((item,i) => {
       const details = document.createElement('details'), summary = document.createElement('summary'), text = document.createElement('p');
       summary.textContent = item.title; text.textContent = item.text; details.append(summary,text); if (i === 0) details.open = true; $('#faq-list').append(details);
     });
@@ -95,7 +95,7 @@
       $$('.skip-link,.site-header,main,footer').forEach(el => { el.inert = false; });
       $('.hero-discover').focus({ preventScroll: true });
     }, reducedMotion ? 0 : 3150);
-    try { sessionStorage.setItem('invitation-opened-loom-v5', 'yes'); } catch (error) {}
+    try { sessionStorage.setItem('invitation-opened-linen-v6', 'yes'); } catch (error) {}
   }
   function showOpening() {
     $$('.skip-link,.site-header,main,footer').forEach(el=>{el.inert=true;});window.scrollTo({top:0,behavior:'instant'});
@@ -112,7 +112,7 @@
   $('#open-invitation').addEventListener('click',openInvitation); $('#open-text').addEventListener('click',openInvitation);
   $('#replay').addEventListener('click',showOpening);
   let alreadyOpened = false;
-  try { alreadyOpened = sessionStorage.getItem('invitation-opened-loom-v5') === 'yes'; } catch(e) {}
+  try { alreadyOpened = sessionStorage.getItem('invitation-opened-linen-v6') === 'yes'; } catch(e) {}
   const editMode = new URLSearchParams(location.search).has('edit');
   if(!alreadyOpened && !location.hash && !editMode) showOpening();
 
