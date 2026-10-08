@@ -5,11 +5,12 @@ root=Path(__file__).resolve().parent
 def data_uri(path):
  mime={'.svg':'image/svg+xml','.woff2':'font/woff2','.jpg':'image/jpeg','.jpeg':'image/jpeg','.png':'image/png','.webp':'image/webp'}[Path(path).suffix]
  return 'data:'+mime+';base64,'+base64.b64encode((root/path).read_bytes()).decode()
-css=(root/'style.css').read_text()
+css='\n'.join((root/path).read_text() for path in ['style.css','opening.css'])
 css=re.sub(r"url\('([^']+)'\)",lambda m:"url('"+data_uri(m[1])+"')",css)
 html=(root/'index.html').read_text()
 html=html.replace('<link rel="preload" href="assets/fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>','')
 html=html.replace('<link rel="stylesheet" href="style.css">','<style>'+css+'</style>')
+html=html.replace('<link rel="stylesheet" href="opening.css">','')
 config=(root/'wedding-config.js').read_text()
 photos={}
 def embed_photo(match):
