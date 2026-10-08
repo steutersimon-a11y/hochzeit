@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5eee3">
+  <meta name="description" content="Wir heiraten. Eine Einladung voller Liebe, Lieblingsmenschen und eines Gartens in voller Blüte.">
+  <title>Wir heiraten · Unsere Einladung</title>
+  <link rel="icon" href="assets/wreath.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script src="wedding-config.js" defer></script>
+  <script src="export-template.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#einladung">Zur Einladung</a>
+  <div class="opening" id="opening" role="dialog" aria-modal="true" aria-label="Eure Einladung öffnen" hidden>
+    <div class="opening-note">FÜR UNSERE LIEBLINGSMENSCHEN</div>
+    <div class="envelope">
+      <div class="envelope-paper"><img src="assets/garland.svg" alt="" width="800" height="210"><span>Eine Einladung<br>von Herzen</span></div>
+      <div class="envelope-back"></div>
+      <div class="envelope-flap"></div>
+      <div class="envelope-front"></div>
+      <button class="wax-seal" id="open-invitation" aria-label="Einladung öffnen"><span class="initials">M · E</span><span class="seal-leaf">❦</span></button>
+    </div>
+    <p class="opening-prompt">Ein kleiner Moment. Ein großes Ja.</p>
+    <button class="text-button" id="open-text">Einladung öffnen <span aria-hidden="true">↗︎</span></button>
+  </div>
+  <header class="site-header">
+    <a class="brand" href="#einladung" aria-label="Zum Anfang"><span class="initials">M · E</span><span class="brand-leaf" aria-hidden="true">❦</span></a>
+    <nav aria-label="Einladung">
+      <a href="#unser-tag">Unser Tag</a><a href="#orte">Die Orte</a><a href="#gut-zu-wissen">Gut zu wissen</a>
+    </nav>
+    <button class="nav-rsvp" data-rsvp>Wir sind dabei <span aria-hidden="true">↗︎</span></button>
+  </header>
+  <main id="einladung">
+    <section class="hero" aria-labelledby="hero-title">
+      <picture><source media="(max-width: 700px)" srcset="assets/garden-mobile.svg"><img class="garden-frame" src="assets/garden-frame.svg" alt="" width="1000" height="940" fetchpriority="high"></picture>
+      <div class="hero-copy">
+        <p class="eyebrow">EINLADUNG ZU UNSERER HOCHZEIT</p>
+        <h1 id="hero-title"><span data-name="0">Mila</span><em>&</em><span data-name="1">Elias</span></h1>
+        <div class="hero-rule"><span></span><i aria-hidden="true">✧</i><span></span></div>
+        <p class="hero-promise">Wir sagen Ja.<br>Und am liebsten mit euch.</p>
+        <p class="hero-date" data-bind="dateLabel">19. Juni 2027</p>
+        <p class="hero-place" data-bind="region">Schermbeck</p>
+        <a class="hero-discover" href="#willkommen">Unsere Einladung entdecken <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-bottom"><span>FÜR IMMER BEGINNT MIT EINEM TAG</span><span>UND MIT EUCH.</span></div>
+    </section>
+
+    <section class="welcome section-pad" id="willkommen">
+      <div class="section-kicker reveal"><span>01</span> EINE EINLADUNG VON HERZEN</div>
+      <div class="welcome-layout">
+        <div class="welcome-title reveal"><p class="handwritten">Ein neues Kapitel</p><h2 data-bind="invitation">Ein Tag voller Liebe.<br>Und ihr mittendrin.</h2></div>
+        <div class="welcome-copy reveal"><p data-bind="intro"></p><span class="signature names-inline">Mila & Elias</span><img class="welcome-sprig" src="assets/bouquet.svg" alt="" width="320" height="300" loading="lazy"></div>
+      </div>
+    </section>
+
+    <section class="story section-pad" id="unsere-geschichte" aria-labelledby="story-title">
+      <div class="photo-duo reveal">
+        <figure class="photo-main photo-frame"><img data-photo="couple" alt="Wir zwei, gemeinsam in den Bergen" hidden><div class="photo-fallback"><img src="assets/wreath.svg" alt=""><span>Wir zwei.</span><small>Unser Lieblingsmoment</small></div><figcaption>DU. ICH. UND ALLES, WAS KOMMT.</figcaption></figure>
+        <figure class="photo-detail photo-frame"><img data-photo="hands" alt="Unsere Hände und der Verlobungsring" hidden><div class="photo-fallback"><span class="fallback-amp">&</span><span>Für immer.</span></div><figcaption>Ein kleines Versprechen.</figcaption></figure>
+        <img class="photo-flower" src="assets/bouquet.svg" alt="" width="320" height="300" loading="lazy">
+      </div>
+      <div class="story-copy reveal"><p class="eyebrow">UNSERE LIEBLINGSGESCHICHTE</p><h2 id="story-title" data-bind="quote"></h2><p data-bind="story"></p><div class="small-ornament" aria-hidden="true">❦</div></div>
+    </section>
+
+    <section class="date-section section-pad" id="datum" aria-labelledby="date-title">
+      <div class="date-ornament" aria-hidden="true"><img src="assets/garland.svg" alt="" width="800" height="210" loading="lazy"></div>
+      <p class="eyebrow reveal">EIN TAG. UNSER TAG.</p>
+      <h2 id="date-title" class="reveal">Haltet euch die Liebe frei.</h2>
+      <div class="date-display reveal"><span data-bind="weekday">Samstag</span><strong data-bind="dateLabel">19. Juni 2027</strong><span data-bind="region">Schermbeck</span></div>
+      <button class="text-button calendar-button reveal" id="save-date">In meinem Kalender vormerken <span aria-hidden="true">↗︎</span></button>
+      <div class="countdown reveal" aria-label="Zeit bis zur Hochzeit"><div><strong id="count-days">254</strong><span>TAGE</span></div><i>·</i><div><strong id="count-hours">00</strong><span>STUNDEN</span></div><i>·</i><div><strong id="count-minutes">00</strong><span>MINUTEN</span></div></div>
+      <p class="countdown-note" id="countdown-note">Bis wir gemeinsam Erinnerungen sammeln.</p>
+    </section>
+
+    <section class="venues section-pad" id="orte" aria-labelledby="venues-title">
+      <div class="section-kicker reveal"><span>02</span> ZWEI ORTE. EINE GESCHICHTE.</div>
+      <div class="section-heading reveal"><h2 id="venues-title">Hier feiern wir die Liebe.</h2><p>Vom ersten Ja bis zum letzten Tanz.</p></div>
+      <div class="venue-grid">
+        <article class="venue-card reveal">
+          <div class="venue-art venue-church"><img data-photo="church" alt="Gestickte Illustration der Reformierten Kirche in Schermbeck" hidden><img class="venue-fallback" src="assets/church.svg" alt="Florale Illustration der Reformierten Kirche" width="420" height="370" loading="lazy"><span class="venue-number">I</span></div>
+          <div class="venue-info"><p class="eyebrow" data-bind="ceremony.type"></p><h3 data-bind="ceremony.name"></h3><p class="venue-time" data-bind="ceremony.time"></p><p class="venue-arrival" data-bind="ceremony.arrival"></p><p class="venue-description" data-bind="ceremony.text"></p><p class="venue-address" data-bind="ceremony.address"></p><a class="text-button map-link" data-map="ceremony" target="_blank" rel="noopener noreferrer">Den Weg zur Trauung finden <span aria-hidden="true">↗︎</span></a></div>
+        </article>
+        <article class="venue-card reveal">
+          <div class="venue-art venue-party"><img data-photo="party" alt="Mago Restaurant & Bar am Abend" hidden><img class="venue-fallback" src="assets/mago.svg" alt="Florale Illustration des Mago Restaurant & Bar" width="400" height="320" loading="lazy"><span class="venue-number">II</span></div>
+          <div class="venue-info"><p class="eyebrow" data-bind="party.type"></p><h3 data-bind="party.name"></h3><p class="venue-time" data-bind="party.time"></p><p class="venue-arrival" data-bind="party.arrival"></p><p class="venue-description" data-bind="party.text"></p><p class="venue-address" data-bind="party.address"></p><a class="text-button map-link" data-map="party" target="_blank" rel="noopener noreferrer">Den Weg zur Feier finden <span aria-hidden="true">↗︎</span></a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="timeline-section section-pad" id="unser-tag" aria-labelledby="timeline-title">
+      <div class="timeline-header reveal"><div class="section-kicker"><span>03</span> VOM JA BIS ZUM LETZTEN LIED</div><h2 id="timeline-title">So klingt unser Tag.</h2><p>Ein bisschen Aufregung. Ganz viel Liebe.<br>Und hoffentlich eine sehr volle Tanzfläche.</p><img src="assets/bouquet.svg" alt="" width="320" height="300" loading="lazy"></div>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <section class="details section-pad" id="gut-zu-wissen" aria-labelledby="details-title">
+      <div class="section-kicker reveal"><span>04</span> DIE KLEINEN DETAILS</div>
+      <div class="details-layout"><div class="details-title reveal"><p class="handwritten">Damit ihr einfach genießen könnt</p><h2 id="details-title">Gut zu wissen.</h2><p>Alles, was euren Tag mit uns<br>noch ein bisschen schöner macht.</p><img src="assets/bouquet.svg" alt="" width="320" height="300" loading="lazy"></div><div class="faq-list reveal" id="faq-list"></div></div>
+    </section>
+
+    <section class="rsvp-section section-pad" id="rueckmeldung" aria-labelledby="rsvp-title">
+      <img class="rsvp-garland" src="assets/garland.svg" alt="" width="800" height="210" loading="lazy">
+      <p class="eyebrow reveal">DER SCHÖNSTE TEIL? IHR SEID DABEI.</p>
+      <h2 id="rsvp-title" class="reveal">Mit euch wird es<br><em>unvergesslich.</em></h2>
+      <p class="reveal">Lasst uns bis zum <span data-bind="rsvpDeadline"></span> wissen,<br>ob wir mit euch feiern dürfen.</p>
+      <button class="primary-button reveal" data-rsvp>Wir sind dabei <span aria-hidden="true">↗︎</span></button>
+      <p class="rsvp-signature names-inline reveal">Mila & Elias</p>
+    </section>
+  </main>
+  <footer><a class="footer-monogram initials" href="#einladung">M · E</a><p data-bind="footer"></p><span><span data-bind="dateLabel"></span> · <span data-bind="region"></span></span><button class="footer-replay" id="replay">Einladung noch einmal öffnen</button></footer>
+
+  <dialog id="rsvp-dialog" aria-labelledby="rsvp-dialog-title">
+    <button class="dialog-close" data-close aria-label="Schließen">×</button>
+    <img class="dialog-flower" src="assets/bouquet.svg" alt="" width="320" height="300">
+    <p class="eyebrow">EIN PLATZ FÜR EUCH</p><h2 id="rsvp-dialog-title">Feiert ihr mit uns?</h2>
+    <form id="rsvp-form">
+      <label>Eure Namen<input name="names" autocomplete="name" required placeholder="Vor- und Nachnamen"></label>
+      <fieldset><legend>Seid ihr dabei?</legend><label class="radio-label"><input type="radio" name="attendance" value="Ja, wir feiern mit euch!" checked> Ja, von Herzen gern.</label><label class="radio-label"><input type="radio" name="attendance" value="Leider können wir nicht dabei sein."> Leider schaffen wir es nicht.</label></fieldset>
+      <div class="form-row"><label>Erwachsene<input name="adults" type="number" min="1" max="20" value="2" required></label><label>Kinder<input name="children" type="number" min="0" max="20" value="0" required></label></div>
+      <label>Wünsche & liebe Worte<textarea name="message" rows="3" placeholder="Allergien, Essenswünsche oder etwas, das ihr uns sagen möchtet …"></textarea></label>
+      <p class="form-note" id="rsvp-note"></p>
+      <button class="primary-button" type="submit">Antwort vorbereiten <span aria-hidden="true">↗︎</span></button>
+      <p id="rsvp-result" role="status" hidden></p>
+    </form>
+  </dialog>
+  <dialog id="photo-dialog" aria-label="Foto in Großansicht"><button class="dialog-close" data-close aria-label="Schließen">×</button><img id="large-photo" alt=""></dialog>
+  <noscript><p class="noscript-note">Bitte aktiviert JavaScript, damit alle Angaben und Interaktionen der Einladung angezeigt werden.</p></noscript>
+</body>
+</html>
