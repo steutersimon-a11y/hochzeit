@@ -20,7 +20,7 @@ config=re.sub(r"(['\"])(assets/images/[^'\"]+)\1",embed_photo,config)
 html=html.replace('<script src="wedding-config.js" defer></script>','<script id="wedding-config">'+config+'</script>')
 html=html.replace('<script src="export-template.js" defer></script>','')
 html=html.replace('<script src="app.js" defer></script>','')
-html=re.sub(r'(src|href|srcset)="(assets/[^\"]+\.svg)"',lambda m:m[1]+'="'+data_uri(m[2])+'"',html)
+html=re.sub(r'(src|href|srcset)="(assets/[^\"]+\.(?:svg|webp))"',lambda m:m[1]+'="'+data_uri(m[2])+'"',html)
 app=(root/'app.js').read_text().replace('</script','<\\/script')
 html=html.replace('</body>','<script>'+app+'</script>\n</body>')
 html='\n'.join(line.rstrip() for line in html.splitlines())+'\n'
