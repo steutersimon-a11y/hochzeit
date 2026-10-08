@@ -1,14 +1,16 @@
-## Aktuelle Gestaltung: Embroidered Garden
-
-Die Einladung wurde erneut anhand der Live-Demo analysiert und als ruhiger, zentrierter Einladungsbogen umgesetzt. Eure Konfiguration bleibt unverändert. Details zur Referenz, Bildherkunft und Prüfung stehen in [DESIGN-REFERENZ.md](DESIGN-REFERENZ.md). Die neueste Siegelanimation aus GitHub ist integriert. `opening.css` ergänzt `style.css`; beide werden beim Build in die eigenständige HTML-Datei eingebettet. Die aktuellen Vorschauen sind `preview-desktop.png` und `preview-mobile.png`.
-
 # Unsere Hochzeit · Embroidered Garden
 
-Eine eigenständig gestaltete digitale Hochzeitseinladung aus HTML, CSS und JavaScript. Fotorealistische Stickmotive mit Seidenrosen und Perlensäumen, zwei auf Handy und Desktop abgestimmte Leinenhüllen, eine räumliche Öffnung mit überstehendem Elfenbeinsiegel und lokal eingebettete Kalligrafie. Inspiriert von [Embroidered Garden](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
+Eine vollständig überarbeitete digitale Hochzeitseinladung aus HTML, CSS und JavaScript. Fotorealistische Stickmotive mit Seidenrosen und Perlensäumen, zwei auf Handy und Desktop abgestimmte Leinenhüllen, eine räumliche Öffnung mit überstehendem Elfenbeinsiegel und lokal eingebettete Kalligrafie. Inspiriert von [Embroidered Garden](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
 
 [Desktop-Vorschau](preview-desktop.png) · [Handy-Vorschau](preview-mobile.png) · [Eure Fotos](preview-fotos.png) · [Die Locations](preview-locations.png)
 
 [Das M-&-S-Siegel](preview-siegel-mobile.png) · [Öffnung der Leinenflügel](preview-ouverture.png) · [Animation als Video](preview-oeffnung.mp4)
+
+## Neu gestaltet und geprüft
+
+Die Live-Vorlage wurde erneut geöffnet und analysiert. Verzerrte Schmuckgrafiken und die verdeckte Szene während der Kartenöffnung sind behoben. Neue zusammengehörige Gartenbilder, Kalligrafie, Blütenornamente und sanfte Bewegung bilden die Gestaltung. Eure Angaben in `wedding-config.js` bleiben unverändert. [Referenzanalyse und Umsetzung](DESIGN-REFERENZ.md).
+
+Die Browserprüfungen lassen sich mit `node scripts/visual-check.cjs` und `node scripts/export-check.cjs` wiederholen, wenn die Seite unter `http://localhost:8000` läuft. Playwright und Chromium werden dafür benötigt; die Einladung selbst braucht keine Installation.
 
 ## Sofort ansehen
 
@@ -18,7 +20,7 @@ Eine eigenständig gestaltete digitale Hochzeitseinladung aus HTML, CSS und Java
 
 Die einzelne HTML-Datei enthält die komplette Gestaltung und funktioniert ohne Installation und ohne Internet. Die Dateivorschau von GitHub oder eine Handy-Dateivorschau kann stattdessen Code anzeigen oder die Animationen nicht ausführen. Am Handy ist die veröffentlichte GitHub-Pages-Adresse deshalb der einfachste Weg; die Aktivierung steht weiter unten.
 
-Das plastische Elfenbein-Siegel mit euren Initialen ragt vor beiden Leinenflügeln über die Mittelkante hinaus. Seine eigene Trägerebene bewegt sich mit dem rechten Flügel. Dieser öffnet etwas früher als der linke, damit das Siegel frei mitgenommen wird. Nach einem Klick schwenken beide Flügel räumlich nach außen und enthüllen die Karte. Die Öffnung dauert etwa 4,3 Sekunden. Bei aktivierter Einstellung für reduzierte Bewegung erscheint die Karte sofort. Die Öffnung lässt sich per Tastatur bedienen und am Seitenende wiederholen.
+Das plastische Elfenbein-Siegel mit euren Initialen ragt vor beiden Leinenflügeln über die Mittelkante hinaus. Seine eigene Trägerebene bewegt sich mit dem rechten Flügel. Dieser öffnet etwas früher als der linke, damit das Siegel frei mitgenommen wird. Nach einem Klick schwenken beide Flügel räumlich nach außen und enthüllen die Karte. Die Öffnung dauert etwa 3,15 Sekunden. Der fertig geladene Garten ist dabei von Anfang an unmittelbar hinter den Leinenflügeln sichtbar. Bei aktivierter Einstellung für reduzierte Bewegung erscheint die Karte sofort. Die Öffnung lässt sich per Tastatur bedienen und am Seitenende wiederholen.
 
 Für den Bearbeitungsmodus `?edit=1` an die Adresse hängen, zum Beispiel:
 
@@ -38,7 +40,7 @@ Alle Texte, Orte, Zeiten, Bilder und Angaben sind in **`wedding-config.js`** ges
 python3 build.py
 ```
 
-werden zusätzlich die einzelne HTML-Datei und die Exportvorlage neu erstellt. Python benötigt dafür keine Zusatzpakete. `scripts/create-art.py` kann die ursprünglichen SVG-Ersatzmotive ohne Zusatzpakete neu erstellen. Die sieben aktuellen Couture-Motive liegen als fertige WebP-Grafiken in `assets/art/`; ihre Hintergrundtransparenz und ursprüngliche Auflösung bleiben erhalten. Die Gestaltung der überarbeiteten Variante steht in `atelier.css`.
+werden zusätzlich die einzelne HTML-Datei und die Exportvorlage neu erstellt. Python benötigt dafür keine Zusatzpakete. `scripts/create-art.py` kann die ursprünglichen SVG-Ersatzmotive ohne Zusatzpakete neu erstellen. Die vier neu erzeugten Garten- und Blütenmotive liegen in `assets/art/` als `garden-new-landscape.webp`, `garden-new-portrait.webp`, `rose-new.webp` und `garland-new.webp`. `style.css` enthält die vollständig erneuerte Gestaltung; `opening.css` die Öffnung. `atelier.css` ist eine nicht mehr eingebundene ältere Variante.
 
 ## Eure Bilder
 

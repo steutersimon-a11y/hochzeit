@@ -85,15 +85,26 @@
     $$('.reveal:not(.is-visible)').forEach(el => observer.observe(el));
   }
 
-  function openInvitation() {
-    if($('#opening').classList.contains('is-opening'))return;
+  async function openInvitation() {
+    if ($('#opening').classList.contains('is-opening') || $('#opening').hasAttribute('aria-busy')) return;
+    $('#opening').setAttribute('aria-busy', 'true');
+    const hero = $('.garden-frame');
+    try { if (hero.decode) await hero.decode(); } catch (error) { /* The linen fallback remains visible if an image fails. */ }
+    await document.fonts.ready;
+    $('#opening').removeAttribute('aria-busy');
     $('#opening').classList.add('is-opening');
     document.body.classList.add('opening-running');
-    setTimeout(() => { $('#opening').hidden = true; $('#opening').classList.remove('is-opening'); document.body.classList.remove('opening-active','opening-running'); $$('.skip-link,.site-header,main,footer').forEach(el=>{el.inert=false;}); $('.brand').focus({preventScroll:true}); },reducedMotion ? 0 : 4300);
-    try { sessionStorage.setItem('invitation-opened-atelier-v3','yes'); } catch(e) { /* File URLs may disable session storage. */ }
+    setTimeout(() => {
+      $('#opening').hidden = true;
+      $('#opening').classList.remove('is-opening');
+      document.body.classList.remove('opening-active', 'opening-running');
+      $$('.skip-link,.site-header,main,footer').forEach(el => { el.inert = false; });
+      $('.hero-discover').focus({ preventScroll: true });
+    }, reducedMotion ? 0 : 3150);
+    try { sessionStorage.setItem('invitation-opened-garden-v4', 'yes'); } catch (error) {}
   }
   function showOpening() {
-    $$('.skip-link,.site-header,main,footer').forEach(el=>{el.inert=true;});window.scrollTo(0,0);
+    $$('.skip-link,.site-header,main,footer').forEach(el=>{el.inert=true;});window.scrollTo({top:0,behavior:'instant'});
     $('#opening').hidden = false; document.body.classList.add('opening-active'); $('#opening').focus({preventScroll:true});
   }
   $('#opening').addEventListener('keydown',event=>{
@@ -107,7 +118,7 @@
   $('#open-invitation').addEventListener('click',openInvitation); $('#open-text').addEventListener('click',openInvitation);
   $('#replay').addEventListener('click',showOpening);
   let alreadyOpened = false;
-  try { alreadyOpened = sessionStorage.getItem('invitation-opened-atelier-v3') === 'yes'; } catch(e) {}
+  try { alreadyOpened = sessionStorage.getItem('invitation-opened-garden-v4') === 'yes'; } catch(e) {}
   const editMode = new URLSearchParams(location.search).has('edit');
   if(!alreadyOpened && !location.hash && !editMode) showOpening();
 
@@ -189,6 +200,17 @@
       const html=source.replace(/<script id="wedding-config">[\s\S]*?<\/script>/,()=>script);
       download(html,'text/html;charset=utf-8','Unsere-Hochzeit.html');
     };
+  }
+  if (!reducedMotion && window.matchMedia('(pointer: fine)').matches) {
+    $('.hero').addEventListener('pointermove', event => {
+      const box = event.currentTarget.getBoundingClientRect();
+      event.currentTarget.style.setProperty('--garden-x', ((event.clientX - box.left) / box.width - .5) * 7 + 'px');
+      event.currentTarget.style.setProperty('--garden-y', ((event.clientY - box.top) / box.height - .5) * 5 + 'px');
+    });
+    $('.hero').addEventListener('pointerleave', event => {
+      event.currentTarget.style.setProperty('--garden-x', '0px');
+      event.currentTarget.style.setProperty('--garden-y', '0px');
+    });
   }
   render();setInterval(updateCountdown,30000);if(editMode)setupEditor();
 })();

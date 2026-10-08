@@ -1,34 +1,40 @@
-# Einladung · Embroidered Garden
+# Marie & Simon · Ein gestickter Garten
 
-Referenz: https://www.thedigitalyes.com/demo/embroidered-garden
-Tatsächliche Demo: https://embroidered-garden-template.thedigitalyes.com
-Analyse am 8. Oktober 2026.
+Die Live-Vorlage von [The Digital Yes](https://www.thedigitalyes.com/demo/embroidered-garden) und ihre [tatsächliche Demo](https://embroidered-garden-template.thedigitalyes.com) waren am 8. Oktober 2026 erreichbar (HTTP 200). Die gesamte Seite und die Öffnungssequenz wurden erneut in Chromium geprüft.
 
-## Was die Referenz ausmacht
+## Gestaltung
 
-Der Einstieg zeigt salbeifarbenen Stoff, eine zentrale Naht und ein plastisches Elfenbeinsiegel. Die Öffnung führt zu einem textilen Garten mit Villa, Perlenvorhängen und einer floralen Begrüßung. Glyzinien, Rosen, Salbeiblätter und zwei Schwäne prägen die Bildsprache. Sichtbare Fäden, Reliefschatten und zurückhaltende Farben schaffen die Wirkung einer handgearbeiteten Einladung. Die Typografie bleibt dunkelgrün, fein und zentriert; große Freiflächen geben den Motiven Raum.
+Die Vorlage lebt von salbeifarbenen Leinenflügeln, einem Elfenbeinmedaillon, räumlicher Stickerei, Perlen, Glyzinien, Rosen und einer großzügigen cremefarbenen Textfläche. Ihr Opener enthält einen Film; die fertige Szene ist bereits unmittelbar hinter den Türen vorhanden. Danach folgen Begrüßung, Countdown, förmliche Einladung, Orte, Dresscode, Geschichte, Ablauf, Folgetag, Geschenke und RSVP.
 
-Die Demo enthält Begrüßung, Countdown, förmliche Einladung, Trauung und Empfang mit Karten- und Kalenderlinks, Dresscode, Geschichte, Tagesablauf, einen zusätzlichen Folgetag, Geschenkinformationen und ein Rückmeldeformular. Die Rückmeldung fragt Teilnahme, Ernährungswünsche, Shuttle und persönliche Nachricht ab. Diese fremden Veranstaltungsangaben werden nicht übernommen.
+Für Marie & Simon wurde die gesamte Präsentation neu aufgebaut. Neue, intern erzeugte Gartenillustrationen für Desktop und Handy bilden eine zusammenhängende Bildwelt mit Villa, Brunnen, Rosen, Glyzinien und Schwänen. Das Hochformat ist eigens komponiert und keine verzerrte Querformatkopie. Neue transparente Blütenornamente und eine passende Girlande verbinden die Abschnitte. Kalligraphische Namen, dunkelgrüne Serifentexte, zurückhaltendes Rosé und goldene Details bilden die Typografie.
 
-## Umsetzung für Marie & Simon
+Das Paarfoto wird breiter gezeigt, damit mehr vom Original sichtbar bleibt. Die Location-Illustrationen werden vollständig in ihren natürlichen Proportionen dargestellt. Datum und Countdown erhalten leichte Medaillons; der Ablauf folgt einer gestickten Linie. Die Hinweise und Rückmeldung sind Teil derselben Gestaltung.
 
-Die Empfehlung ist ein durchgehender, maximal 860 Pixel breiter Einladungsbogen. Er erhält die textile Wirkung der Referenz und bleibt am Desktop lesbar. Mobil füllt er den Bildschirm. Ein neu intern generierter Gartenrahmen zeigt eigene Glyzinien, Rosen, Perlen, Brunnen und Schwäne; der Text liegt als echtes HTML im freien Zentrum. Die verbesserten Scharniere, das Siegel und die weiteren bereits vorhandenen Stickmotive des aktuellen Repository-Stands bleiben erhalten.
+Sanfte Lichtbewegung, kleine Lichtpunkte, eine leichte Reaktion des Gartenbilds auf den Mauszeiger, bewegte Blüten und ruhige Scroll-Einblendungen machen die Einladung lebendig. Die Texte bleiben dabei stabil. Bei reduzierter Bewegung entfallen diese Effekte.
 
-Reihenfolge: Garten mit Namen und Datum → persönliche Einladung → Datum und Countdown → beide Orte → Fotos und Geschichte → Tagesablauf → Hinweise → Rückmeldung. Ein Folgetag und Shuttle-Zusagen werden nicht erfunden. Die zwei Locations erhalten jeweils eine vollständige Illustration und eine eigene Anfahrt. Die bestehenden Inhalte in wedding-config.js wurden nicht verändert: Namen, Datum, Orte, Texte, Fotos, Zeiten, Frist und Rückmeldelogik bleiben bestehen.
+## Die behobenen Fehler
 
-## Dateien und Herkunft
+Zuvor verdeckte eine deckende Fläche über der eigentlichen Seite den Opener bis zum Ende der Türanimation. Außerdem begann die Szene unterhalb einer Navigation und passte räumlich nicht zu den Kartenflügeln. Jetzt beginnt sie bei y=0; die Navigation folgt nach dem Opener. Die Kartenflügel geben unmittelbar die fertige Szene frei. Vor der Öffnung wartet die Anwendung auf das dekodierte Gartenbild und geladene Schriften.
 
-- assets/embroidered-garden.webp: neu intern erzeugtes Originalmotiv.
-- assets/art/: vorhandene intern erzeugte Stickmotive aus dem aktuellen GitHub-Stand.
-- assets/images/: vorhandene Bilder aus dem Repository; keine neuen Computerdateien oder Archivimporte.
-- style.css: Layout und Gestaltung.
-- opening.css: integrierte verbesserte Scharniere und Siegelanimation.
-- Unsere-Hochzeit.html: neu gebauter eigenständiger Export mit eingebetteten Bildern und Schriften.
+Mehrere Dekorationen hatten feste HTML-Höhen, während CSS ihre Breite änderte: Quadratgrafiken erschienen beispielsweise mit 100×300 Pixeln. Alle Schmuckbilder haben jetzt natürliche Abmessungen und `height:auto`; bewusst gesetzte Fotoflächen verwenden `object-fit`. Auch die Leinentextur wird proportional gekachelt. Die alten, mehrfach überschriebenen CSS-Schichten wurden vollständig ersetzt.
 
-Die Grafiken und der Code der Referenz werden nicht als Website-Assets übernommen. Sie dient als visuelle und strukturelle Vorlage.
+## Inhalte und Bildherkunft
 
-## Prüfung und offene Angaben
+`wedding-config.js` bleibt unverändert: Marie & Simon, 28. August 2027, Schermbeck, Reformierte Kirche und Mago Restaurant & Bar sowie alle bestehenden Texte, Zeiten und offenen Angaben. Die Fotos und Location-Illustrationen stammen ausschließlich aus dem vorhandenen Repository. Es wurden keine Dateien vom Computer des Nutzers abgerufen. Fremde Veranstaltungsangaben wie Folgetag oder Shuttle-Zusage wurden nicht übernommen.
 
-Chromium: 320, 390, 700, 1100 und 1440 Pixel ohne horizontales Überlaufen; Öffnung mit reduzierter Bewegung, Rückmeldedialog einschließlich Escape, FAQ und Kalenderdownload erfolgreich. Zusätzlich normale Siegelanimation, Desktop- und Mobilvorschau, eigenständige HTML ohne zusätzliche Netzwerkanfragen sowie Kalenderbeginn 28.08.2027 um 14:00 Uhr Europe/Berlin geprüft. Keine JavaScript-Laufzeitfehler in den Breitentests.
+Neue Originalmotive unter `assets/art/`:
 
-Zeiten, Frist und einige Hinweise sind laut bestehender Konfiguration weiterhin Beispielangaben. Exakte Adressen und Rückmelde-E-Mail fehlen weiterhin. Ohne E-Mail wird keine Antwort verschickt; es wurde kein Backend ergänzt.
+- `garden-new-landscape.webp` – Garten für Desktop.
+- `garden-new-portrait.webp` – eigenständige mobile Komposition.
+- `rose-new.webp` – transparentes Blütenornament.
+- `garland-new.webp` – passende florale Girlande.
+
+Die Live-Vorlage diente der Analyse; ihr Code, ihre Grafiken und ihr Film werden nicht als Produktassets übernommen. Das vorhandene Elfenbeinsiegel und die eigenen Leinenmotive bleiben erhalten.
+
+## Prüfung
+
+`scripts/visual-check.cjs` prüft die Breiten 320, 390, 700, 1100 und 1440 Pixel: Bildproportionen, horizontales Überlaufen, Garten während der Öffnung, Tastatur-Fokus im Cover, FAQ, Rückmelde- und Fotodialoge, erneute Öffnung und reduzierte Bewegung.
+
+`scripts/export-check.cjs` prüft den eigenständigen HTML-Export ohne zusätzliche Netzwerkanfragen, einen bearbeiteten HTML-Export mit eingebetteten Bildern sowie den Kalenderbeginn 28.08.2027 um 14:00 Uhr Europe/Berlin (12:00 UTC). Die normalen Animationen und die endgültigen Bildkompositionen werden zusätzlich visuell geprüft.
+
+Zeitangaben, Rückmeldefrist und einige Hinweise sind weiterhin die vorhandenen Beispielangaben. Exakte Adressen und die Rückmelde-E-Mail sind noch offen. Ohne eingetragene E-Mail wird keine Antwort verschickt; es wurde kein Backend ergänzt.
