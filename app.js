@@ -88,8 +88,9 @@
   function openInvitation() {
     if($('#opening').classList.contains('is-opening'))return;
     $('#opening').classList.add('is-opening');
-    setTimeout(() => { $('#opening').hidden = true; $('#opening').classList.remove('is-opening'); document.body.classList.remove('opening-active'); $$('.skip-link,.site-header,main,footer').forEach(el=>{el.inert=false;}); $('.brand').focus({preventScroll:true}); },reducedMotion ? 0 : 3500);
-    try { sessionStorage.setItem('invitation-opened-gatefold-v2','yes'); } catch(e) { /* File URLs may disable session storage. */ }
+    document.body.classList.add('opening-running');
+    setTimeout(() => { $('#opening').hidden = true; $('#opening').classList.remove('is-opening'); document.body.classList.remove('opening-active','opening-running'); $$('.skip-link,.site-header,main,footer').forEach(el=>{el.inert=false;}); $('.brand').focus({preventScroll:true}); },reducedMotion ? 0 : 4300);
+    try { sessionStorage.setItem('invitation-opened-atelier-v3','yes'); } catch(e) { /* File URLs may disable session storage. */ }
   }
   function showOpening() {
     $$('.skip-link,.site-header,main,footer').forEach(el=>{el.inert=true;});window.scrollTo(0,0);
@@ -106,7 +107,7 @@
   $('#open-invitation').addEventListener('click',openInvitation); $('#open-text').addEventListener('click',openInvitation);
   $('#replay').addEventListener('click',showOpening);
   let alreadyOpened = false;
-  try { alreadyOpened = sessionStorage.getItem('invitation-opened-gatefold-v2') === 'yes'; } catch(e) {}
+  try { alreadyOpened = sessionStorage.getItem('invitation-opened-atelier-v3') === 'yes'; } catch(e) {}
   const editMode = new URLSearchParams(location.search).has('edit');
   if(!alreadyOpened && !location.hash && !editMode) showOpening();
 
@@ -165,8 +166,21 @@
     });
     function applyEditorConfig(){if(!form.reportValidity())return false;const names=[form.elements.name1.value.trim(),form.elements.name2.value.trim()];if(names.some(name=>!name))return false;config.names=names;config.date=form.elements.date.value;const date=new Date(config.date+'T12:00:00Z');config.dateLabel=new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(date);config.weekday=new Intl.DateTimeFormat('de-DE',{weekday:'long',timeZone:'UTC'}).format(date);config.rsvpEmail=form.elements.email.value.trim();render();return true;}
     form.onsubmit=event=>{event.preventDefault();if(applyEditorConfig())dialog.close();};
-    $('#export-html').onclick=()=>{
+    let templateLoading;
+    $('#export-html').onclick=async()=>{
       if(!applyEditorConfig())return;
+      // The large self-contained export is loaded only when it is requested.
+      if(!window.INVITATION_TEMPLATE && !$('#wedding-config')) {
+        const button=$('#export-html'); button.disabled=true; button.textContent='Einladung wird vorbereitet …';
+        try {
+          if(!templateLoading) templateLoading=new Promise((resolve,reject)=>{
+            const script=document.createElement('script'); script.src='export-template.js';
+            script.onload=resolve; script.onerror=()=>{templateLoading=null;script.remove();reject(new Error('Exportvorlage nicht geladen'));}; document.head.append(script);
+          });
+          await templateLoading;
+        } catch(error) { button.textContent='Bitte erneut versuchen · HTML speichern'; button.disabled=false; return; }
+        button.disabled=false; button.textContent='HTML mit Bildern speichern ↗';
+      }
       const exportConfig={...config,photos:{...config.photos}};
       Object.entries(exportConfig.photos).forEach(([key,src])=>{exportConfig.photos[key]=window.INVITATION_PHOTOS?.[src] || src;});
       const json=JSON.stringify(exportConfig,null,2).replace(/</g,'\\u003c');

@@ -1,0 +1,124 @@
+/* Couture embroidery, editable calligraphy and independent physical hinges. */
+@font-face{font-family:Pinyon;src:url('assets/fonts/pinyon-script-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+:root{--script:Pinyon,Cormorant,cursive;--paper:#f7f0e4;--ink:#354939}
+body:before{opacity:.065}
+img{height:auto}
+.site-header{background:#f7f0e4;border-bottom-color:#b9a47c70}
+.brand{font-family:var(--script);font-size:34px}.brand-leaf{font-family:var(--serif)}
+.nav-rsvp{border-color:#ac9573;background:#fffcf42b}
+
+/* Typography sits in the quiet centre of the embroidery. */
+.hero{width:100%;height:auto;min-height:740px;max-height:none;aspect-ratio:3/2;max-width:1600px;border-bottom:1px solid #a98b595c;box-shadow:0 12px 38px #7963480e;transition:transform 3.9s cubic-bezier(.22,.6,.3,1);transform-origin:50% 30%}
+.hero>picture{position:absolute;inset:0}
+.garden-frame{inset:0;width:100%;height:100%;max-width:none;transform:none;object-fit:cover;object-position:center;filter:none}
+.hero-copy{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:650px;max-width:56%;margin:0}
+.hero .eyebrow{font-size:9px;letter-spacing:2.6px;color:#655a45}
+.hero h1{font-family:var(--script);font-size:clamp(80px,8.2vw,132px);line-height:1.12;letter-spacing:0;gap:16px;flex-direction:row;flex-wrap:nowrap;margin:14px 0 6px;color:#3a4c35;text-shadow:0 1px 0 #fffaea,0 -1px 0 #30412b15}
+.hero h1 em{font-family:var(--serif);font-size:.5em;letter-spacing:-2px;color:#a47d48}
+.hero-rule{margin:5px auto 13px;gap:12px}.hero-rule span{width:55px;background:#ad91615e}.hero-rule i{font-size:12px}
+.hero-promise{font-size:clamp(23px,2.15vw,30px);line-height:1.22;color:#526045}
+.hero-date{font-size:29px;line-height:1.25;margin-top:20px;color:#4f563e}
+.hero-place{font-size:8px;letter-spacing:3px;margin-top:7px}
+.hero-discover{margin-top:20px;font-size:8px;gap:3px;color:#5b5f47}.hero-discover span{font-size:20px}
+.hero-bottom{display:none}
+.opening-active .hero{transform:scale(.973)}.opening-running .hero{transform:scale(1)}
+
+/* Ivory stationery, subtle foil rules and raised floral cutouts. */
+.handwritten{font-family:var(--script);font-size:43px;font-style:normal;color:#94745d;line-height:1.3}
+.signature,.rsvp-signature{font-family:var(--script);font-style:normal;font-size:42px}
+.section-kicker{color:#847255}.section-kicker>span{border-color:#baa17a;background:#fffbef;box-shadow:inset 0 0 0 3px #ede4d2}
+.welcome{border-bottom-color:#c1ab8550}.welcome-title h2{line-height:1.09}
+.welcome-sprig{width:170px;right:-90px;bottom:-52px;opacity:1}
+.photo-frame{background:#fcf6eb;border:1px solid #b9a585;box-shadow:1px 1px 0 #d3c6b1,3px 5px 0 #e9dfce,0 18px 32px #44382c24}
+.photo-main{padding:15px 15px 0}.photo-detail{padding:10px 10px 0;z-index:2}
+.photo-flower{width:260px;left:-85px;bottom:-85px;z-index:3;filter:drop-shadow(0 6px 3px #66513b25)}
+.story-copy h2{font-size:61px;font-style:italic;line-height:1.08}.story-copy .eyebrow{color:#907650}
+.date-section{background:radial-gradient(ellipse at 50% 0%,#fff9eb,#eee4d1 85%);border-top-color:#b39c72;border-bottom-color:#b39c72}
+.date-ornament{width:530px;margin:-25px auto 18px}
+.date-display>strong{border-color:#b8a377;font-style:italic}
+.countdown{gap:24px}.countdown>i{display:none}
+.countdown>div{width:128px;height:128px;border:1px solid #b89f70;border-radius:50%;justify-content:center;background:radial-gradient(ellipse at 30% 20%,#fffaf0,#ece0c6);box-shadow:inset 0 0 0 4px #f4ecd9,inset 0 0 0 5px #c9b995,0 7px 15px #6f573717}
+.countdown strong{font-size:49px;line-height:1.1}.countdown span{margin-top:5px;font-size:7px;letter-spacing:1.6px}
+.venue-card{background:#fbf3e8;border:1px solid #b5a17e;padding:9px;box-shadow:0 10px 22px #58462c0e,inset 0 0 0 4px #f6ecdb,inset 0 0 0 5px #d3c5ac}
+.venue-art{border:1px solid #c0a88f;background:#eeded2}
+.venue-number{background:#fff7e8;border-color:#ad8f61;box-shadow:0 3px 7px #56432d1c}
+.venue-info h3{font-style:italic}.venue-info .eyebrow{color:#8b7450}.venue-address{border-color:#c5b392}
+.timeline-section{border-color:#c7b695}.timeline-header>img{width:250px;margin:30px 0 -20px 25px}
+.timeline-icon{background:linear-gradient(135deg,#fffaf0,#e9dec8);color:#917346;border-color:#b9a275;box-shadow:inset 0 0 0 2px #fff5e5,0 2px 4px #5c482916}
+.timeline li:before{background:#c5b28e}.details-title>img{width:170px}.faq-list,details{border-color:#c8b797}
+.rsvp-section{background-color:#3e503c;background-image:linear-gradient(#334735dc,#334735dc),url('assets/art/linen-cover.webp');background-size:cover;background-position:center;border-top:1px solid #a38d64;border-bottom:1px solid #a38d64}
+.rsvp-garland{width:680px;margin:0 auto 25px;filter:drop-shadow(0 4px 5px #18281750)}
+.rsvp-section h2{text-shadow:0 2px 2px #1c2d2660}
+.rsvp-section .primary-button{background:#fff8e9;color:#41513b;border-color:#c6ad7c;box-shadow:0 3px 12px #16271d35}.rsvp-section .primary-button:hover{background:#f3e4c7}
+.footer-monogram{font-family:var(--script);font-size:47px}
+
+/* A separate carrier projects the seal in front of BOTH doors.
+   No grouping filters or clipped overflow on the 3D hinges. */
+.opening{overflow:hidden;background:transparent}
+.gatefold{perspective:1800px;perspective-origin:50% 50%;transform-style:preserve-3d}
+.gate-door,.seal-carrier{position:absolute;top:0;bottom:0;width:50%;transform-style:preserve-3d;overflow:visible;will-change:transform;transition:transform 3.8s cubic-bezier(.4,0,.18,1);filter:none;background:none;border:0;box-shadow:none;backface-visibility:visible}
+.gate-left{left:0;transform-origin:left center;z-index:2}.gate-right{right:0;transform-origin:right center;z-index:3}
+.seal-carrier{right:0;transform-origin:right center;z-index:10;pointer-events:none}
+.gate-door:before{display:none}
+.door-face,.door-back{position:absolute;inset:0;backface-visibility:hidden;background-color:#8b9579;background-image:url('assets/art/linen-cover.webp');background-size:200% 100%;border-top:1px solid #d7d1b155;border-bottom:1px solid #293b2350}
+.gate-left .door-face{background-position:left center;box-shadow:inset -2px 0 2px #293822b0,inset -12px 0 22px #25381e35,8px 0 22px #17251545}
+.gate-right .door-face{background-position:right center;box-shadow:inset 2px 0 2px #fff9cd65,inset 9px 0 14px #354b2845,-3px 0 6px #1c2b2299}
+.door-face:after{content:'';position:absolute;inset:0;background:#16251a;opacity:0;transition:opacity 3.6s ease;pointer-events:none}
+.door-back{transform:rotateY(180deg) translateZ(3px);background-size:200% 100%;box-shadow:inset 0 0 60px #22341d35}
+.gate-left .door-back{background-position:right center}.gate-right .door-back{background-position:left center}
+.wax-seal{left:0;top:49%;width:225px;height:300px;transform:translate3d(-50%,-50%,32px);transform-style:preserve-3d;backface-visibility:hidden;pointer-events:auto;z-index:1;border-radius:0;filter:drop-shadow(-4px 10px 5px #1d2c2265);transition:transform .45s ease,filter .45s ease}
+.wax-seal>img{width:100%;height:100%;object-fit:contain}
+.wax-seal:hover{transform:translate3d(-50%,-50%,36px) scale(1.015);filter:drop-shadow(-5px 13px 6px #1d2c2270)}
+.wax-seal:active{transform:translate3d(-50%,-50%,30px)}
+.wax-seal:focus-visible{outline:1px solid #fff6d7;outline-offset:12px;border-radius:40%}
+.seal-monogram{top:52%;font-family:var(--script);font-size:64px;letter-spacing:0;gap:3px;color:#a07a3f;text-shadow:0 -1px 0 #fff7df,1px 1px 0 #76542d70,0 2px 0 #fff7df}
+.seal-monogram em{font-family:var(--serif);font-size:30px;letter-spacing:-2px}
+.opening-note{top:10%;color:#f6ecd8;z-index:20;font-size:8px;letter-spacing:3px;text-shadow:0 1px 3px #2c392ab3}
+.opening-names{font-family:var(--script);font-size:43px;letter-spacing:0;line-height:1.3;margin-top:17px}
+.opening-bottom{bottom:9%;z-index:20}.opening-prompt{font-size:24px;margin-bottom:13px;color:#faf0dd}
+.opening-bottom .text-button{font-size:8px;letter-spacing:2px;color:#fff4dc;border-color:#e3d3b2a0}
+.opening-date{font-family:var(--serif);font-size:18px;color:#efe4cf;margin-top:18px;letter-spacing:1px}
+.is-opening .gate-right,.is-opening .seal-carrier{transform:rotateY(108deg);transition-delay:.12s;filter:none}
+.is-opening .gate-left{transform:rotateY(-108deg);transition-delay:.3s;filter:none}
+.is-opening .gate-left .door-face:after{opacity:.26}.is-opening .gate-right .door-face:after{opacity:.22}
+.is-opening .wax-seal{transform:translate3d(-50%,-50%,32px);opacity:1}
+.opening.is-opening,.opening.is-opening .wax-seal{pointer-events:none}
+
+@media(min-width:701px){.door-face,.door-back{background-image:url('assets/art/linen-cover-landscape.webp')}}
+@media(min-width:1500px){.wax-seal{width:246px;height:328px}.seal-monogram{font-size:70px}.seal-monogram em{font-size:33px}}
+@media(max-width:1000px){
+ .hero{min-height:740px}.hero-copy{top:23%;max-width:62%}.hero h1{font-size:92px;gap:10px}.hero-promise{font-size:26px}
+ .story-copy h2{font-size:49px}.welcome-sprig{right:-65px;width:145px}.photo-flower{width:200px;left:-50px;bottom:-65px}
+}
+@media(max-width:700px){
+ .site-header{height:65px;padding:0 22px}.brand{font-size:30px}
+ .hero{height:clamp(720px,200vw,930px);min-height:0;aspect-ratio:auto}
+ .garden-frame{inset:0;width:100%;height:100%;object-fit:cover;transform:none}
+ .hero-copy{top:16%;width:69%;max-width:370px;margin:0}
+ .hero .eyebrow{font-size:7px;letter-spacing:1.6px;line-height:1.7}
+ .hero h1{flex-direction:column;font-size:80px;line-height:.8;gap:0;letter-spacing:0;margin:22px 0 13px}
+ .hero h1 em{font-size:40px;line-height:.7;margin:10px 0 14px}
+ .hero-rule{display:none}.hero-rule span{width:34px}
+ .hero-promise{font-size:24px;line-height:1.17}.hero-date{font-size:26px;margin-top:18px}
+ .hero-place{font-size:7px;margin-top:7px;letter-spacing:2.4px}.hero-discover{display:none}.hero-discover span{font-size:18px}
+ .handwritten{font-size:35px}.signature{font-size:36px}.welcome-sprig{width:135px;right:-48px;bottom:-55px}.welcome-copy{max-width:90%;padding-bottom:15px}
+ .photo-main{padding:11px 11px 0}.photo-detail{padding:8px 8px 0}.photo-flower{width:190px;left:-42px;bottom:-64px}.story-copy h2{font-size:46px}
+ .date-ornament{width:345px;margin:0 auto 20px}.countdown{gap:14px}.countdown>div{width:91px;height:91px}.countdown strong{font-size:36px}.countdown span{font-size:6px;letter-spacing:1.2px;margin-top:3px}
+ .venue-card{padding:7px}.venue-art{height:470px}.venue-info{padding:28px 17px 29px}
+ .timeline-header>img{width:125px;right:-13px;bottom:-38px;margin:0}.details-title .handwritten{font-size:30px;max-width:260px}.details-title>img{width:105px}
+ .rsvp-garland{width:410px;max-width:none;margin-bottom:25px}.rsvp-signature{font-size:36px}
+ .gatefold{perspective:1100px}.wax-seal{width:188px;height:251px;top:48%}.seal-monogram{font-size:53px;letter-spacing:0}.seal-monogram em{font-size:25px}
+ .opening-note{top:12%;font-size:7px;letter-spacing:2px}.opening-names{font-size:38px;margin-top:15px}
+ .opening-bottom{bottom:11%}.opening-prompt{font-size:21px}.opening-date{font-size:17px;margin-top:16px}
+}
+@media(max-width:365px){
+ .hero-copy{top:23%;width:70%}.hero h1{font-size:73px;margin-top:19px}.hero h1 em{font-size:35px;margin:8px 0 12px}.hero-promise{font-size:22px}.hero-date{font-size:24px}
+ .hero .eyebrow{font-size:6px;letter-spacing:1.3px}.hero-discover{margin-top:13px;font-size:6px}
+ .countdown{gap:10px}.countdown>div{width:83px;height:83px}.countdown strong{font-size:33px}.venue-art{height:410px}
+}
+@media(max-height:560px){
+ .opening-note{top:5%;font-size:7px}.opening-names{font-size:29px;margin-top:3px}.opening-bottom{bottom:4%}.opening-prompt{font-size:18px;margin-bottom:3px}.opening-date{margin-top:5px;font-size:14px}
+ .wax-seal{top:48%;width:126px;height:168px}.seal-monogram{font-size:42px}.seal-monogram em{font-size:21px}
+}
+@media(prefers-reduced-motion:reduce){.hero{transition:none;transform:none}.opening.is-opening{visibility:hidden;opacity:0}}
+@media print{.hero{height:780px;aspect-ratio:auto;min-height:0}.hero-copy{top:22%}.rsvp-section{background:#fff;color:var(--ink)}.countdown>div{box-shadow:none}}
