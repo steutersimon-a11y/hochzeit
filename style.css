@@ -25,3 +25,10 @@
 @media(max-width:700px){.welcome-copy>p{font-size:13px}.story-copy>p:last-of-type,.venue-description,details>p{font-size:12px}.timeline li p{font-size:11px}.rsvp-section>p:not(.eyebrow):not(.rsvp-signature){font-size:11px}.form-note{font-size:11px}}
 
 .welcome,.story,.timeline-section,.details{overflow:hidden}
+
+/* Give the supplied venue embroideries room to be seen in full. */
+.venue-art{height:570px;background:#efdfd3}
+.venue-art>[data-photo]{object-fit:contain;object-position:center}
+@media(max-width:1000px){.venue-art{height:465px}}
+@media(max-width:700px){.venue-art{height:480px}}
+@media(max-width:365px){.venue-art{height:415px}}

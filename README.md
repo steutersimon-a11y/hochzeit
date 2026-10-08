@@ -2,7 +2,7 @@
 
 Eine eigenständig gestaltete digitale Hochzeitseinladung aus HTML, CSS und JavaScript. Florale Stickgrafiken, warme Leinenoptik, eine Brieföffnung mit Siegel und elegante, lokal mitgelieferte Schriften. Inspiriert von [Embroidered Garden](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
 
-[Desktop-Vorschau](preview-desktop.png) · [Handy-Vorschau](preview-mobile.png)
+[Desktop-Vorschau](preview-desktop.png) · [Handy-Vorschau](preview-mobile.png) · [Eure Fotos](preview-fotos.png) · [Die Locations](preview-locations.png)
 
 ## Sofort ansehen
 
@@ -34,7 +34,7 @@ werden zusätzlich die einzelne HTML-Datei und die Exportvorlage neu erstellt. P
 
 ## Eure Bilder
 
-Die Fotos und beiden Stickillustrationen wurden im Chat als eingebettete Bildvorschauen übergeben. Als herunterladbare Datei lag beim Erstellen nur das Referenzvideo vor. Die Originalbilder sind daher **noch nicht Bestandteil dieses Repositorys**; die vorbereiteten Plätze zeigen eigene florale Illustrationen.
+Euer Paarfoto, das Ringfoto und die beiden Stickillustrationen aus `Hochzeit.rar` sind eingebunden. Die Originaldateien liegen in `assets/images/`; die einzelne HTML-Datei enthält zusätzlich alle vier Bilder direkt und benötigt deshalb keinen separaten Bildordner. Die Dateien wurden unverändert aus dem Archiv übernommen.
 
 Die vier Plätze sind:
 
@@ -45,7 +45,7 @@ Die vier Plätze sind:
 | `church` | Die gestickte Kirchenillustration |
 | `party` | Die gestickte Mago-Illustration oder das Originalfoto |
 
-Entweder im Bearbeitungsmodus auswählen oder in `assets/images/` speichern und die entsprechenden Pfade in `wedding-config.js` eintragen. JPG, PNG und WebP funktionieren. Die Seite schneidet Bilder ausschließlich in der Darstellung zu; Originaldateien werden nicht verändert.
+Zum Austauschen neue Bilder im Bearbeitungsmodus auswählen oder in `assets/images/` speichern und die entsprechenden Pfade in `wedding-config.js` eintragen. JPG, PNG und WebP funktionieren. Die Fotoflächen schneiden ausschließlich in der Darstellung zu; Originaldateien werden nicht verändert. Die beiden Location-Illustrationen werden vollständig angezeigt.
 
 ## Kostenlos veröffentlichen
 

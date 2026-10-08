@@ -159,7 +159,9 @@
     form.onsubmit=event=>{event.preventDefault();if(applyEditorConfig())dialog.close();};
     $('#export-html').onclick=()=>{
       if(!applyEditorConfig())return;
-      const json=JSON.stringify(config,null,2).replace(/</g,'\\u003c');
+      const exportConfig={...config,photos:{...config.photos}};
+      Object.entries(exportConfig.photos).forEach(([key,src])=>{exportConfig.photos[key]=window.INVITATION_PHOTOS?.[src] || src;});
+      const json=JSON.stringify(exportConfig,null,2).replace(/</g,'\\u003c');
       const script='<script id="wedding-config">window.WEDDING = '+json+';<\/script>';
       const source=window.INVITATION_TEMPLATE || originalHTML;
       const html=source.replace(/<script id="wedding-config">[\s\S]*?<\/script>/,()=>script);

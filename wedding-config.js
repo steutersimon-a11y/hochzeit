@@ -12,10 +12,10 @@ window.WEDDING = {
   quote: 'Mit dir fühlt sich jeder Ort\nwie Zuhause an.',
   story: 'Manchmal beginnt das größte Abenteuer ganz leise. Mit einem Blick, einem Lachen und dem Gefühl, angekommen zu sein. Jetzt sagen wir Ja – zu uns, zu allem, was kommt, und zu einem Leben voller gemeinsamer Geschichten.',
   photos: {
-    couple: '', // 'assets/images/paar.jpg'
-    hands: '', // 'assets/images/haende.jpg'
-    church: '', // 'assets/images/kirche-stickerei.jpg'
-    party: '', // 'assets/images/mago.jpg'
+    couple: 'assets/images/paar.jpg',
+    hands: 'assets/images/haende.jpg',
+    church: 'assets/images/kirche-stickerei.jpg',
+    party: 'assets/images/mago.jpg',
   },
   ceremony: {
     name: 'Reformierte Kirche',
