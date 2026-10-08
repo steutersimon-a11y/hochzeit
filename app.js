@@ -20,6 +20,7 @@
   function render() {
     $$('[data-bind]').forEach(el => { el.textContent = pathValue(el.dataset.bind) ?? ''; });
     $$('[data-name]').forEach(el => { el.textContent = config.names[+el.dataset.name] ?? ''; });
+    $$('[data-initial]').forEach(el => { el.textContent = [...(config.names[+el.dataset.initial] || '').trim()][0] || ''; });
     $$('.names-inline').forEach(el => { el.textContent = inlineNames(); });
     $$('.initials').forEach(el => { el.textContent = config.names.map(n => [...n.trim()][0] || '').join(' · '); });
     document.title = inlineNames() + ' · Wir heiraten';
@@ -85,20 +86,27 @@
   }
 
   function openInvitation() {
-    $('#opening').classList.add('is-opening'); document.body.classList.remove('opening-active');
-    $$('.site-header,main,footer').forEach(el=>{el.inert=false;});
-    setTimeout(() => { $('#opening').hidden = true; $('#opening').classList.remove('is-opening'); $('.brand').focus({preventScroll:true}); },reducedMotion ? 0 : 1700);
-    try { sessionStorage.setItem('invitation-opened','yes'); } catch(e) { /* File URLs may disable session storage. */ }
+    if($('#opening').classList.contains('is-opening'))return;
+    $('#opening').classList.add('is-opening');
+    setTimeout(() => { $('#opening').hidden = true; $('#opening').classList.remove('is-opening'); document.body.classList.remove('opening-active'); $$('.skip-link,.site-header,main,footer').forEach(el=>{el.inert=false;}); $('.brand').focus({preventScroll:true}); },reducedMotion ? 0 : 3500);
+    try { sessionStorage.setItem('invitation-opened-gatefold-v2','yes'); } catch(e) { /* File URLs may disable session storage. */ }
   }
   function showOpening() {
-    $$('.site-header,main,footer').forEach(el=>{el.inert=true;});window.scrollTo(0,0);
-    $('#opening').hidden = false; document.body.classList.add('opening-active'); $('#open-invitation').focus({preventScroll:true});
+    $$('.skip-link,.site-header,main,footer').forEach(el=>{el.inert=true;});window.scrollTo(0,0);
+    $('#opening').hidden = false; document.body.classList.add('opening-active'); $('#opening').focus({preventScroll:true});
   }
-  $('#opening').addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();openInvitation();}});
+  $('#opening').addEventListener('keydown',event=>{
+    if(event.key==='Escape'){event.preventDefault();openInvitation();}
+    if(event.key==='Tab'){
+      const first=$('#open-invitation'),last=$('#open-text');
+      if(event.shiftKey&&(document.activeElement===first||document.activeElement===$('#opening'))){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+    }
+  });
   $('#open-invitation').addEventListener('click',openInvitation); $('#open-text').addEventListener('click',openInvitation);
   $('#replay').addEventListener('click',showOpening);
   let alreadyOpened = false;
-  try { alreadyOpened = sessionStorage.getItem('invitation-opened') === 'yes'; } catch(e) {}
+  try { alreadyOpened = sessionStorage.getItem('invitation-opened-gatefold-v2') === 'yes'; } catch(e) {}
   const editMode = new URLSearchParams(location.search).has('edit');
   if(!alreadyOpened && !location.hash && !editMode) showOpening();
 

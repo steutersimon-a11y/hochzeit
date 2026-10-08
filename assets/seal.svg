@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 340" width="260" height="340">
+  <defs>
+    <path id="shape" d="M130 10C144 29 151 29 164 29C182 18 201 30 204 47C228 52 236 72 226 89C239 108 242 136 228 150C242 164 243 191 229 207C236 229 229 253 211 261C207 285 188 299 173 291C157 307 145 302 130 327C115 302 103 307 87 291C72 299 53 285 49 261C31 253 24 229 31 207C17 191 18 164 32 150C18 136 21 108 34 89C24 72 32 52 56 47C59 30 78 18 96 29C109 29 116 29 130 10Z"/>
+    <linearGradient id="ivory" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#fff9ed"/><stop offset=".28" stop-color="#f8f0e2"/><stop offset=".7" stop-color="#e9decb"/><stop offset="1" stop-color="#d5c7ad"/></linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffbec"/><stop offset=".38" stop-color="#e2d4bb"/><stop offset=".74" stop-color="#bcaa87"/><stop offset="1" stop-color="#efdfc1"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d9bf86"/><stop offset=".23" stop-color="#9c7941"/><stop offset=".48" stop-color="#e6ce99"/><stop offset=".73" stop-color="#a98144"/><stop offset="1" stop-color="#c4a26a"/></linearGradient>
+    <radialGradient id="pearl" cx=".3" cy=".22"><stop stop-color="#fffef9"/><stop offset=".4" stop-color="#f8eee1"/><stop offset=".8" stop-color="#dacbb4"/><stop offset="1" stop-color="#a99779"/></radialGradient>
+    <filter id="shadow" x="-45%" y="-25%" width="190%" height="165%"><feDropShadow dx="-4" dy="11" stdDeviation="7" flood-color="#303a25" flood-opacity=".52"/><feDropShadow dx="0" dy="2" stdDeviation="1" flood-color="#242b1d" flood-opacity=".65"/></filter>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".65" numOctaves="3" seed="8" result="n"/><feColorMatrix in="n" type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".07"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter>
+    <filter id="relief" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx=".8" dy="1" stdDeviation=".4" flood-color="#79613d" flood-opacity=".48"/></filter>
+    <g id="scroll"><path d="M100 44C86 38 76 57 63 55C50 53 52 39 62 41C71 43 69 51 63 49M62 55C44 58 48 75 58 72C66 70 60 60 56 65M45 84C31 94 36 112 45 115C62 121 68 97 54 98C46 99 47 109 54 108M43 114C55 128 31 144 45 155C52 161 62 156 57 149C53 142 43 151 48 155M45 157C35 170 40 187 51 183C63 177 51 167 46 175M45 188C30 204 38 222 52 222C66 221 68 204 56 206C50 207 50 216 56 216M47 223C31 242 43 260 58 258C66 257 64 245 57 248M60 259C61 276 75 276 84 269C93 263 99 278 111 282C122 286 125 275 119 272C112 268 108 276 115 278" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+  </defs>
+  <g filter="url(#shadow)">
+    <use href="#shape" transform="translate(0 5)" fill="#b6a68a" stroke="#8f7d60" stroke-width="2"/>
+    <use href="#shape" transform="translate(0 3)" fill="#d7c7ab" stroke="#f5e8cf" stroke-width="2.2"/>
+    <use href="#shape" fill="url(#ivory)" stroke="url(#edge)" stroke-width="3.4" filter="url(#grain)"/>
+    <use href="#shape" transform="translate(10.4 13.5) scale(.92)" fill="none" stroke="#fff9eb" stroke-width="1.5" opacity=".95"/>
+    <use href="#shape" transform="translate(18.2 23.6) scale(.86)" fill="none" stroke="#b69a67" stroke-width="1.8" opacity=".7"/>
+    <g filter="url(#relief)">
+      <g stroke="#fff5dc" stroke-width="4" opacity=".8" transform="translate(-.7 -.7)"><use href="#scroll"/><use href="#scroll" transform="translate(260 0) scale(-1 1)"/></g>
+      <g stroke="url(#gold)" stroke-width="2.8"><use href="#scroll"/><use href="#scroll" transform="translate(260 0) scale(-1 1)"/></g>
+      <path d="M119 46Q130 28 141 46M117 283Q130 306 143 283" fill="none" stroke="url(#gold)" stroke-width="2"/>
+      <circle cx="130" cy="31" r="5.5" fill="url(#pearl)"/><circle cx="130" cy="304" r="5.5" fill="url(#pearl)"/>
+      <circle cx="120" cy="37" r="3.1" fill="url(#pearl)"/><circle cx="140" cy="37" r="3.1" fill="url(#pearl)"/>
+      <circle cx="120" cy="296" r="3.1" fill="url(#pearl)"/><circle cx="140" cy="296" r="3.1" fill="url(#pearl)"/>
+    </g>
+  </g>
+</svg>

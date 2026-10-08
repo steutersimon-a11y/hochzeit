@@ -15,17 +15,15 @@
 </head>
 <body>
   <a class="skip-link" href="#einladung">Zur Einladung</a>
-  <div class="opening" id="opening" role="dialog" aria-modal="true" aria-label="Eure Einladung öffnen" hidden>
-    <div class="opening-note">FÜR UNSERE LIEBLINGSMENSCHEN</div>
-    <div class="envelope">
-      <div class="envelope-paper"><img src="assets/garland.svg" alt="" width="800" height="210"><span>Eine Einladung<br>von Herzen</span></div>
-      <div class="envelope-back"></div>
-      <div class="envelope-flap"></div>
-      <div class="envelope-front"></div>
-      <button class="wax-seal" id="open-invitation" aria-label="Einladung öffnen"><span class="initials">M · S</span><span class="seal-leaf">❦</span></button>
+  <div class="opening" id="opening" role="dialog" aria-modal="true" aria-label="Eure Einladung öffnen" tabindex="-1" hidden>
+    <div class="gatefold" aria-hidden="false">
+      <div class="gate-door gate-left"><div class="door-embossing"></div></div>
+      <div class="gate-door gate-right"><div class="door-embossing"></div>
+        <button class="wax-seal" id="open-invitation" aria-label="Einladung mit unserem Siegel M und S öffnen"><img src="assets/seal.svg" alt="" width="260" height="340"><span class="seal-monogram"><span data-initial="0">M</span><em>&</em><span data-initial="1">S</span></span></button>
+      </div>
     </div>
-    <p class="opening-prompt">Ein kleiner Moment. Ein großes Ja.</p>
-    <button class="text-button" id="open-text">Einladung öffnen <span aria-hidden="true">↗︎</span></button>
+    <div class="opening-note">EINE EINLADUNG VON HERZEN</div>
+    <div class="opening-bottom"><p class="opening-prompt">Ein kleiner Moment. Ein großes Ja.</p><button class="text-button" id="open-text">Zum Öffnen berühren <span aria-hidden="true">↗︎</span></button></div>
   </div>
   <header class="site-header">
     <a class="brand" href="#einladung" aria-label="Zum Anfang"><span class="initials">M · S</span><span class="brand-leaf" aria-hidden="true">❦</span></a>

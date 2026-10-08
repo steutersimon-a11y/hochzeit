@@ -1,16 +1,20 @@
 # Unsere Hochzeit · Embroidered Garden
 
-Eine eigenständig gestaltete digitale Hochzeitseinladung aus HTML, CSS und JavaScript. Florale Stickgrafiken, warme Leinenoptik, eine Brieföffnung mit Siegel und elegante, lokal mitgelieferte Schriften. Inspiriert von [Embroidered Garden](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
+Eine eigenständig gestaltete digitale Hochzeitseinladung aus HTML, CSS und JavaScript. Florale Stickgrafiken, warme Leinenoptik, eine räumliche Öffnung mit zwei Leinenflügeln und plastischem M-&-S-Siegel und elegante, lokal mitgelieferte Schriften. Inspiriert von [Embroidered Garden](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
 
 [Desktop-Vorschau](preview-desktop.png) · [Handy-Vorschau](preview-mobile.png) · [Eure Fotos](preview-fotos.png) · [Die Locations](preview-locations.png)
+
+[Das M-&-S-Siegel](preview-siegel-mobile.png) · [Öffnung der Leinenflügel](preview-ouverture.png)
 
 ## Sofort ansehen
 
 1. [Unsere-Hochzeit.html herunterladen](https://github.com/steutersimon-a11y/hochzeit/raw/refs/heads/main/Unsere-Hochzeit.html) und auf dem Computer speichern. Wenn der Browser Quelltext zeigt: den Link mit der rechten Maustaste anklicken und „Link speichern unter …“ wählen. Der Dateiname muss auf `.html` enden.
 2. Die gespeicherte Datei mit Chrome, Edge, Firefox oder Safari öffnen, zum Beispiel per Rechtsklick → „Öffnen mit“ → Browser.
-3. Auf das runde Siegel oder „Einladung öffnen“ klicken. Danach durch die gesamte Seite scrollen. Die Brieföffnung lässt sich im Footer wiederholen.
+3. Auf das Siegel oder „Einladung öffnen“ klicken. Danach durch die gesamte Seite scrollen. Die Brieföffnung lässt sich im Footer wiederholen.
 
 Die einzelne HTML-Datei enthält die komplette Gestaltung und funktioniert ohne Installation und ohne Internet. Die Dateivorschau von GitHub oder eine Handy-Dateivorschau kann stattdessen Code anzeigen oder die Animationen nicht ausführen. Am Handy ist die veröffentlichte GitHub-Pages-Adresse deshalb der einfachste Weg; die Aktivierung steht weiter unten.
+
+Das Elfenbein-Siegel mit euren Initialen sitzt auf dem rechten Leinenflügel. Nach einem Klick schwenken beide Flügel räumlich nach außen und enthüllen die Karte. Die Öffnung dauert etwa 3,5 Sekunden. Bei aktivierter Einstellung für reduzierte Bewegung erscheint die Karte sofort. Die Öffnung lässt sich per Tastatur bedienen und am Seitenende wiederholen.
 
 Für den Bearbeitungsmodus `?edit=1` an die Adresse hängen, zum Beispiel:
 
@@ -67,7 +71,7 @@ Der Kalenderbutton lädt eine ICS-Datei herunter. Die Zeit wird für `Europe/Ber
 
 ## Gestaltung und Lizenzen
 
-Die sieben floralen SVG-Motive und Architekturillustrationen wurden für diese Einladung neu gezeichnet. Die bezahlte Vorlage wurde nicht gekauft oder als Asset übernommen. Cormorant Garamond und Manrope sind frei nutzbare Schriften; ihre Lizenztexte liegen in `assets/fonts/`.
+Die sieben floralen SVG-Motive und Architekturillustrationen sowie die Leinenstruktur und das reliefartige Elfenbein-Siegel wurden für diese Einladung neu gezeichnet. Die bezahlte Vorlage wurde nicht gekauft oder als Asset übernommen. Cormorant Garamond und Manrope sind frei nutzbare Schriften; ihre Lizenztexte liegen in `assets/fonts/`.
 
 Die Gestaltung berücksichtigt Mobilgeräte, Tastaturbedienung, sichtbare Fokusmarkierungen, modale Dialoge und die Betriebssystemeinstellung für reduzierte Bewegung. Fotos können per Klick oder Tastatur vergrößert werden, sobald Originalbilder eingebunden sind.
 

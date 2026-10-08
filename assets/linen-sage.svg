@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="720" viewBox="0 0 480 720">
+  <defs>
+    <linearGradient id="cloth" x2="1" y2=".15"><stop stop-color="#929c81"/><stop offset=".47" stop-color="#a1ac90"/><stop offset="1" stop-color="#818d70"/></linearGradient>
+    <filter id="fibres" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".14 .72" numOctaves="3" seed="19" result="texture"/><feColorMatrix in="texture" type="saturate" values="0"/><feComponentTransfer><feFuncR type="linear" slope=".55" intercept=".25"/><feFuncG type="linear" slope=".55" intercept=".25"/><feFuncB type="linear" slope=".55" intercept=".25"/><feFuncA type="linear" slope=".32"/></feComponentTransfer><feBlend in="SourceGraphic" mode="soft-light"/></filter>
+    <pattern id="weave" width="6" height="8" patternUnits="userSpaceOnUse"><path d="M1 0v8M4 0v8" stroke="#ebeddc" stroke-width=".5" opacity=".15"/><path d="M0 2h6M0 6h6" stroke="#43523a" stroke-width=".5" opacity=".1"/><path d="M1 2v3M4 6v2" stroke="#f9f8e6" stroke-width=".8" opacity=".16"/></pattern>
+  </defs>
+  <path fill="url(#cloth)" filter="url(#fibres)" d="M0 0h480v720H0z"/>
+  <path fill="url(#weave)" d="M0 0h480v720H0z"/>
+  <g fill="none" stroke-linecap="round" stroke="#e4e7d3" opacity=".13">
+    <path d="M34 50v71M91 148v44M129 39v95M195 174v61M253 40v105M311 137v48M397 51v84M453 201v57M40 274v65M116 390v98M216 308v86M297 408v76M366 291v99M440 462v62M45 552v107M146 616v71M215 517v71M334 606v95M409 554v47"/>
+  </g>
+</svg>
