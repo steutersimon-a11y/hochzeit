@@ -1,9 +1,10 @@
-/* Alle Beispielangaben können hier ersetzt werden. Keine Installation nötig.
-   Die Angaben außer den beiden Locations sind erfundene Design-Platzhalter. */
+/* Alle Angaben können hier ersetzt werden. Keine Installation nötig.
+   Namen, Hochzeitsdatum und Locations sind bestätigt.
+   Zeiten, Rückmeldefrist und weitere Details sind Design-Platzhalter. */
 window.WEDDING = {
-  names: ['Mila', 'Elias'],
-  date: '2027-06-19',
-  dateLabel: '19. Juni 2027',
+  names: ['Marie', 'Simon'],
+  date: '2027-08-28',
+  dateLabel: '28. August 2027',
   weekday: 'Samstag',
   region: 'Schermbeck',
   invitation: 'Ein Tag voller Liebe.\nUnd ihr mittendrin.',

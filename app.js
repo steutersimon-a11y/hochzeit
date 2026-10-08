@@ -141,7 +141,7 @@
 
   function setupEditor() {
     const bar=document.createElement('div');bar.className='editor-bar';
-    const note=document.createElement('span');note.textContent='Designvorschau · Namen & Datum sind Beispielangaben.';
+    const note=document.createElement('span');note.textContent='Designvorschau · Uhrzeiten & weitere Details sind Platzhalter.';
     const button=document.createElement('button');button.textContent='Einladung anpassen';bar.append(note,button);document.body.append(bar);
     const dialog=document.createElement('dialog');dialog.id='editor-dialog';
     dialog.innerHTML='<button class="dialog-close" type="button" aria-label="Schließen">×</button><div class="editor-content"><p class="eyebrow">EUER KLEINES DESIGNATELIER</p><h2>Eine Einladung, die nach euch aussieht.</h2><p class="editor-note">Änderungen bleiben in dieser Vorschau. Mit „HTML speichern“ bekommt ihr eine vollständige Einladung inklusive eurer Bilder – kostenlos und ohne Konto.</p><form id="editor-form"><label>Vorname 1<input name="name1" required></label><label>Vorname 2<input name="name2" required></label><label>Hochzeitsdatum<input name="date" type="date" required></label><label>E-Mail für Rückmeldungen<input name="email" type="email" placeholder="Optional · eure echte Kontaktadresse"></label><div id="image-inputs"></div><button class="primary-button" type="submit">Vorschau aktualisieren ↗</button></form><button class="text-button" id="export-html">HTML mit Bildern speichern ↗</button><p class="editor-note">Alle weiteren Texte und Uhrzeiten könnt ihr in wedding-config.js bearbeiten. Bilddateien verlassen euren Browser erst, wenn ihr die gespeicherte Einladung selbst teilt.</p></div>';

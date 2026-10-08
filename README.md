@@ -6,7 +6,11 @@ Eine eigenständig gestaltete digitale Hochzeitseinladung aus HTML, CSS und Java
 
 ## Sofort ansehen
 
-`Unsere-Hochzeit.html` herunterladen und im Browser öffnen. Sie enthält die komplette Gestaltung und funktioniert ohne Installation und ohne Internet. Die Brieföffnung lässt sich im Footer wiederholen.
+1. [Unsere-Hochzeit.html herunterladen](https://github.com/steutersimon-a11y/hochzeit/raw/refs/heads/main/Unsere-Hochzeit.html) und auf dem Computer speichern. Wenn der Browser Quelltext zeigt: den Link mit der rechten Maustaste anklicken und „Link speichern unter …“ wählen. Der Dateiname muss auf `.html` enden.
+2. Die gespeicherte Datei mit Chrome, Edge, Firefox oder Safari öffnen, zum Beispiel per Rechtsklick → „Öffnen mit“ → Browser.
+3. Auf das runde Siegel oder „Einladung öffnen“ klicken. Danach durch die gesamte Seite scrollen. Die Brieföffnung lässt sich im Footer wiederholen.
+
+Die einzelne HTML-Datei enthält die komplette Gestaltung und funktioniert ohne Installation und ohne Internet. Die Dateivorschau von GitHub oder eine Handy-Dateivorschau kann stattdessen Code anzeigen oder die Animationen nicht ausführen. Am Handy ist die veröffentlichte GitHub-Pages-Adresse deshalb der einfachste Weg; die Aktivierung steht weiter unten.
 
 Für den Bearbeitungsmodus `?edit=1` an die Adresse hängen, zum Beispiel:
 
@@ -18,7 +22,7 @@ Im Bearbeitungsmodus lassen sich Namen, Datum, Kontaktadresse und alle vier Bild
 
 ## Alle Details ändern
 
-Die Namen „Mila & Elias“, der 19. Juni 2027, Zeiten, Rückmeldefrist und Einladungstexte sind **erfundene Beispielangaben**. Vorgegeben waren die Reformierte Kirche in Schermbeck und Mago Restaurant & Bar. Genaue Adressen wurden bewusst nicht erfunden.
+Die Einladung ist für **Marie & Simon am Samstag, 28. August 2027** eingerichtet. Vorgegeben sind außerdem die Reformierte Kirche in Schermbeck und Mago Restaurant & Bar. Zeiten, Rückmeldefrist und weitere Details sind weiterhin **erfundene Beispielangaben**. Genaue Adressen wurden bewusst nicht erfunden.
 
 Alle Texte, Orte, Zeiten, Bilder und Angaben sind in **`wedding-config.js`** gesammelt. Nach Änderungen an dieser Datei nutzt `index.html` sofort die neuen Angaben. Mit
 
