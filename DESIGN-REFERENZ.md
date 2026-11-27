@@ -40,7 +40,7 @@ Die Schrift verwendet durchgehend Nachtblau (`#14263E`). Rauchblau (`#506D8D`) z
 
 ## Durchgehendes Leinen
 
-Die Doppellinien in Nacht- und Rauchblau beginnen unter den Samtsäumen und laufen seitlich bis zum unteren Rand. Zwei kleine elfenbeinfarbene Perlen schmücken die unteren Ecken.
+Die seitlich leicht eingerückten Doppellinien in Nacht- und Rauchblau beginnen unter den Samtsäumen und laufen bis zum unteren Rand. Zwei kleine elfenbeinfarbene Perlen schmücken die unteren Ecken.
 
 Eine einzige feine Leinentextur bildet den Hintergrund des gesamten Dokuments. Opener, Begrüßung, Orte und Footer besitzen keinen eigenen deckenden Hintergrund und keine Abschnittsrandnähte. Die Motive wurden intern freigestellt; der Leinenuntergrund bleibt zwischen und hinter ihnen sichtbar. Header und Footer sind ebenfalls transparent.
 

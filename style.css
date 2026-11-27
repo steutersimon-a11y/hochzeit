@@ -24,6 +24,7 @@
 .invitation-border {
   position: absolute;
   inset: var(--border-inset);
+  inset-inline: calc(var(--border-inset) + clamp(4px, 1cqw, 9px));
   top: calc(var(--border-inset) - var(--curtain-overhang) + .85 * var(--curtain-height));
   z-index: 3;
   border: solid var(--ink);

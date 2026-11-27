@@ -353,8 +353,7 @@ async function exerciseViewport(browser, baseURL, width) {
   }
   const sceneDetails = await page.evaluate(() => {
     const frame = document.querySelector('.invitation-border').getBoundingClientRect();
-    const sheet = document.querySelector('.invitation-sheet').getBoundingClientRect();
-    const nominalTop = sheet.top + frame.left - sheet.left;
+    const nominalTop = document.querySelector('.hero').getBoundingClientRect().top - 15;
     const curtains = [...document.querySelectorAll('.hero-curtain')].map(image => {
       const box = image.getBoundingClientRect(), style = getComputedStyle(image);
       const scale = Math.min(box.width / image.naturalWidth, box.height / image.naturalHeight);
