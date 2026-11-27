@@ -350,14 +350,35 @@ async function exerciseViewport(browser, baseURL, width) {
       const offset = (position, space) => position.endsWith('%') ? parseFloat(position) / 100 * space : parseFloat(position) || 0;
       const paintedLeft = box.left + offset(horizontal, box.width - paintedWidth);
       const paintedTop = box.top + offset(vertical, box.height - paintedHeight);
+      const canvas = document.createElement('canvas');
+      canvas.width = image.naturalWidth;
+      canvas.height = image.naturalHeight;
+      const context = canvas.getContext('2d', { willReadFrequently: true });
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+      const alphaEnvelope = { left: canvas.width, right: 0, top: canvas.height, bottom: 0, threshold: 128, pixels: 0 };
+      for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+          if (pixels[(y * canvas.width + x) * 4 + 3] < alphaEnvelope.threshold) continue;
+          alphaEnvelope.left = Math.min(alphaEnvelope.left, x);
+          alphaEnvelope.right = Math.max(alphaEnvelope.right, x + 1);
+          alphaEnvelope.top = Math.min(alphaEnvelope.top, y);
+          alphaEnvelope.bottom = Math.max(alphaEnvelope.bottom, y + 1);
+          alphaEnvelope.pixels++;
+        }
+      }
+      const visibleLeft = paintedLeft + alphaEnvelope.left / canvas.width * paintedWidth;
+      const visibleRight = paintedLeft + alphaEnvelope.right / canvas.width * paintedWidth;
+      const visibleTop = paintedTop + alphaEnvelope.top / canvas.height * paintedHeight;
       const transform = new DOMMatrixReadOnly(style.transform === 'none' ? undefined : style.transform);
       return { src: image.getAttribute('src'), fit: style.objectFit, position: style.objectPosition, aspectError,
-        naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight, paintedWidth, paintedHeight,
+        naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight, paintedWidth, paintedHeight, alphaEnvelope,
         decorative: image.alt === '' && style.pointerEvents === 'none',
         upright: transform.a > 0 && transform.d > 0 && Math.abs(transform.b) < .001 && Math.abs(transform.c) < .001,
-        leftOverhang: frame.left - paintedLeft, rightOverhang: paintedLeft + paintedWidth - frame.right,
+        boxLeftOverhang: frame.left - paintedLeft, boxRightOverhang: paintedLeft + paintedWidth - frame.right,
+        visibleLeftOverhang: frame.left - visibleLeft, visibleRightOverhang: visibleRight - frame.right,
         topOverhang: frame.top - paintedTop,
-        viewportSafe: paintedLeft >= -1 && paintedLeft + paintedWidth <= innerWidth + 1 && paintedTop + scrollY >= -1 };
+        viewportSafe: visibleLeft >= -1 && visibleRight <= innerWidth + 1 && visibleTop + scrollY >= -1 };
     });
     const welcomeArt = document.querySelector('.welcome-border').getBoundingClientRect();
     const welcomeCopy = document.querySelector('.welcome-copy').getBoundingClientRect();
@@ -384,8 +405,9 @@ async function exerciseViewport(browser, baseURL, width) {
     curtain.src === 'assets/art/hero-curtain-velvet.webp'
       && (curtain.fit === 'contain' || curtain.fit === 'fill' && curtain.aspectError < .012)
       && curtain.naturalWidth === 1600 && curtain.naturalHeight === 941 && curtain.upright && curtain.decorative && curtain.viewportSafe
-      && [curtain.topOverhang, curtain.leftOverhang, curtain.rightOverhang].every(overhang => overhang >= 4 && overhang <= 9)),
-    `${width}: single curtain is distorted, clipped, or exceeds its controlled frame overhang ${JSON.stringify(sceneDetails.curtains)}`);
+      && curtain.alphaEnvelope.pixels > 0 && curtain.topOverhang >= 4 && curtain.topOverhang <= 9
+      && curtain.visibleLeftOverhang >= (width >= 1100 ? 6 : 2) && curtain.visibleRightOverhang >= (width >= 1100 ? 6 : 2)),
+    `${width}: opaque curtain is distorted, clipped, or does not extend beyond both frame sides ${JSON.stringify(sceneDetails.curtains)}`);
   check(sceneDetails.welcomeGap >= -1, `${width}: welcome ornament covers the message (${sceneDetails.welcomeGap}px gap)`);
   const dayCounter = sceneDetails.countdown;
   check(dayCounter.images === 1 && dayCounter.obsolete === 0 && !/stund|minut/i.test(dayCounter.text)

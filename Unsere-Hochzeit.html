@@ -18,7 +18,7 @@
 /* One border follows the full height of the open invitation. */
 .invitation-sheet {
   --sheet-gutter: clamp(16px, 3vw, 27px);
-  --border-inset: clamp(6px, 1.2vw, 11px);
+  --border-inset: clamp(10px, 2.5vw, 21px);
   position: relative;
   max-width: calc(880px + 2 * var(--sheet-gutter));
   margin-inline: auto;
@@ -60,9 +60,9 @@
 
 /* Each illustration has one place in the invitation; all artwork keeps its proportions. */
 .hero {
-  --curtain-overhang: clamp(5px, .9cqw, 8px);
-  --curtain-extension: calc(var(--sheet-gutter) - var(--border-inset) + var(--curtain-overhang));
-  --curtain-span: calc(100cqw + 2 * var(--curtain-extension));
+  --curtain-top-overhang: clamp(5px, .9cqw, 8px);
+  --curtain-span: calc(100cqw + 2 * var(--sheet-gutter) - 2px);
+  --curtain-offset: 0px;
   position: relative;
   display: grid;
   align-content: start;
@@ -93,9 +93,9 @@
 
 .hero-curtain {
   position: absolute;
-  /* The velvet sits just above the double line and inside the page edge. */
-  top: calc(-15px - var(--curtain-overhang));
-  left: 50%;
+  /* Keep the full curtain inside the page while the velvet crosses the frame. */
+  top: calc(-15px - var(--curtain-top-overhang));
+  left: calc(50% + var(--curtain-offset));
   width: var(--curtain-span);
   height: auto;
   max-width: none;
@@ -493,6 +493,18 @@ footer > span { display: block; font: .75rem var(--sans); letter-spacing: .035em
 /* Dialogs and editing retain their existing functions. */
 dialog{width:550px;max-width:calc(100% - 32px);max-height:90svh;padding:42px;border:1px solid var(--line);background:var(--paper);color:var(--ink);overflow:auto;box-shadow:0 25px 90px #14263e35}dialog::backdrop{background:#14263e78;backdrop-filter:blur(7px)}.dialog-close{position:absolute;top:10px;right:15px;border:0;background:none;font-size:29px;line-height:1;padding:8px;min-width:44px;min-height:44px}dialog h2{font-size:clamp(2rem, 7vw, 2.5rem);margin:0 30px 16px}form{display:grid;gap:20px}label{display:flex;flex-direction:column;gap:7px;font:13px/1.65 var(--sans)}input,textarea{width:100%;background:#fffcf6;border:1px solid var(--line);padding:11px;font:16px var(--sans);border-radius:0}input::placeholder,textarea::placeholder{color:var(--ink);opacity:.7}fieldset{border:0;padding:0;margin:0}legend{font:13px var(--sans);margin-bottom:10px}.radio-label{display:flex;flex-direction:row;align-items:center;margin:10px 0;font-size:13px;min-height:36px}.radio-label input{width:auto;accent-color:var(--ink)}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}.form-note,#rsvp-result{font:13px/1.6 var(--sans);color:var(--ink)}#rsvp-note:not(:last-child){margin-bottom:1rem}#photo-dialog{width:auto;max-width:90vw;padding:28px}#large-photo{max-height:78svh;width:auto;height:auto}.editor-bar{position:fixed;bottom:15px;left:15px;right:15px;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:15px;background:var(--blue-wash);color:var(--ink);border:1px solid var(--line);padding:12px 18px;font:11px var(--sans)}.editor-bar button{background:var(--paper);border:0;padding:8px 12px;font:11px var(--sans)}.editor-note{font:11px/1.8 var(--sans);color:var(--ink);margin:15px 0 25px}.image-input small{font-size:10px;color:var(--ink)}#export-html{margin-top:25px}.noscript-note{text-align:center;padding:20px}
 .motion-enabled .reveal{opacity:0;transform:translateY(15px);transition:opacity .8s ease,transform .8s ease}.motion-enabled .reveal:focus-within,.motion-enabled .reveal.is-visible{opacity:1;transform:none}@keyframes soft-arrive{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+@media (min-width: 950px) {
+  .invitation-sheet {
+    --border-inset: clamp(11px, calc(21px - (100vw - 950px) / 5), 21px);
+  }
+
+  .hero {
+    --curtain-span: min(calc(100vw - 24px), calc(100cqw + 5rem));
+    /* Compensate for the slightly wider transparent margin on the right. */
+    --curtain-offset: 3px;
+  }
+}
 
 @media (min-width: 701px) {
   .hero-copy { width: 64%; }

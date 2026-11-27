@@ -40,7 +40,7 @@ Die Schrift verwendet durchgehend Nachtblau (`#14263E`). Rauchblau (`#506D8D`) z
 
 ## Durchgehendes Leinen
 
-Zwei durchgezogene Linien in Nacht- und Rauchblau fassen die gesamte geöffnete Einladung ein. Vier kleine elfenbeinfarbene Perlen schmücken die Ecken. Am oberen Rand liegt der Samtvorhang leicht über den Linien. Seitlich bleibt Platz für Schrift und Stickmotive.
+Zwei durchgezogene Linien in Nacht- und Rauchblau fassen die gesamte geöffnete Einladung ein. Vier kleine elfenbeinfarbene Perlen schmücken die Ecken. Die Säume des Samtvorhangs fallen links und rechts über die Linien. Auf schmalen Displays liegt der Rahmen etwas weiter innen, damit der Überhang vollständig im Bild bleibt.
 
 Eine einzige feine Leinentextur bildet den Hintergrund des gesamten Dokuments. Opener, Begrüßung, Orte und Footer besitzen keinen eigenen deckenden Hintergrund und keine Abschnittsrandnähte. Die Motive wurden intern freigestellt; der Leinenuntergrund bleibt zwischen und hinter ihnen sichtbar. Header und Footer sind ebenfalls transparent.
 
