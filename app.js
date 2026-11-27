@@ -91,13 +91,19 @@
     return tentative - minutes*60000;
   }
   function updateCountdown() {
-    const left = eventEpoch() - Date.now();
-    if(!Number.isFinite(left)) return;
-    const minutes = Math.max(0,Math.floor(left/60000));
-    $('#count-days').textContent = String(Math.floor(minutes/1440)).padStart(2,'0');
-    $('#count-hours').textContent = String(Math.floor(minutes%1440/60)).padStart(2,'0');
-    $('#count-minutes').textContent = String(minutes%60).padStart(2,'0');
-    $('#countdown-note').hidden = left > 0;
+    const weddingDay = Date.parse(config.date + 'T00:00:00Z');
+    if (!Number.isFinite(weddingDay)) return;
+    const now = new Date();
+    const dateParts = new Intl.DateTimeFormat('de-DE', {
+      timeZone: config.calendar.timezone, year: 'numeric', month: 'numeric', day: 'numeric',
+    }).formatToParts(now);
+    const getPart = type => Number(dateParts.find(part => part.type === type).value);
+    // Compare calendar dates so Berlin's shorter and longer DST days count once each.
+    const today = Date.UTC(getPart('year'), getPart('month') - 1, getPart('day'));
+    const days = Math.max(0, (weddingDay - today) / 86400000);
+    $('#count-days').textContent = String(days);
+    $('#count-days-label').textContent = days === 1 ? 'Tag' : 'Tage';
+    $('#countdown-note').hidden = now < eventEpoch();
   }
   let observer;
   function observeReveals() {
@@ -116,12 +122,12 @@
   async function openInvitation() {
     if (opening.classList.contains('is-opening') || opening.hasAttribute('aria-busy')) return;
     opening.setAttribute('aria-busy', 'true');
-    const hero = $('.garden-frame');
+    const heroImages = $$('.garden-frame,.hero-curtain');
     let readyDeadline;
     try {
       await Promise.race([
         Promise.all([
-          hero?.decode ? hero.decode().catch(() => {}) : Promise.resolve(),
+          ...heroImages.map(image => image.decode().catch(() => {})),
           document.fonts?.ready || Promise.resolve()
         ]),
         new Promise(resolve => { readyDeadline = setTimeout(resolve, 900); })

@@ -18,11 +18,11 @@ Die Recherche vom 27. November 2026 ergänzt den Aufbau der Referenz um Ideen au
 
 ## Die neue Gestaltung
 
-Die aktuellen Bilddateien in [assets/loom](assets/loom/README.md) bilden eine gemeinsame Materialwelt: elfenbeinfarbenes Leinen, Salbeigrün, gedämpftes Mauve, Perlen und sichtbare Stickstiche. Jede große dekorative Szene hat genau einen Platz. Nur die drei Countdown-Medaillons wiederholen sich bewusst als zusammengehörige Anzeigen.
+Die aktuellen Bilddateien in [assets/loom](assets/loom/README.md) bilden eine gemeinsame Materialwelt: elfenbeinfarbenes Leinen, Salbeigrün, gedämpftes Mauve, Perlen und sichtbare Stickstiche. Jede große dekorative Szene hat genau einen Platz. Die beiden Vorhänge spiegeln dasselbe Stickmotiv.
 
-Der Opener zeigt die eigene Kirche aus dem Repository. Der helle polygonale Baukörper mit rotem Dach und dunklem Dachreiter steht auf einem offenen, hell gepflasterten Vorplatz. Zwei niedrige Pflanzengruppen mit kleinen Blüten flankieren die Kirche am hinteren Rand. Nachtblaue Vorhänge mit elfenbeinfarbener Perlenkante und rauchblauen Seidenschleifen rahmen die Namen ein. Die Szene ist schon geladen, bevor die Kartenflügel öffnen. Ihre natürlichen Bildkoordinaten bestimmen die Textposition. Datum und Ortsangabe bleiben oberhalb des Turms.
+Der Opener zeigt die eigene Kirche aus dem Repository. Der helle polygonale Baukörper mit rotem Dach und dunklem Dachreiter steht auf einem offenen, hell gepflasterten Vorplatz. Zwei niedrige Pflanzengruppen mit kleinen Blüten flankieren die Kirche am hinteren Rand. Nachtblaue Vorhänge mit Perlenkante und rauchblauen Schleifen hängen direkt an der inneren Rahmenlinie. Die separate hochauflösende Vorhanggrafik fällt bis auf Höhe der Kirchturmspitze und skaliert proportional. Die Szene ist schon geladen, bevor die Kartenflügel öffnen. Ihre natürlichen Bildkoordinaten bestimmen die Textposition. Datum und Ortsangabe bleiben oberhalb des Turms.
 
-Beim Weiterscrollen folgen die florale Begrüßung, Countdown sowie die beiden illustrierten Orte mit ihren Angaben. Die neue Mago-Illustration übernimmt die Architektur, Fenster, Dach und Terrasse des eigenen Repository-Bildes. Die eigene Kirchenillustration wird freigestellt und im Ortsabschnitt vollständig dargestellt. Beide Orte behalten ihre Proportionen.
+Eine kleine Stickborte aus blauen Knötchen, Blättern und Perlen leitet den Willkommensgruß ein. Im einzelnen nachtblauen Countdown-Medaillon steht die Zahl der verbleibenden Kalendertage. Es folgen beide illustrierten Orte mit ihren Angaben. Die neue Mago-Illustration übernimmt die Architektur, Fenster, Dach und Terrasse des eigenen Repository-Bildes. Die eigene Kirchenillustration wird freigestellt und im Ortsabschnitt vollständig dargestellt. Beide Orte behalten ihre Proportionen.
 
 Geschichte, eigene Fotos, Tagesablauf, Hinweise, Geschenke und Rückmeldung schließen die Einladung ab. Die beiden Schwäne stehen ausschließlich ganz am Ende im Footer. Der Ablauf zeigt sechs verschiedene Stickmotive: Kirche für Ankunft, Ringe für Trauung, Sektgläser für Anstoßen, Cocktail für Aperitif, Teller und Besteck für Dinner sowie Discokugel für Tanz. Eine feine durchgehende Stichlinie verbindet die Stationen. Der Dresscode wurde auf Wunsch entfernt. Der Geschenkhinweis erscheint einmal und wird im FAQ nicht wiederholt.
 
@@ -34,7 +34,7 @@ Beim Öffnen steht das geprägte M&S allein auf einem ovalen, champagnerfarbenen
 
 ## Blau im Inneren
 
-Die nachtblauen Vorhänge führen den Ton des Umschlags in die Einladung. Helle Perlen säumen den Stoff, rauchblaue Schleifen binden ihn seitlich zusammen. Rauchblaue Stickstiche finden sich in ausgewählten Glyzinien, der Ranke der Ortsansicht, den sechs Ablaufmotiven, der kleinen Geschenkschleife und zwischen den Blättern unter den Schwänen. Salbei, Mauve und Elfenbein greifen die warme Palette der Illustrationen auf.
+Die nachtblauen Vorhänge führen den Ton des Umschlags in die Einladung. Helle Perlen säumen den Stoff, rauchblaue Schleifen binden ihn seitlich zusammen. Rauchblaue Stickstiche finden sich in der Willkommensborte, der Ranke der Ortsansicht, den sechs Ablaufmotiven, den Schleifen für Countdown und Geschenk sowie zwischen den Blättern unter den Schwänen. Salbei, Mauve und Elfenbein greifen die warme Palette der Illustrationen auf.
 
 Die Schrift verwendet durchgehend Nachtblau (`#14263E`). Rauchblau (`#506D8D`) zeichnet die Stichlinie im Ablauf, die Fokusmarkierungen und den kurzen Faden am Monogramm. Auf dem Rückmeldebutton sorgt eine helle blaue Fläche für Kontrast zur nachtblauen Beschriftung.
 

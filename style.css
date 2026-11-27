@@ -50,6 +50,30 @@
 
 /* Each illustration has one place in the invitation; all artwork keeps its proportions. */
 .hero{position:relative;width:100%;margin:auto;padding-bottom:55px;text-align:center;background:transparent}.hero-art{display:block;aspect-ratio:2/3}.garden-frame{width:100%;height:100%;object-fit:contain}.hero-copy{position:absolute;top:12%;left:23%;width:54%;z-index:2}.hero h1{display:flex;flex-direction:column;gap:0;font:62px/1.04 var(--serif);letter-spacing:-.5px}.hero h1 em{font:42px/1 var(--serif);margin:7px 0}.hero-date{font-size:21px;letter-spacing:1.5px;margin-top:24px}.hero-place{font:8px var(--sans);letter-spacing:2px;text-transform:uppercase;margin-top:12px}.hero-discover{position:absolute;bottom:5px;left:0;right:0;display:flex;flex-direction:column;gap:5px;align-items:center;font:8px var(--sans);letter-spacing:.5px}.hero-discover span{font-size:20px}.opening-running .hero-copy{animation:soft-arrive 1.6s ease both}.site-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 35px;border:0;background:transparent}.brand{font:24px var(--serif)}.site-header nav{display:flex;gap:27px;font:9px var(--sans);letter-spacing:.5px}.nav-rsvp{border:0;border-bottom:1px solid var(--line);background:none;padding:8px 0;display:flex;align-items:center;gap:13px;font:9px var(--sans)}
+/* Reveal the chapel from the original composition and hang the detailed fabric separately. */
+.garden-frame {
+  clip-path: polygon(20% 47%, 80% 47%, 80% 50%, 100% 50%, 100% 100%, 0 100%, 0 50%, 20% 50%);
+}
+
+.hero-curtain {
+  position: absolute;
+  /* Align the fabric seam with the inner line of the double frame. */
+  top: -10px;
+  left: calc(var(--border-inset) + 5px - var(--sheet-gutter));
+  width: 29cqw;
+  height: 77cqw;
+  max-width: none;
+  object-fit: contain;
+  object-position: left top;
+  pointer-events: none;
+}
+
+.hero-curtain-right {
+  left: auto;
+  right: calc(var(--border-inset) + 5px - var(--sheet-gutter));
+  transform: scaleX(-1);
+}
+
 /* One linen surface, with spacing sized to the content of each scene. */
 .eyebrow {
   font: 500 .7rem/1.5 var(--sans);
@@ -104,22 +128,15 @@
 .primary-button { min-height: 48px; font-size: .8125rem; letter-spacing: .025em; }
 
 .welcome {
-  position: relative;
-  isolation: isolate;
-  width: 100%;
-  margin-top: clamp(1.5rem, 6cqw, 3.25rem);
-  padding: min(47cqw, 18.5rem) 15% 0;
+  margin-top: clamp(2rem, 6cqw, 3.25rem);
+  padding-inline: 1.25rem;
   text-align: center;
 }
 
-.welcome .panel-art {
-  position: absolute;
-  inset: 0 0 auto;
-  width: min(100%, 39rem);
+.welcome-border {
+  width: min(70%, 12.5rem);
   height: auto;
-  margin-inline: auto;
-  pointer-events: none;
-  z-index: -1;
+  margin: 0 auto 1rem;
 }
 
 .welcome-copy {
@@ -168,27 +185,19 @@
 .date-display > span { font: 500 .75rem var(--sans); }
 
 .countdown {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(4px, 2.5cqw, 20px);
+  position: relative;
+  isolation: isolate;
+  width: clamp(10.25rem, 44cqw, 12.5rem);
+  aspect-ratio: 1;
+  display: grid;
+  align-content: center;
+  justify-items: center;
   margin: 1.25rem auto;
 }
 
-.countdown > div {
-  position: relative;
-  isolation: isolate;
-  width: clamp(5rem, 26cqw, 9rem);
-  aspect-ratio: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .countdown img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; z-index: -1; }
-.countdown strong { font: clamp(2.125rem, 7cqw, 3.5rem)/1 var(--serif); }
-.countdown span { margin-top: 4px; font: 500 clamp(.5625rem, 1.7cqw, .6875rem) var(--sans); }
+.countdown strong { font: clamp(2.75rem, 9cqw, 3.5rem)/1 var(--serif); font-variant-numeric: lining-nums tabular-nums; }
+.countdown span { margin-top: 4px; font: 500 .6875rem var(--sans); letter-spacing: .12em; text-transform: uppercase; }
 .countdown-note { margin-top: 12px; color: var(--ink); font-style: italic; }
 
 .section-ornament {
@@ -424,6 +433,10 @@ dialog{width:550px;max-width:calc(100% - 32px);max-height:90svh;padding:42px;bor
 
 @media (min-width: 701px) {
   .hero-art { aspect-ratio: 4 / 3; }
+  .garden-frame {
+    clip-path: polygon(20% 37%, 80% 37%, 80% 63%, 100% 63%, 100% 100%, 0 100%, 0 63%, 20% 63%);
+  }
+  .hero-curtain { width: 27cqw; height: 51cqw; }
   .hero-copy { top: 8%; left: 18%; width: 64%; }
   .hero h1 { flex-direction: row; justify-content: center; align-items: baseline; font-size: clamp(2.4rem, 7.3cqw, 4rem); }
   .hero h1 em { font-size: .7em; margin: 0 .3em; }

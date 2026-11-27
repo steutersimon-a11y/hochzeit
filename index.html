@@ -36,6 +36,8 @@
   <main id="einladung">
     <section class="hero" aria-labelledby="hero-title">
       <picture class="hero-art"><source media="(min-width:701px)" srcset="assets/loom/opener-blue-desktop.webp" width="1448" height="1086"><img class="garden-frame" src="assets/loom/opener-blue.webp" alt="" width="1024" height="1536" fetchpriority="high"></picture>
+      <img class="hero-curtain" src="assets/loom/curtain-navy.webp" alt="" width="632" height="1839" fetchpriority="high">
+      <img class="hero-curtain hero-curtain-right" src="assets/loom/curtain-navy.webp" alt="" width="632" height="1839">
       <div class="hero-copy">
         <h1 id="hero-title" tabindex="-1"><span data-name="0">Marie</span><em>&amp;</em><span data-name="1">Simon</span></h1>
         <p class="hero-date" data-bind="dateLabel">28. August 2027</p>
@@ -53,7 +55,7 @@
     <button class="nav-rsvp" data-rsvp>Zur Rückmeldung <span aria-hidden="true">↗︎</span></button>
   </header>
     <section class="welcome textile-panel" id="willkommen" aria-labelledby="welcome-title">
-      <img class="panel-art" src="assets/loom/welcome-blue.webp" alt="" width="1024" height="1536" loading="lazy">
+      <img class="welcome-border" src="assets/loom/welcome-border.webp" alt="" width="750" height="130" loading="lazy">
       <div class="welcome-copy panel-copy reveal"><h2 id="welcome-title" data-bind="invitation"></h2><p data-bind="intro"></p><span class="signature names-inline">Marie &amp; Simon</span></div>
     </section>
 
@@ -62,7 +64,10 @@
       <p class="eyebrow reveal">BIS ZU UNSEREM GROSSEN TAG</p>
       <h2 id="date-title" class="reveal">Countdown</h2>
       <div class="date-display reveal"><span data-bind="weekday">Samstag</span><strong data-bind="dateLabel">28. August 2027</strong><span data-bind="region">Schermbeck</span></div>
-      <div class="countdown reveal" aria-label="Zeit bis zur Hochzeit"><div><img src="assets/loom/medallion.webp" alt="" width="480" height="480" loading="lazy"><strong id="count-days">254</strong><span>TAGE</span></div><div><img src="assets/loom/medallion.webp" alt="" width="480" height="480" loading="lazy"><strong id="count-hours">00</strong><span>STUNDEN</span></div><div><img src="assets/loom/medallion.webp" alt="" width="480" height="480" loading="lazy"><strong id="count-minutes">00</strong><span>MINUTEN</span></div></div>
+      <div class="countdown reveal" role="group" aria-label="Zeit bis zur Hochzeit">
+        <img src="assets/loom/countdown-navy.webp" alt="" width="600" height="600" loading="lazy">
+        <strong id="count-days">–</strong><span id="count-days-label">Tage</span>
+      </div>
       <button class="text-button calendar-button reveal" id="save-date">Datum im Kalender vormerken <span aria-hidden="true">↗︎</span></button>
       <p class="countdown-note" id="countdown-note" hidden>Unser Für immer hat begonnen.</p>
     </section>

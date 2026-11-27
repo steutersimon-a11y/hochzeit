@@ -17,9 +17,9 @@ if (!playwright) throw new Error('Playwright or playwright-core is required.');
 
 const root = path.resolve(__dirname, '..');
 const output = process.env.INVITATION_QA_OUTPUT || '/tmp/wedding-qa';
-const requiredArt = ['opener-blue.webp', 'opener-blue-desktop.webp', 'welcome-blue.webp',
+const requiredArt = ['opener-blue.webp', 'opener-blue-desktop.webp', 'welcome-border.webp', 'curtain-navy.webp',
   'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp',
-  'medallion.webp', 'timeline-blue.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
+  'countdown-navy.webp', 'timeline-blue.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
 const missing = requiredArt.filter(file => !fs.existsSync(path.join(root, 'assets/loom', file)));
 for (const file of ['linen-navy.webp', 'seal-relief-ms.webp']) {
   if (!fs.existsSync(path.join(root, 'assets/art', file))) missing.push('assets/art/' + file);
@@ -35,17 +35,17 @@ const results = [];
 function check(value, message) {
   if (!value) { failures.push(message); console.error('CHECK FAILED: ' + message); }
 }
-// Decorative scenes have one deliberate home. Only the three countdown seals repeat.
+// Decorative scenes have one home; the same curtain is reflected at the two frame edges.
 const source = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const artSources = [...source.matchAll(/<img\b[^>]*\bsrc=["'](assets\/(?:loom|art)\/[^"']+)["']/g)]
   .map(match => match[1]);
 const sourceCounts = new Map();
 artSources.forEach(src => sourceCounts.set(src, (sourceCounts.get(src) || 0) + 1));
 for (const [src, count] of sourceCounts) {
-  check(count === (src === 'assets/loom/medallion.webp' ? 3 : 1),
+  check(count === (src === 'assets/loom/curtain-navy.webp' ? 2 : 1),
     `Static markup repeats a decorative scene: ${src} appears ${count} times`);
 }
-for (const file of ['opener-blue.webp', 'welcome-blue.webp', 'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp']) {
+for (const file of ['opener-blue.webp', 'welcome-border.webp', 'countdown-navy.webp', 'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp']) {
   check(sourceCounts.get('assets/loom/' + file) === 1, `Missing unique textile scene: ${file}`);
 }
 // Guests' own information stays intact; the requested Dresscode is removed,
@@ -301,6 +301,55 @@ async function exerciseViewport(browser, baseURL, width) {
     check(!panel.clipped && panel.top >= 0 && panel.bottom <= 1 && panel.left >= 0 && panel.right <= 1,
       `${width}: panel text clips outside its textile scene ${JSON.stringify(panel)}`);
   }
+  const sceneDetails = await page.evaluate(() => {
+    const frame = document.querySelector('.invitation-border').getBoundingClientRect();
+    const curtains = [...document.querySelectorAll('.hero-curtain')].map(image => {
+      const box = image.getBoundingClientRect(), style = getComputedStyle(image);
+      const scale = Math.min(box.width / image.naturalWidth, box.height / image.naturalHeight);
+      const paintedWidth = image.naturalWidth * scale, paintedHeight = image.naturalHeight * scale;
+      const mirrored = style.transform !== 'none' && new DOMMatrixReadOnly(style.transform).a < 0;
+      return { src: image.getAttribute('src'), fit: style.objectFit, position: style.objectPosition,
+        naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight, paintedWidth, paintedHeight, mirrored,
+        topOffset: box.top - frame.top,
+        edgeOffset: mirrored ? frame.right - box.right : box.left - frame.left };
+    });
+    const welcomeArt = document.querySelector('.welcome-border').getBoundingClientRect();
+    const welcomeCopy = document.querySelector('.welcome-copy').getBoundingClientRect();
+    const countdown = document.querySelector('.countdown'), image = countdown.querySelector('img');
+    const circle = image.getBoundingClientRect(), area = countdown.getBoundingClientRect();
+    const number = document.querySelector('#count-days').getBoundingClientRect();
+    const localDate = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: window.WEDDING.calendar.timezone || 'Europe/Berlin',
+      year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date())
+      .filter(part => ['year', 'month', 'day'].includes(part.type)).map(part => [part.type, Number(part.value)]));
+    const [year, month, day] = window.WEDDING.date.split('-').map(Number);
+    const remainingDays = Math.max(0, Math.round((Date.UTC(year, month - 1, day)
+      - Date.UTC(localDate.year, localDate.month - 1, localDate.day)) / 86400000));
+    return { curtains, welcomeGap: welcomeCopy.top - welcomeArt.bottom,
+      countdown: { images: countdown.querySelectorAll('img').length,
+        obsolete: document.querySelectorAll('#count-hours,#count-minutes').length,
+        text: countdown.textContent.trim(), label: document.querySelector('#count-days-label')?.textContent.trim(),
+        days: Number(document.querySelector('#count-days').textContent), expectedDays: remainingDays,
+        imageCenter: circle.left + circle.width / 2, areaCenter: area.left + area.width / 2,
+        numberCenter: number.left + number.width / 2,
+        numberContained: number.left >= circle.left && number.right <= circle.right
+          && number.top >= circle.top && number.bottom <= circle.bottom } };
+  });
+  check(sceneDetails.curtains.length === 2 && sceneDetails.curtains.every(curtain =>
+    curtain.src.endsWith('curtain-navy.webp') && curtain.fit === 'contain' && curtain.position === '0% 0%'
+      && curtain.naturalWidth > 0 && curtain.naturalHeight > 0
+      && Math.abs(curtain.topOffset - 5) <= 1 && Math.abs(curtain.edgeOffset - 5) <= 1)
+    && sceneDetails.curtains[0].mirrored !== sceneDetails.curtains[1].mirrored
+    && Math.abs(sceneDetails.curtains[0].paintedWidth - sceneDetails.curtains[1].paintedWidth) <= 1
+    && Math.abs(sceneDetails.curtains[0].paintedHeight - sceneDetails.curtains[1].paintedHeight) <= 1,
+    `${width}: curtains do not meet the frame or keep their proportions ${JSON.stringify(sceneDetails.curtains)}`);
+  check(sceneDetails.welcomeGap >= -1, `${width}: welcome ornament covers the message (${sceneDetails.welcomeGap}px gap)`);
+  const dayCounter = sceneDetails.countdown;
+  check(dayCounter.images === 1 && dayCounter.obsolete === 0 && !/stund|minut/i.test(dayCounter.text)
+    && /^tage?$/i.test(dayCounter.label || '') && dayCounter.days === dayCounter.expectedDays,
+    `${width}: countdown must show only the remaining local calendar days ${JSON.stringify(dayCounter)}`);
+  check(Math.abs(dayCounter.imageCenter - dayCounter.areaCenter) <= 1
+    && Math.abs(dayCounter.numberCenter - dayCounter.imageCenter) <= 1 && dayCounter.numberContained,
+    `${width}: single day medallion is not centered or clips its number ${JSON.stringify(dayCounter)}`);
   const textBindings = await page.evaluate(() => {
     const get = key => key.split('.').reduce((value, part) => value?.[part], window.WEDDING);
     const mismatches = [...document.querySelectorAll('[data-bind]')].filter(element => element.textContent !== String(get(element.dataset.bind) ?? ''))
@@ -358,7 +407,7 @@ async function exerciseViewport(browser, baseURL, width) {
   }
   await page.evaluate(() => { document.activeElement?.blur(); scrollTo({ top: 0, behavior: 'instant' }); });
   await page.screenshot({ path: path.join(output, `page-${width}.png`), fullPage: true });
-  for (const [selector, filename] of [['.welcome', 'welcome'], ['.venues-intro', 'venues-intro'],
+  for (const [selector, filename] of [['.welcome', 'welcome'], ['#datum', 'countdown'], ['.venues-intro', 'venues-intro'],
     ['.venue-grid', 'locations'], ['.story-framed', 'story-framed'], ['.story-photos', 'photos'],
     ['.gift-section', 'gift-section'], ['.timeline-section', 'timeline-section'], ['footer', 'farewell']]) {
     await page.locator(selector).evaluate(element => element.scrollIntoView({ block: 'start', behavior: 'instant' }));
@@ -428,7 +477,7 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.keyboard.press('Escape');
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
   check(errors.length === 0, `${width}: browser errors ${errors.join('; ')}`);
-  results.push({ width, height, centerColors: diversity, ornaments: ornaments.length, cover, heroPlacement, linenFlow, panels,
+  results.push({ width, height, centerColors: diversity, ornaments: ornaments.length, cover, heroPlacement, linenFlow, panels, sceneDetails,
     farewell, timelineIcons, fallbackVisibility, errors });
   console.log(`${failures.length === startingFailures ? 'PASS' : 'FAIL'} viewport ${width}×${height}: continuous linen, equal widths, farewell swans, opener, art, keyboard, dialogs`);
   await context.close();
