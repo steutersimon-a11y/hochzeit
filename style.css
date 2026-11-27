@@ -50,12 +50,14 @@
 
 /* Each illustration has one place in the invitation; all artwork keeps its proportions. */
 .hero {
-  --curtain-drop: 77cqw;
+  --curtain-overhang: clamp(5px, .9cqw, 8px);
+  --curtain-extension: calc(var(--sheet-gutter) - var(--border-inset) + var(--curtain-overhang));
+  --curtain-span: calc(100cqw + 2 * var(--curtain-extension));
   position: relative;
   display: grid;
-  align-content: center;
-  min-height: calc(var(--curtain-drop) + 3.5rem);
-  padding-block: 2rem 3.5rem;
+  align-content: start;
+  min-height: calc(var(--curtain-span) * 941 / 1600 + 1.25rem);
+  padding-block: calc(var(--curtain-span) * .17 - .625rem) 3.5rem;
   text-align: center;
 }
 
@@ -63,7 +65,7 @@
   position: relative;
   width: 60%;
   margin-inline: auto;
-  z-index: 2;
+  z-index: 5;
 }
 
 .hero h1{font:62px/1.04 var(--serif);letter-spacing:-.5px}
@@ -81,21 +83,15 @@
 
 .hero-curtain {
   position: absolute;
-  /* Align the fabric seam with the inner line of the double frame. */
-  top: -10px;
-  left: calc(var(--border-inset) + 5px - var(--sheet-gutter));
-  width: 29cqw;
-  height: var(--curtain-drop);
+  /* The velvet sits just above the double line and inside the page edge. */
+  top: calc(-15px - var(--curtain-overhang));
+  left: 50%;
+  width: var(--curtain-span);
+  height: auto;
   max-width: none;
-  object-fit: contain;
-  object-position: left top;
+  transform: translateX(-50%);
+  z-index: 4;
   pointer-events: none;
-}
-
-.hero-curtain-right {
-  left: auto;
-  right: calc(var(--border-inset) + 5px - var(--sheet-gutter));
-  transform: scaleX(-1);
 }
 
 /* One linen surface, with spacing sized to the content of each scene. */
@@ -489,8 +485,6 @@ dialog{width:550px;max-width:calc(100% - 32px);max-height:90svh;padding:42px;bor
 .motion-enabled .reveal{opacity:0;transform:translateY(15px);transition:opacity .8s ease,transform .8s ease}.motion-enabled .reveal:focus-within,.motion-enabled .reveal.is-visible{opacity:1;transform:none}@keyframes soft-arrive{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 @media (min-width: 701px) {
-  .hero { --curtain-drop: 51cqw; }
-  .hero-curtain { width: 27cqw; }
   .hero-copy { width: 64%; }
   .hero h1 { font-size: clamp(2.4rem, 7.3cqw, 4rem); }
   .hero-title-text { flex-direction: row; justify-content: center; align-items: baseline; }

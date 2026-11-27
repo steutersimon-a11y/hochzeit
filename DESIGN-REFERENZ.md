@@ -18,9 +18,9 @@ Die Recherche vom 27. November 2026 ergänzt den Aufbau der Referenz um Ideen au
 
 ## Die neue Gestaltung
 
-Die aktuellen Bilddateien in [assets/loom](assets/loom/README.md) bilden eine gemeinsame Materialwelt: elfenbeinfarbenes Leinen, Salbeigrün, gedämpftes Mauve, Perlen und sichtbare Stickstiche. Jede große dekorative Szene hat genau einen Platz. Die beiden Vorhänge spiegeln dasselbe Stickmotiv.
+Die aktuellen Bilddateien in [assets/loom](assets/loom/README.md) bilden eine gemeinsame Materialwelt: elfenbeinfarbenes Leinen, Salbeigrün, gedämpftes Mauve, Perlen und sichtbare Stickstiche. Jede große dekorative Szene hat genau einen Platz.
 
-Die hochgeladene Schriftgrafik mit „WIR HEIRATEN“, den handgeschriebenen Namen und dem Datum steht mittig auf hellem Leinen. Ein Pfeil führt zur Begrüßung. Nachtblaue Vorhänge mit Perlenkante und rauchblauen Schleifen hängen direkt an der inneren Rahmenlinie. Die Grafiken skalieren proportional und werden vor Beginn der Kartenöffnung geladen.
+Die hochgeladene Aquarellschrift mit „WIR HEIRATEN“, den handgeschriebenen Namen und dem Datum steht mittig auf hellem Leinen. Ein Pfeil führt zur Begrüßung. Der hochgeladene nachtblaue Samtvorhang überspannt den Auftakt und ragt leicht über die äußere Rahmenlinie. Die Schriftgrafik steht mit Abstand unter der mittigen Schleife. Beide Grafiken skalieren proportional und werden vor Beginn der Kartenöffnung geladen.
 
 Eine kleine Stickborte aus blauen Knötchen, Blättern und Perlen leitet den Willkommensgruß ein. Im einzelnen nachtblauen Countdown-Medaillon steht die Zahl der verbleibenden Kalendertage. Es folgen beide illustrierten Orte mit ihren Angaben. Die neue Mago-Illustration übernimmt die Architektur, Fenster, Dach und Terrasse des eigenen Repository-Bildes. Die eigene Kirchenillustration wird freigestellt und im Ortsabschnitt vollständig dargestellt. Beide Orte behalten ihre Proportionen.
 
@@ -34,17 +34,17 @@ Beim Öffnen steht das geprägte M&S allein auf einem ovalen, champagnerfarbenen
 
 ## Blau im Inneren
 
-Die nachtblauen Vorhänge führen den Ton des Umschlags in die Einladung. Helle Perlen säumen den Stoff, rauchblaue Schleifen binden ihn seitlich zusammen. Rauchblaue Stickstiche finden sich in der Willkommensborte, der Ranke der Ortsansicht, den sechs Ablaufmotiven und den Schleifen für Countdown und Geschenk. Das Nachtblau kehrt im Aquarellrahmen und bei den Schwänen wieder. Salbei, Mauve und Elfenbein greifen die warme Palette der Illustrationen auf.
+Der nachtblaue Samtvorhang greift den Ton des Umschlags auf. Perlen säumen die seitlichen Stoffbahnen, eine Schleife sitzt mittig im oberen Bogen. Rauchblaue Stickstiche finden sich in der Willkommensborte, der Ranke der Ortsansicht, den sechs Ablaufmotiven und den Schleifen für Countdown und Geschenk. Das Nachtblau kehrt im Aquarellrahmen und bei den Schwänen wieder. Salbei, Mauve und Elfenbein greifen die warme Palette der Illustrationen auf.
 
 Die Schrift verwendet durchgehend Nachtblau (`#14263E`). Rauchblau (`#506D8D`) zeichnet die Stichlinie im Ablauf, die Fokusmarkierungen und den kurzen Faden am Monogramm. Auf dem Rückmeldebutton sorgt eine helle blaue Fläche für Kontrast zur nachtblauen Beschriftung.
 
 ## Durchgehendes Leinen
 
-Zwei durchgezogene Linien in Nacht- und Rauchblau fassen die gesamte geöffnete Einladung ein. Vier kleine elfenbeinfarbene Perlen schmücken die Ecken. Der seitliche Abstand lässt auf dem Handy Platz für Vorhänge, Schrift und Stickmotive.
+Zwei durchgezogene Linien in Nacht- und Rauchblau fassen die gesamte geöffnete Einladung ein. Vier kleine elfenbeinfarbene Perlen schmücken die Ecken. Am oberen Rand liegt der Samtvorhang leicht über den Linien. Seitlich bleibt Platz für Schrift und Stickmotive.
 
 Eine einzige feine Leinentextur bildet den Hintergrund des gesamten Dokuments. Opener, Begrüßung, Orte und Footer besitzen keinen eigenen deckenden Hintergrund und keine Abschnittsrandnähte. Die Motive wurden intern freigestellt; der Leinenuntergrund bleibt zwischen und hinter ihnen sichtbar. Header und Footer sind ebenfalls transparent.
 
-Die Breite der Einladung beträgt auf großen Bildschirmen maximal 880 Pixel, einschließlich des Openers. Die Höhe des Auftakts richtet sich nach der Länge der Vorhänge. Auf kleinen Bildschirmen stehen die Namen untereinander. Die Begrüßung wurde nach dem Versetzen der Schwäne verkürzt, damit kein leerer Bildabschnitt zurückbleibt.
+Die Inhaltsbreite beträgt auf großen Bildschirmen maximal 880 Pixel. Die Höhe des Auftakts richtet sich nach dem Samtvorhang und der übereinander angeordneten Schriftgrafik. Die Begrüßung wurde nach dem Versetzen der Schwäne verkürzt, damit kein leerer Bildabschnitt zurückbleibt.
 
 ## Eigene Inhalte und Herkunft
 

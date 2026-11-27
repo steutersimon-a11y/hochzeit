@@ -5,7 +5,7 @@ Die aktuelle Gestaltung setzt freigestellte Originalmotive auf eine einzige durc
 | Aktuelle Datei | Verwendung |
 | --- | --- |
 | `linen-ivory.webp` | Gemeinsamer heller, feiner Leinenhintergrund des ganzen Dokuments |
-| `curtain-navy.webp` | Separater hochauflösender Perlenvorhang, für die rechte Seite gespiegelt |
+| `curtain-navy.webp` | Früherer Perlenvorhang, ursprünglich für die rechte Seite gespiegelt |
 | `welcome-border.webp` | Schmale Begrüßungsborte mit blauen Knötchen, Perlen und Blättern |
 | `stitched-sprig-blue.webp` | Offene Ranke mit Rosen, Perlen und rauchblauen Knötchen |
 | `gift-bow-blue.webp` | Rauchblaue Schleife mit Perle für den Geschenkhinweis |

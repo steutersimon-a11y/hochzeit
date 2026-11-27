@@ -17,11 +17,11 @@ if (!playwright) throw new Error('Playwright or playwright-core is required.');
 
 const root = path.resolve(__dirname, '..');
 const output = process.env.INVITATION_QA_OUTPUT || '/tmp/wedding-qa';
-const requiredArt = ['welcome-border.webp', 'curtain-navy.webp',
+const requiredArt = ['welcome-border.webp',
   'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp',
   'countdown-navy.webp', 'timeline-blue.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
 const missing = requiredArt.filter(file => !fs.existsSync(path.join(root, 'assets/loom', file)));
-for (const file of ['linen-navy.webp', 'seal-relief-ms.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp']) {
+for (const file of ['linen-navy.webp', 'seal-relief-ms.webp', 'hero-curtain-velvet.webp', 'hero-lettering-blue.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp']) {
   if (!fs.existsSync(path.join(root, 'assets/art', file))) missing.push('assets/art/' + file);
 }
 if (missing.length) {
@@ -35,20 +35,20 @@ const results = [];
 function check(value, message) {
   if (!value) { failures.push(message); console.error('CHECK FAILED: ' + message); }
 }
-// Decorative scenes have one home; the same curtain is reflected at the two frame edges.
+// Each decorative scene has one home; the complete header curtain is one original image.
 const source = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const artSources = [...source.matchAll(/<img\b[^>]*\bsrc=["'](assets\/(?:loom|art)\/[^"']+)["']/g)]
   .map(match => match[1]);
 const sourceCounts = new Map();
 artSources.forEach(src => sourceCounts.set(src, (sourceCounts.get(src) || 0) + 1));
 for (const [src, count] of sourceCounts) {
-  check(count === (src === 'assets/loom/curtain-navy.webp' ? 2 : 1),
+  check(count === 1,
     `Static markup repeats a decorative scene: ${src} appears ${count} times`);
 }
 for (const file of ['welcome-border.webp', 'countdown-navy.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp']) {
   check(sourceCounts.get('assets/loom/' + file) === 1, `Missing unique textile scene: ${file}`);
 }
-for (const file of ['rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp']) {
+for (const file of ['hero-curtain-velvet.webp', 'hero-lettering-blue.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp']) {
   check(sourceCounts.get('assets/art/' + file) === 1, `Missing unique uploaded scene: ${file}`);
 }
 for (const file of ['rsvp-ribbon-top.webp', 'rsvp-ribbon-bottom.webp']) {
@@ -157,7 +157,7 @@ async function exerciseViewport(browser, baseURL, width) {
     return {
       scrollY: window.scrollY,
       y: hero.getBoundingClientRect().top,
-      loaded: images.length === (artworkExpected ? 3 : 2)
+      loaded: images.length === (artworkExpected ? 2 : 1)
         && images.every(image => image.matches('.hero-curtain,.hero-lettering') && image.complete && image.naturalWidth > 0),
       sources: images.map(image => image.currentSrc),
       opacity: Number(getComputedStyle(copy).opacity),
@@ -170,7 +170,7 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.screenshot({ path: midFile });
   const diversity = centerDiversity(midFile);
   check(mid.scrollY === 0 && mid.y >= 0 && mid.y < 50 && mid.loaded && mid.opacity > .7, `${width}: live first scene missing during opening ${JSON.stringify(mid)}`);
-  check(mid.sources.every(source => source.includes('assets/loom/curtain-navy.webp') || source.includes('assets/art/hero-lettering.webp')),
+  check(mid.sources.every(source => source.includes('assets/art/hero-curtain-velvet.webp') || source.includes('assets/art/hero-lettering-blue.webp')),
     `${width}: opening contains another illustration ${JSON.stringify(mid.sources)}`);
   check(mid.pseudoContent === 'none' || mid.pseudoBackground === 'rgba(0, 0, 0, 0)', `${width}: opaque page pseudo-element covers opener`);
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
@@ -206,7 +206,7 @@ async function exerciseViewport(browser, baseURL, width) {
       textContained: [...content, discover].every(rect => rect.left >= box.left - 1 && rect.right <= box.right + 1
         && rect.top >= box.top - 1 && rect.bottom <= box.bottom + 1) };
   });
-  check(heroPlacement.images === (heroPlacement.artworkExpected ? 3 : 2) && heroPlacement.removedChurch && heroPlacement.removedRegion
+  check(heroPlacement.images === (heroPlacement.artworkExpected ? 2 : 1) && heroPlacement.removedChurch && heroPlacement.removedRegion
     && heroPlacement.text === heroPlacement.expected, `${width}: simplified opening retains a church, region, or unexpected content ${JSON.stringify(heroPlacement)}`);
   check(heroPlacement.arrowOnly && (heroPlacement.artworkExpected
     ? heroPlacement.artworkVisible && !heroPlacement.duplicateText && heroPlacement.altCorrect
@@ -343,12 +343,21 @@ async function exerciseViewport(browser, baseURL, width) {
     const curtains = [...document.querySelectorAll('.hero-curtain')].map(image => {
       const box = image.getBoundingClientRect(), style = getComputedStyle(image);
       const scale = Math.min(box.width / image.naturalWidth, box.height / image.naturalHeight);
-      const paintedWidth = image.naturalWidth * scale, paintedHeight = image.naturalHeight * scale;
-      const mirrored = style.transform !== 'none' && new DOMMatrixReadOnly(style.transform).a < 0;
-      return { src: image.getAttribute('src'), fit: style.objectFit, position: style.objectPosition,
-        naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight, paintedWidth, paintedHeight, mirrored,
-        topOffset: box.top - frame.top,
-        edgeOffset: mirrored ? frame.right - box.right : box.left - frame.left };
+      const paintedWidth = style.objectFit === 'contain' ? image.naturalWidth * scale : box.width;
+      const paintedHeight = style.objectFit === 'contain' ? image.naturalHeight * scale : box.height;
+      const aspectError = Math.abs((box.width / box.height) / (image.naturalWidth / image.naturalHeight) - 1);
+      const [horizontal, vertical] = style.objectPosition.split(' ');
+      const offset = (position, space) => position.endsWith('%') ? parseFloat(position) / 100 * space : parseFloat(position) || 0;
+      const paintedLeft = box.left + offset(horizontal, box.width - paintedWidth);
+      const paintedTop = box.top + offset(vertical, box.height - paintedHeight);
+      const transform = new DOMMatrixReadOnly(style.transform === 'none' ? undefined : style.transform);
+      return { src: image.getAttribute('src'), fit: style.objectFit, position: style.objectPosition, aspectError,
+        naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight, paintedWidth, paintedHeight,
+        decorative: image.alt === '' && style.pointerEvents === 'none',
+        upright: transform.a > 0 && transform.d > 0 && Math.abs(transform.b) < .001 && Math.abs(transform.c) < .001,
+        leftOverhang: frame.left - paintedLeft, rightOverhang: paintedLeft + paintedWidth - frame.right,
+        topOverhang: frame.top - paintedTop,
+        viewportSafe: paintedLeft >= -1 && paintedLeft + paintedWidth <= innerWidth + 1 && paintedTop + scrollY >= -1 };
     });
     const welcomeArt = document.querySelector('.welcome-border').getBoundingClientRect();
     const welcomeCopy = document.querySelector('.welcome-copy').getBoundingClientRect();
@@ -371,14 +380,12 @@ async function exerciseViewport(browser, baseURL, width) {
         numberContained: number.left >= circle.left && number.right <= circle.right
           && number.top >= circle.top && number.bottom <= circle.bottom } };
   });
-  check(sceneDetails.curtains.length === 2 && sceneDetails.curtains.every(curtain =>
-    curtain.src.endsWith('curtain-navy.webp') && curtain.fit === 'contain' && curtain.position === '0% 0%'
-      && curtain.naturalWidth > 0 && curtain.naturalHeight > 0
-      && Math.abs(curtain.topOffset - 5) <= 1 && Math.abs(curtain.edgeOffset - 5) <= 1)
-    && sceneDetails.curtains[0].mirrored !== sceneDetails.curtains[1].mirrored
-    && Math.abs(sceneDetails.curtains[0].paintedWidth - sceneDetails.curtains[1].paintedWidth) <= 1
-    && Math.abs(sceneDetails.curtains[0].paintedHeight - sceneDetails.curtains[1].paintedHeight) <= 1,
-    `${width}: curtains do not meet the frame or keep their proportions ${JSON.stringify(sceneDetails.curtains)}`);
+  check(sceneDetails.curtains.length === 1 && sceneDetails.curtains.every(curtain =>
+    curtain.src === 'assets/art/hero-curtain-velvet.webp'
+      && (curtain.fit === 'contain' || curtain.fit === 'fill' && curtain.aspectError < .012)
+      && curtain.naturalWidth === 1600 && curtain.naturalHeight === 941 && curtain.upright && curtain.decorative && curtain.viewportSafe
+      && [curtain.topOverhang, curtain.leftOverhang, curtain.rightOverhang].every(overhang => overhang >= 4 && overhang <= 9)),
+    `${width}: single curtain is distorted, clipped, or exceeds its controlled frame overhang ${JSON.stringify(sceneDetails.curtains)}`);
   check(sceneDetails.welcomeGap >= -1, `${width}: welcome ornament covers the message (${sceneDetails.welcomeGap}px gap)`);
   const dayCounter = sceneDetails.countdown;
   check(dayCounter.images === 1 && dayCounter.obsolete === 0 && !/stund|minut/i.test(dayCounter.text)

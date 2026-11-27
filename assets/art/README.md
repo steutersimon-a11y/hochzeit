@@ -16,7 +16,9 @@ Die sieben Motive sind zwei Leinenhüllen für Handy und Desktop, Elfenbeinsiege
 
 ## Schriftgrafik im Auftakt
 
-`hero-lettering.webp` ist die verlustfrei konvertierte Fassung der hochgeladenen Datei `Wir heiraten_ Marie & Simon.png`. Der Zuschnitt kürzt den transparenten Außenrand für die Darstellung zwischen den Vorhängen.
+`hero-lettering-blue.webp` ist die verlustfrei konvertierte Fassung der hochgeladenen Datei `Elegante Hochzeitseinladung in Blau.png`. Der Zuschnitt verkürzt den transparenten Außenrand. `hero-lettering.webp` gehört zur früheren Schriftfassung.
+
+`hero-curtain-velvet.webp` ist der hochgeladene `Navy-Velvet-Theatervorhang mit Perlen.png` als verlustfreies WebP. Der Zuschnitt kürzt die vollständig transparenten Seitenränder.
 
 ## Aquarellbänder und Abschied
 
