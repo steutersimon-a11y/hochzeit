@@ -12,7 +12,7 @@ Die öffentliche Referenz und ihre vollständige Live-Einladung wurden erneut ge
 
 Die Vorhänge hängen direkt an der inneren Rahmenlinie. Eine kleine Stickborte leitet den Willkommensgruß ein. Ein einzelnes nachtblaues Medaillon zeigt die verbleibenden Kalendertage bis zur Hochzeit. Ortsangaben und Illustrationen stehen zusammen. Eine gestickte Ranke leitet die Ortsansicht ein, eine kleine Perlenschleife begleitet den Geschenkhinweis. Die Geschichte und ihre beiden Fotos teilen sich auf großen Bildschirmen eine Zeile. Die Beschriftungen bleiben auf kleinen Displays frei. Eine durchgehende Stichlinie verbindet die sechs Stationen des Tagesablaufs.
 
-Die beiden hochgeladenen Aquarellbänder rahmen die Rückmeldung auf dem hellen Leinen ein. Die neuen Aquarellschwäne bilden mit dem Datum und den Initialen den Abschluss.
+Die hochgeladene nachtblaue Aquarellschleife rahmt die Rückmeldung mit großzügigem Abstand zum Text ein. Die Aquarellschwäne mit Datum und Initialen bilden etwas kleiner gesetzt den Abschluss.
 
 Die Sachangaben stehen in `wedding-config.js`. Die angefragten neuen Fotos fehlen noch. Aktuell zeigt die Einladung das vorhandene Paar- und Ringfoto. [Analyse und Umsetzung](DESIGN-REFERENZ.md) · [Neue Bildserie](assets/loom/README.md).
 

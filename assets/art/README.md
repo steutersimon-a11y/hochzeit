@@ -20,4 +20,4 @@ Die sieben Motive sind zwei Leinenhüllen für Handy und Desktop, Elfenbeinsiege
 
 ## Aquarellbänder und Abschied
 
-`rsvp-ribbon-top.webp` und `rsvp-ribbon-bottom.webp` sind die für die Seite skalierten Fassungen von `Dunkelblaues Aquarellbandornament.png` und `Dunkelblauer Aquarell-Rahmen mit Schleifenwicklungen.png`. `farewell-swans-watercolor.webp` enthält die hochgeladenen Aquarellschwäne mit Datum und Initialen als verlustfreies WebP mit verkürztem transparentem Außenrand. Die Originale liegen im selben Ordner.
+`rsvp-ribbon-frame.webp` ist die für die Seite skalierte Fassung von `Dunkelblaue Aquarellschleife mit Rahmen.png`. `rsvp-ribbon-top.webp` und `rsvp-ribbon-bottom.webp` gehören zur früheren zweiteiligen Fassung. `farewell-swans-watercolor.webp` enthält die hochgeladenen Aquarellschwäne mit Datum und Initialen als verlustfreies WebP mit verkürztem transparentem Außenrand. Die Originale liegen im selben Ordner.

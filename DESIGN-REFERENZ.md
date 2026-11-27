@@ -24,7 +24,7 @@ Die hochgeladene Schriftgrafik mit „WIR HEIRATEN“, den handgeschriebenen Nam
 
 Eine kleine Stickborte aus blauen Knötchen, Blättern und Perlen leitet den Willkommensgruß ein. Im einzelnen nachtblauen Countdown-Medaillon steht die Zahl der verbleibenden Kalendertage. Es folgen beide illustrierten Orte mit ihren Angaben. Die neue Mago-Illustration übernimmt die Architektur, Fenster, Dach und Terrasse des eigenen Repository-Bildes. Die eigene Kirchenillustration wird freigestellt und im Ortsabschnitt vollständig dargestellt. Beide Orte behalten ihre Proportionen.
 
-Geschichte, eigene Fotos, Tagesablauf, Hinweise, Geschenke und Rückmeldung schließen die Einladung ab. Eine nachtblaue Aquarellschleife und ein geschwungenes Band rahmen die Rückmeldung ein. Die hochgeladenen Aquarellschwäne mit Datum und Initialen bilden im Footer das letzte Motiv. Der Ablauf zeigt sechs verschiedene Stickmotive: Kirche für Ankunft, Ringe für Trauung, Sektgläser für Anstoßen, Cocktail für Aperitif, Teller und Besteck für Dinner sowie Discokugel für Tanz. Eine feine durchgehende Stichlinie verbindet die Stationen. Der Dresscode wurde auf Wunsch entfernt. Der Geschenkhinweis erscheint einmal und wird im FAQ nicht wiederholt.
+Geschichte, eigene Fotos, Tagesablauf, Hinweise, Geschenke und Rückmeldung schließen die Einladung ab. Ein großzügiger, einteiliger Aquarellrahmen mit nachtblauer Schleife fasst die Rückmeldung ein. Die Aquarellschwäne mit Datum und Initialen bilden auf drei Viertel ihrer bisherigen Darstellungsgröße das letzte Motiv. Der Ablauf zeigt sechs verschiedene Stickmotive: Kirche für Ankunft, Ringe für Trauung, Sektgläser für Anstoßen, Cocktail für Aperitif, Teller und Besteck für Dinner sowie Discokugel für Tanz. Eine feine durchgehende Stichlinie verbindet die Stationen. Der Dresscode wurde auf Wunsch entfernt. Der Geschenkhinweis erscheint einmal und wird im FAQ nicht wiederholt.
 
 Cormorant Garamond trägt Überschriften und Fließtext. Kleine Beschriftungen und Bedienfelder verwenden Manrope. Kartenöffnung und ruhige Scroll-Einblendungen unterstützen den Verlauf. Die Einstellung für reduzierte Bewegung wird berücksichtigt.
 
@@ -34,7 +34,7 @@ Beim Öffnen steht das geprägte M&S allein auf einem ovalen, champagnerfarbenen
 
 ## Blau im Inneren
 
-Die nachtblauen Vorhänge führen den Ton des Umschlags in die Einladung. Helle Perlen säumen den Stoff, rauchblaue Schleifen binden ihn seitlich zusammen. Rauchblaue Stickstiche finden sich in der Willkommensborte, der Ranke der Ortsansicht, den sechs Ablaufmotiven und den Schleifen für Countdown und Geschenk. Das Nachtblau kehrt in den Aquarellbändern und den Schwänen wieder. Salbei, Mauve und Elfenbein greifen die warme Palette der Illustrationen auf.
+Die nachtblauen Vorhänge führen den Ton des Umschlags in die Einladung. Helle Perlen säumen den Stoff, rauchblaue Schleifen binden ihn seitlich zusammen. Rauchblaue Stickstiche finden sich in der Willkommensborte, der Ranke der Ortsansicht, den sechs Ablaufmotiven und den Schleifen für Countdown und Geschenk. Das Nachtblau kehrt im Aquarellrahmen und bei den Schwänen wieder. Salbei, Mauve und Elfenbein greifen die warme Palette der Illustrationen auf.
 
 Die Schrift verwendet durchgehend Nachtblau (`#14263E`). Rauchblau (`#506D8D`) zeichnet die Stichlinie im Ablauf, die Fokusmarkierungen und den kurzen Faden am Monogramm. Auf dem Rückmeldebutton sorgt eine helle blaue Fläche für Kontrast zur nachtblauen Beschriftung.
 
