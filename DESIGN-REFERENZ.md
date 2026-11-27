@@ -30,7 +30,7 @@ Cormorant Garamond trägt Namen, Überschriften und Fließtext. Kleine Beschrift
 
 ## Nachtblauer Umschlag
 
-Beim Öffnen steht das geprägte M&S allein auf einem ovalen, champagnerfarbenen Wachssiegel. Der bereitgestellte Screenshot war die Vorlage für die Form und das feine Doppeloval. Siegel und nachtblaues Leinen sind neu erzeugt. Ein Klick auf das Siegel lässt die beiden Leinenflügel auseinandergehen und legt die helle Kirchenszene frei.
+Beim Öffnen steht das geprägte M&S allein auf einem ovalen, champagnerfarbenen Wachssiegel. Die aufrechten Serifen sind mittig gestaffelt. Lichtkanten und Schatten geben dem Monogramm dasselbe Relief wie dem Doppeloval. Der bereitgestellte Screenshot war die Vorlage für die Form und das feine Doppeloval. Siegel und nachtblaues Leinen sind neu erzeugt. Ein Klick auf das Siegel lässt die beiden Leinenflügel auseinandergehen und legt die helle Kirchenszene frei.
 
 ## Durchgehendes Leinen
 

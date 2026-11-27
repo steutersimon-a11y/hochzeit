@@ -1,9 +1,3 @@
-@font-face {
-  font-family: SealScript;
-  src: url('assets/fonts/pinyon-script-latin-400-normal.woff2') format('woff2');
-  font-display: swap;
-}
-
 /* The navy cloth leaves part to reveal the already rendered invitation. */
 .opening {
   position: fixed;
@@ -127,31 +121,18 @@
 
 .seal-monogram {
   position: absolute;
-  inset: 0;
-  color: #d0ae8b;
-  font: calc(var(--seal-width) * .345)/1 SealScript, var(--serif);
-  text-shadow: 0 -1px 0 #ffe9c9, 0 1px 0 #654728, 0 2px 3px #634429bb;
-  -webkit-text-stroke: .25px #917055;
+  inset: 20% 22%;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  row-gap: calc(var(--seal-width) * .02);
+  color: #cdb392;
+  font: 500 calc(var(--seal-width) * .26)/.78 var(--serif);
+  text-shadow: -1px -1px #ffe6c5, 1px 1px #977657, 1px 2px #806144, 2px 3px 3px #59412a8c;
   pointer-events: none;
 }
 
-.seal-monogram > * {
-  position: absolute;
-  transform: translate(-50%, -50%);
-}
-
-.seal-monogram > [data-initial="0"] { left: 46%; top: 42%; }
-.seal-monogram > em {
-  z-index: 1;
-  left: 49%;
-  top: 52%;
-  font: italic calc(var(--seal-width) * .235)/1 var(--serif);
-}
-.seal-monogram > [data-initial="1"] {
-  left: 57%;
-  top: 61%;
-  font: italic calc(var(--seal-width) * .36)/1 var(--serif);
-}
+.seal-amp { font-size: .65em; }
 
 .is-opening .gate-left { transform: rotateY(-112deg); transition-delay: .12s; }
 .is-opening .gate-right,

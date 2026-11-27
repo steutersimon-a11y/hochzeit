@@ -32,12 +32,36 @@ async function openInvitation(page) {
   await page.evaluate(() => document.fonts.ready);
   const opening = page.locator('#opening');
   if (await opening.isVisible()) {
-    const cover = await opening.evaluate(element => ({ text: element.innerText.replace(/\s+/g, ''),
-      expected: window.WEDDING.names.map(name => [...name.trim()][0]).join('&'),
-      oldContent: element.querySelectorAll('#open-text,.opening-note,.opening-bottom').length,
-      buttons: [...element.querySelectorAll('button')].map(button => button.id) }));
+    const cover = await opening.evaluate(element => {
+      const visible = node => !!node && getComputedStyle(node).display !== 'none'
+        && getComputedStyle(node).visibility !== 'hidden' && node.getBoundingClientRect().width > 0;
+      const stamped = element.querySelector('img.seal-stamped'), blank = element.querySelector('img.seal-blank');
+      const monogram = element.querySelector('.seal-monogram');
+      const initials = window.WEDDING.names.map(name => [...name.trim()][0]);
+      return { text: element.innerText.replace(/\s+/g, ''), expected: initials.join('&'),
+        stampedExpected: initials.join('') === 'MS', stampedVisible: visible(stamped), blankVisible: visible(blank),
+        monogramVisible: visible(monogram), stampedAlt: stamped?.getAttribute('alt'),
+        stampedEmbedded: stamped?.getAttribute('src')?.startsWith('data:image/webp;base64,'),
+        upright: [monogram, ...(monogram?.children || [])].filter(Boolean).every(node => {
+          const transform = getComputedStyle(node).transform;
+          if (transform === 'none') return true;
+          const matrix = new DOMMatrixReadOnly(transform);
+          return Math.abs(matrix.b) < .001 && Math.abs(matrix.c) < .001;
+        }),
+        oldContent: element.querySelectorAll('#open-text,.opening-note,.opening-bottom').length,
+        buttons: [...element.querySelectorAll('button')].map(button => button.id) };
+    });
     assert.equal(cover.oldContent, 0, 'Standalone cover retains old opening text or buttons.');
-    assert.equal(cover.text, cover.expected, 'Standalone cover must show only the monogram.');
+    if (cover.stampedExpected) {
+      assert(cover.stampedVisible && !cover.blankVisible && !cover.monogramVisible, 'Default cover must show one relief seal without text overlays.');
+      assert.equal(cover.text, '', 'Default relief seal must not retain visible HTML lettering.');
+      assert.equal(cover.stampedAlt, '', 'The seal button label supplies the accessible text.');
+      assert(cover.stampedEmbedded, 'Standalone cover must embed its relief seal.');
+    } else {
+      assert(!cover.stampedVisible && cover.blankVisible && cover.monogramVisible, 'Edited initials must switch to blank seal artwork with editable lettering.');
+      assert.equal(cover.text, cover.expected, 'Edited cover must show its own initials.');
+      assert(cover.upright, 'Editable monogram must remain upright.');
+    }
     assert.deepEqual(cover.buttons, ['open-invitation'], 'Standalone cover must open from its single seal button.');
     await page.locator('#open-invitation').click();
     await opening.waitFor({ state: 'hidden' });

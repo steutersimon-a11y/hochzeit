@@ -12,4 +12,4 @@ Die sieben Motive sind zwei Leinenhüllen für Handy und Desktop, Elfenbeinsiege
 
 ## Nachtblauer Umschlag
 
-`linen-navy.webp` ist die neue Leinentextur der Kartenflügel. `seal-champagne.webp` ist ein eigenständig erzeugtes, freigestelltes Wachssiegel mit leicht unregelmäßigem Rand und feinem Doppeloval. Der bereitgestellte Screenshot diente als Stilvorlage. Das geprägte Monogramm wird aus den Initialen der Einladung gesetzt und lässt sich im Editor automatisch anpassen.
+`linen-navy.webp` ist die neue Leinentextur der Kartenflügel. `seal-champagne.webp` ist ein eigenständig erzeugtes, freigestelltes Wachssiegel mit leicht unregelmäßigem Rand und feinem Doppeloval. Der bereitgestellte Screenshot diente als Stilvorlage. `seal-relief-ms.webp` zeigt das mittig geprägte M&S mit aufrechten Serifen, abgerundeten Lichtkanten und Wachsschatten. Bei geänderten Initialen setzt der Editor diese mittig auf das Blankosiegel.

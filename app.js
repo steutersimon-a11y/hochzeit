@@ -10,11 +10,16 @@
   const inlineNames = () => config.names.join(' & ');
 
   function render() {
+    const initials = config.names.map(name => [...name.trim()][0] || '');
+    const hasStampedSeal = initials[0] === 'M' && initials[1] === 'S';
+    $('.seal-stamped').hidden = !hasStampedSeal;
+    $('.seal-blank').hidden = hasStampedSeal;
+    $('.seal-monogram').hidden = hasStampedSeal;
     $$('[data-bind]').forEach(el => { el.textContent = pathValue(el.dataset.bind) ?? ''; });
     $$('[data-name]').forEach(el => { el.textContent = config.names[+el.dataset.name] ?? ''; });
-    $$('[data-initial]').forEach(el => { el.textContent = [...(config.names[+el.dataset.initial] || '').trim()][0] || ''; });
+    $$('[data-initial]').forEach(el => { el.textContent = initials[+el.dataset.initial] || ''; });
     $$('.names-inline').forEach(el => { el.textContent = inlineNames(); });
-    $$('.initials').forEach(el => { el.textContent = config.names.map(n => [...n.trim()][0] || '').join(' · '); });
+    $$('.initials').forEach(el => { el.textContent = initials.join(' · '); });
     document.title = inlineNames() + ' · Wir heiraten';
     $$('[data-map]').forEach(link => {
       const route = new URL('https://www.google.com/maps/dir/');
@@ -106,7 +111,7 @@
 
   const opening = $('#opening');
   const seal = $('#open-invitation');
-  const openingSessionKey = 'invitation-opened-navy-v7';
+  const openingSessionKey = 'invitation-opened-relief-v8';
 
   async function openInvitation() {
     if (opening.classList.contains('is-opening') || opening.hasAttribute('aria-busy')) return;

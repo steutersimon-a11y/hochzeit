@@ -21,7 +21,7 @@ const requiredArt = ['opener-flow.webp', 'opener-flow-desktop.webp', 'welcome-fl
   'farewell-swans.webp', 'stitched-sprig.webp', 'gift-bow.webp',
   'medallion.webp', 'timeline-flow.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
 const missing = requiredArt.filter(file => !fs.existsSync(path.join(root, 'assets/loom', file)));
-for (const file of ['linen-navy.webp', 'seal-champagne.webp']) {
+for (const file of ['linen-navy.webp', 'seal-relief-ms.webp']) {
   if (!fs.existsSync(path.join(root, 'assets/art', file))) missing.push('assets/art/' + file);
 }
 if (missing.length) {
@@ -98,20 +98,26 @@ async function exerciseViewport(browser, baseURL, width) {
   await overflow(page, `${width} initial`);
   check(await page.evaluate(() => document.querySelector('main').inert), `${width}: main is interactive behind opening`);
   const cover = await page.locator('#opening').evaluate(opening => {
+    const visible = element => !!element && getComputedStyle(element).display !== 'none'
+      && getComputedStyle(element).visibility !== 'hidden' && element.getBoundingClientRect().width > 0;
     const focusable = [...opening.querySelectorAll('a[href],button,input,select,textarea,[tabindex]')]
       .filter(element => !element.disabled && element.tabIndex >= 0 && element.getBoundingClientRect().width > 0);
+    const stamped = opening.querySelector('img.seal-stamped'), blank = opening.querySelector('img.seal-blank');
+    const monogram = opening.querySelector('.seal-monogram');
     return { text: opening.innerText.replace(/\s+/g, ''), expected: window.WEDDING.names.map(name => [...name.trim()][0]).join('&'),
       buttons: [...opening.querySelectorAll('button')].map(button => button.id), focusable: focusable.map(element => element.id),
       sealTag: opening.querySelector('#open-invitation')?.tagName,
-      seal: opening.querySelector('#open-invitation img')?.getAttribute('src'),
+      seal: stamped?.getAttribute('src'), sealAlt: stamped?.getAttribute('alt'),
+      stampedVisible: visible(stamped), blankVisible: visible(blank), monogramVisible: visible(monogram),
       linen: getComputedStyle(opening.querySelector('.door-face')).backgroundImage,
       removed: opening.querySelectorAll('#open-text,.opening-note,.opening-bottom').length };
   });
-  check(cover.text === cover.expected && cover.removed === 0, `${width}: cover contains extra text or old opening content ${JSON.stringify(cover)}`);
+  check(cover.text === '' && cover.removed === 0, `${width}: stamped cover contains extra text or old opening content ${JSON.stringify(cover)}`);
   check(cover.sealTag === 'BUTTON' && cover.buttons.length === 1 && cover.buttons[0] === 'open-invitation'
     && cover.focusable.length === 1 && cover.focusable[0] === 'open-invitation', `${width}: seal is not the only cover control ${JSON.stringify(cover)}`);
-  check(cover.seal?.includes('assets/art/seal-champagne.webp') && cover.linen.includes('assets/art/linen-navy.webp'),
-    `${width}: navy linen or champagne seal is missing ${JSON.stringify(cover)}`);
+  check(cover.seal?.endsWith('seal-relief-ms.webp') && cover.sealAlt === '' && cover.stampedVisible
+    && !cover.blankVisible && !cover.monogramVisible && cover.linen.includes('assets/art/linen-navy.webp'),
+    `${width}: centered relief seal is missing or doubled ${JSON.stringify(cover)}`);
   check(await page.evaluate(() => document.activeElement.id === 'opening'), `${width}: initial cover focus should avoid a seal halo`);
   await page.screenshot({ path: path.join(output, `closed-${width}.png`) });
   await page.keyboard.press('Tab');
