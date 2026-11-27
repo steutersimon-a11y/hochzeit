@@ -17,9 +17,9 @@ if (!playwright) throw new Error('Playwright or playwright-core is required.');
 
 const root = path.resolve(__dirname, '..');
 const output = process.env.INVITATION_QA_OUTPUT || '/tmp/wedding-qa';
-const requiredArt = ['opener-flow.webp', 'opener-flow-desktop.webp', 'welcome-flow.webp',
-  'farewell-swans.webp', 'stitched-sprig.webp', 'gift-bow.webp',
-  'medallion.webp', 'timeline-flow.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
+const requiredArt = ['opener-blue.webp', 'opener-blue-desktop.webp', 'welcome-blue.webp',
+  'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp',
+  'medallion.webp', 'timeline-blue.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
 const missing = requiredArt.filter(file => !fs.existsSync(path.join(root, 'assets/loom', file)));
 for (const file of ['linen-navy.webp', 'seal-relief-ms.webp']) {
   if (!fs.existsSync(path.join(root, 'assets/art', file))) missing.push('assets/art/' + file);
@@ -45,7 +45,7 @@ for (const [src, count] of sourceCounts) {
   check(count === (src === 'assets/loom/medallion.webp' ? 3 : 1),
     `Static markup repeats a decorative scene: ${src} appears ${count} times`);
 }
-for (const file of ['opener-flow.webp', 'welcome-flow.webp', 'farewell-swans.webp', 'stitched-sprig.webp', 'gift-bow.webp']) {
+for (const file of ['opener-blue.webp', 'welcome-blue.webp', 'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp']) {
   check(sourceCounts.get('assets/loom/' + file) === 1, `Missing unique textile scene: ${file}`);
 }
 // Guests' own information stays intact; the requested Dresscode is removed,
@@ -74,6 +74,14 @@ async function overflow(page, label) {
   }));
   check(dimensions.document <= dimensions.viewport + 1 && dimensions.body <= dimensions.viewport + 1,
     `${label}: horizontal overflow ${JSON.stringify(dimensions)}`);
+}
+async function navyText(page, selector, label) {
+  const mismatches = await page.locator(selector).evaluateAll(roots => roots.flatMap(root => [root, ...root.querySelectorAll('*')])
+    .filter(element => element.getBoundingClientRect().width > 0 && element.getBoundingClientRect().height > 0
+      && [...element.childNodes].some(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim()))
+    .map(element => ({ text: element.textContent.trim().slice(0, 60), color: getComputedStyle(element).color }))
+    .filter(element => element.color !== 'rgb(20, 38, 62)'));
+  check(mismatches.length === 0, `${label}: interior text is not navy ${JSON.stringify(mismatches)}`);
 }
 function centerDiversity(file) {
   const result = spawnSync('python3', ['-c',
@@ -152,7 +160,7 @@ async function exerciseViewport(browser, baseURL, width) {
   const diversity = centerDiversity(midFile);
   check(mid.y === 0 && mid.loaded && mid.opacity > .7, `${width}: live first scene missing during opening ${JSON.stringify(mid)}`);
   check(diversity > 150, `${width}: mid-opening central scene is blank (${diversity} sampled colors)`);
-  check(mid.source.includes('assets/loom/opener-flow'), `${width}: wrong first-scene artwork source`);
+  check(mid.source.includes('assets/loom/opener-blue'), `${width}: wrong first-scene artwork source`);
   check(mid.pseudoContent === 'none' || mid.pseudoBackground === 'rgba(0, 0, 0, 0)', `${width}: opaque page pseudo-element covers opener`);
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
   check(await page.evaluate(() => !document.querySelector('main').inert), `${width}: page stays inert after opening`);
@@ -214,6 +222,7 @@ async function exerciseViewport(browser, baseURL, width) {
   if (!currentConfig.scheduleConfirmed) {
     check(await page.locator('main').evaluate(main => /vorläufig/i.test(main.innerText)), `${width}: provisional schedule has no visible label`);
   }
+  await navyText(page, 'main,footer', `${width} invitation`);
   await page.evaluate(() => document.activeElement?.blur());
   await page.screenshot({ path: path.join(output, `opened-${width}.png`) });
   await page.locator('.hero').screenshot({ path: path.join(output, `hero-${width}.png`) });
@@ -314,7 +323,7 @@ async function exerciseViewport(browser, baseURL, width) {
   check(new Set(timelineIcons.map(icon => icon.position)).size === timelineIcons.length,
     `${width}: timeline repeats a sprite cell`);
   for (const icon of timelineIcons) {
-    check(icon.source.includes('timeline-flow.webp') && Math.abs(icon.ratio-2/3) < .01 && icon.overlays === 0,
+    check(icon.source.includes('timeline-blue.webp') && Math.abs(icon.ratio-2/3) < .01 && icon.overlays === 0,
       `${width}: distorted or doubled timeline icon ${JSON.stringify(icon)}`);
   }
   const venueImages = await page.evaluate(() => [...document.querySelectorAll('.venue-art>[data-photo]')].map(image => {
@@ -370,6 +379,7 @@ async function exerciseViewport(browser, baseURL, width) {
   const dialogBox = await page.locator('#rsvp-dialog').boundingBox();
   check(dialogBox.x >= 0 && dialogBox.x + dialogBox.width <= width + 1, `${width}: RSVP dialog outside viewport`);
   check(dialogBox.height <= height * .91, `${width}: RSVP dialog exceeds viewport height`);
+  await navyText(page, '#rsvp-dialog', `${width} RSVP dialog`);
   if (!await page.evaluate(() => window.WEDDING.rsvpEmail)) {
     check(!await page.locator('#rsvp-form').isVisible(), `${width}: unconfigured RSVP asks guests to fill a form`);
     check(await page.locator('#rsvp-note').isVisible() && (await page.locator('#rsvp-note').textContent()).trim().length > 0,

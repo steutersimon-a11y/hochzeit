@@ -1,6 +1,6 @@
 # Marie & Simon · Embroidered Garden
 
-Eine digitale Hochzeitseinladung auf einem durchgehenden Leinentuch: eigene Kirche unter Perlenvorhängen, Glyzinien, offene Stickranken, passende Ortsillustrationen und sechs Ablaufmotive. Die beiden Schwäne bilden ganz unten den Abschied. Opener und weiterer Verlauf haben dieselbe Breite. Ein ovales M&S-Siegel aus champagnerfarbenem Wachs öffnet die nachtblauen Leinenflügel direkt auf die Kirchenszene. Inspiriert vom tatsächlichen Bildaufbau von [The Digital Yes](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
+Eine digitale Hochzeitseinladung auf einem durchgehenden Leinentuch: eigene Kirche unter nachtblauen Perlenvorhängen mit rauchblauen Schleifen, Glyzinien, offene Stickranken, passende Ortsillustrationen und sechs Ablaufmotive. Die beiden Schwäne bilden ganz unten den Abschied. Opener und weiterer Verlauf haben dieselbe Breite. Ein ovales M&S-Siegel aus champagnerfarbenem Wachs öffnet die nachtblauen Leinenflügel direkt auf die Kirchenszene. Inspiriert vom tatsächlichen Bildaufbau von [The Digital Yes](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
 
 [Auftakt](preview-opener.png) · [Handy-Vorschau](preview-mobile.png) · [Desktop-Vorschau](preview-desktop.png) · [Die Locations](preview-locations.png) · [Eure Fotos](preview-fotos.png)
 
@@ -8,7 +8,7 @@ Eine digitale Hochzeitseinladung auf einem durchgehenden Leinentuch: eigene Kirc
 
 ## Neue Gestaltung
 
-Die öffentliche Referenz und ihre vollständige Live-Einladung wurden erneut geöffnet und visuell untersucht. Die Einladung kombiniert einen nachtblauen Umschlag mit hellem Leinen, Salbeigrün, Mauve, Perlen und Stickstichen im Inneren. Eine einzige gekachelte Leinentextur läuft hinter der gesamten Einladung durch. Die Stickmotive sind transparente Auflagen ohne eigene rechteckige Leinenfläche. Der Opener wurde anhand der eigenen Kirchenillustration gestaltet; das neue Mago-Bild anhand der eigenen Restaurantillustration. Der Ablauf zeigt Kirche, Ringe, Sektgläser, Cocktail, Dinner und Discokugel.
+Die öffentliche Referenz und ihre vollständige Live-Einladung wurden erneut geöffnet und visuell untersucht. Die nachtblaue Schrift verbindet den Umschlag mit dem hellen Leinen im Inneren. Rauchblaue Details setzen Akzente in der Stickerei zwischen Salbei, Mauve und Elfenbein. Eine einzige gekachelte Leinentextur läuft hinter der gesamten Einladung durch. Die Stickmotive sind transparente Auflagen ohne eigene rechteckige Leinenfläche. Der Opener wurde anhand der eigenen Kirchenillustration gestaltet; das neue Mago-Bild anhand der eigenen Restaurantillustration. Der Ablauf zeigt Kirche, Ringe, Sektgläser, Cocktail, Dinner und Discokugel.
 
 Ortsangaben und Illustrationen stehen zusammen. Eine gestickte Ranke leitet die Ortsansicht ein, eine kleine Perlenschleife begleitet den Geschenkhinweis. Die Geschichte und ihre beiden Fotos teilen sich auf großen Bildschirmen eine Zeile. Die Beschriftungen bleiben auf kleinen Displays frei. Eine durchgehende Stichlinie verbindet die sechs Stationen des Tagesablaufs.
 

@@ -20,7 +20,7 @@ Die Recherche vom 27. November 2026 ergänzt den Aufbau der Referenz um Ideen au
 
 Die aktuellen Bilddateien in [assets/loom](assets/loom/README.md) bilden eine gemeinsame Materialwelt: elfenbeinfarbenes Leinen, Salbeigrün, gedämpftes Mauve, Perlen und sichtbare Stickstiche. Jede große dekorative Szene hat genau einen Platz. Nur die drei Countdown-Medaillons wiederholen sich bewusst als zusammengehörige Anzeigen.
 
-Der Opener zeigt die eigene Kirche aus dem Repository: heller polygonaler Baukörper, rotes Dach und dunkler Dachreiter. Perlenvorhänge rahmen die Namen ein. Die Szene ist schon geladen, bevor die Kartenflügel öffnen. Ihre natürlichen Bildkoordinaten bestimmen die Textposition; Datum und Ortsangabe bleiben oberhalb des Turms.
+Der Opener zeigt die eigene Kirche aus dem Repository: heller polygonaler Baukörper, rotes Dach und dunkler Dachreiter. Nachtblaue Vorhänge mit elfenbeinfarbener Perlenkante und rauchblauen Seidenschleifen rahmen die Namen ein. Die Szene ist schon geladen, bevor die Kartenflügel öffnen. Ihre natürlichen Bildkoordinaten bestimmen die Textposition; Datum und Ortsangabe bleiben oberhalb des Turms.
 
 Beim Weiterscrollen folgen die florale Begrüßung, Countdown sowie die beiden illustrierten Orte mit ihren Angaben. Die neue Mago-Illustration übernimmt die Architektur, Fenster, Dach und Terrasse des eigenen Repository-Bildes. Die eigene Kirchenillustration wird freigestellt und im Ortsabschnitt vollständig dargestellt. Beide Orte behalten ihre Proportionen.
 
@@ -31,6 +31,12 @@ Cormorant Garamond trägt Namen, Überschriften und Fließtext. Kleine Beschrift
 ## Nachtblauer Umschlag
 
 Beim Öffnen steht das geprägte M&S allein auf einem ovalen, champagnerfarbenen Wachssiegel. Die aufrechten Buchstaben stehen auf einer gemeinsamen Mittelachse. Eingerollte Enden geben dem Monogramm mehr Schwung. Lichtkanten und Schatten geben dem Monogramm dasselbe Relief wie dem Doppeloval. Der bereitgestellte Screenshot war die Vorlage für die Form und das feine Doppeloval. Siegel und nachtblaues Leinen sind neu erzeugt. Ein Klick auf das Siegel lässt die beiden Leinenflügel auseinandergehen und legt die helle Kirchenszene frei.
+
+## Blau im Inneren
+
+Die nachtblauen Vorhänge führen den Ton des Umschlags in die Einladung. Helle Perlen säumen den Stoff, rauchblaue Schleifen binden ihn seitlich zusammen. Rauchblaue Stickstiche finden sich in ausgewählten Glyzinien, der Ranke der Ortsansicht, den sechs Ablaufmotiven, der kleinen Geschenkschleife und zwischen den Blättern unter den Schwänen. Salbei, Mauve und Elfenbein greifen die warme Palette der Illustrationen auf.
+
+Die Schrift verwendet durchgehend Nachtblau (`#14263E`). Rauchblau (`#506D8D`) zeichnet die Stichlinie im Ablauf, die Fokusmarkierungen und den kurzen Faden am Monogramm. Auf dem Rückmeldebutton sorgt eine helle blaue Fläche für Kontrast zur nachtblauen Beschriftung.
 
 ## Durchgehendes Leinen
 
