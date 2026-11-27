@@ -23,3 +23,7 @@ Die sieben Motive sind zwei Leinenhüllen für Handy und Desktop, Elfenbeinsiege
 ## Aquarellbänder und Abschied
 
 `rsvp-ribbon-frame.webp` ist die für die Seite skalierte Fassung von `Dunkelblaue Aquarellschleife mit Rahmen.png`. `rsvp-ribbon-top.webp` und `rsvp-ribbon-bottom.webp` gehören zur früheren zweiteiligen Fassung. `farewell-swans-watercolor.webp` enthält die hochgeladenen Aquarellschwäne mit Datum und Initialen als verlustfreies WebP mit verkürztem transparentem Außenrand. Die Originale liegen im selben Ordner.
+
+## Toile de Jouy
+
+`toile-de-jouy.webp` enthält die hochgeladene `Elegante Toile-de-Jouy-Hochzeitsidylle.png` im Originalformat von 1536 × 1024 Pixeln. Das Muster wird erst nach dem Aufklappen als durchgehender Hintergrund sichtbar.

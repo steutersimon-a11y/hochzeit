@@ -42,7 +42,7 @@ Die Schrift verwendet durchgehend Nachtblau (`#14263E`). Rauchblau (`#506D8D`) z
 
 Die seitlich leicht eingerückten Doppellinien in Nacht- und Rauchblau beginnen unter den Samtsäumen und laufen bis zum unteren Rand. Zwei kleine elfenbeinfarbene Perlen schmücken die unteren Ecken.
 
-Eine einzige feine Leinentextur bildet den Hintergrund des gesamten Dokuments. Opener, Begrüßung, Orte und Footer besitzen keinen eigenen deckenden Hintergrund und keine Abschnittsrandnähte. Die Motive wurden intern freigestellt; der Leinenuntergrund bleibt zwischen und hinter ihnen sichtbar. Header und Footer sind ebenfalls transparent.
+Beim Aufklappen liegt die feine Leinentextur hinter der sichtbaren Einladung. Sobald die Karte geöffnet ist, blendet sich das hochgeladene Toile de Jouy dezent über dem Leinen ein. Die Vorlage wiederholt sich senkrecht mit weichen Übergängen. Die transparenten Abschnitte lassen das Muster vom Auftakt bis zum Abschied durchlaufen.
 
 Die Inhaltsbreite beträgt auf großen Bildschirmen maximal 880 Pixel. Die Höhe des Auftakts richtet sich nach dem Samtvorhang und der übereinander angeordneten Schriftgrafik. Die Begrüßung wurde nach dem Versetzen der Schwäne verkürzt, damit kein leerer Bildabschnitt zurückbleibt.
 

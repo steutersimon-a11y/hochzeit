@@ -21,7 +21,7 @@ const requiredArt = ['welcome-border.webp',
   'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp',
   'countdown-navy.webp', 'timeline-blue.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
 const missing = requiredArt.filter(file => !fs.existsSync(path.join(root, 'assets/loom', file)));
-for (const file of ['linen-navy.webp', 'seal-relief-ms.webp', 'hero-curtain-marine.webp', 'hero-lettering-blue.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp']) {
+for (const file of ['linen-navy.webp', 'seal-relief-ms.webp', 'hero-curtain-marine.webp', 'hero-lettering-blue.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp', 'toile-de-jouy.webp']) {
   if (!fs.existsSync(path.join(root, 'assets/art', file))) missing.push('assets/art/' + file);
 }
 if (missing.length) {
@@ -81,6 +81,30 @@ async function overflow(page, label) {
   check(dimensions.document <= dimensions.viewport + 1 && dimensions.body <= dimensions.viewport + 1,
     `${label}: horizontal overflow ${JSON.stringify(dimensions)}`);
 }
+async function toileState(page) {
+  return page.evaluate(() => {
+    const style = getComputedStyle(document.body, '::before');
+    return { image: style.backgroundImage, opacity: Number(style.opacity), content: style.content,
+      display: style.display, visibility: style.visibility, pointerEvents: style.pointerEvents,
+      position: style.position, repeat: style.backgroundRepeat, width: parseFloat(style.width), height: parseFloat(style.height),
+      zIndex: Number(style.zIndex), isolation: getComputedStyle(document.body).isolation, transition: style.transitionDuration,
+      viewportWidth: innerWidth, viewportHeight: innerHeight, documentHeight: document.documentElement.scrollHeight,
+      opening: document.body.classList.contains('opening-active') };
+  });
+}
+function checkToile(state, visible, label) {
+  check(state.image.includes('assets/art/toile-de-jouy.webp') && state.pointerEvents === 'none'
+    && (visible ? !state.opening && Math.abs(state.opacity - .58) <= .001 && state.display !== 'none' && state.visibility === 'visible'
+      : state.opening && state.opacity === 0 && state.transition.split(',').every(duration => parseFloat(duration) === 0)),
+    `${label}: Toile layer appears in the wrong opening phase ${JSON.stringify(state)}`);
+  if (visible) {
+    check(state.content !== 'none' && ['repeat', 'repeat-y', 'no-repeat repeat'].includes(state.repeat)
+      && state.zIndex < 0 && state.isolation === 'isolate'
+      && ['absolute', 'fixed'].includes(state.position) && state.width >= state.viewportWidth - 1
+      && state.height >= (state.position === 'fixed' ? state.viewportHeight : state.documentHeight) - 1,
+      `${label}: Toile background does not span the continuous invitation ${JSON.stringify(state)}`);
+  }
+}
 async function navyText(page, selector, label) {
   const mismatches = await page.locator(selector).evaluateAll(roots => roots.flatMap(root => [root, ...root.querySelectorAll('*')])
     .filter(element => element.getBoundingClientRect().width > 0 && element.getBoundingClientRect().height > 0
@@ -109,6 +133,8 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.goto(baseURL, { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
   await page.locator('#opening').waitFor({ state: 'visible' });
+  const toile = { closed: await toileState(page) };
+  checkToile(toile.closed, false, `${width} closed cover`);
   await overflow(page, `${width} initial`);
   check(await page.evaluate(() => document.querySelector('main').inert), `${width}: main is interactive behind opening`);
   const cover = await page.locator('#opening').evaluate(opening => {
@@ -167,6 +193,8 @@ async function exerciseViewport(browser, baseURL, width) {
     };
   });
   const midFile = path.join(output, `opening-${width}.png`);
+  toile.mid = await toileState(page);
+  checkToile(toile.mid, false, `${width} opening animation`);
   await page.screenshot({ path: midFile });
   const diversity = centerDiversity(midFile);
   check(mid.scrollY === 0 && mid.y >= 0 && mid.y < 50 && mid.loaded && mid.opacity > .7, `${width}: live first scene missing during opening ${JSON.stringify(mid)}`);
@@ -174,6 +202,9 @@ async function exerciseViewport(browser, baseURL, width) {
     `${width}: opening contains another illustration ${JSON.stringify(mid.sources)}`);
   check(mid.pseudoContent === 'none' || mid.pseudoBackground === 'rgba(0, 0, 0, 0)', `${width}: opaque page pseudo-element covers opener`);
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
+  await page.waitForFunction(() => Number(getComputedStyle(document.body, '::before').opacity) >= .579);
+  toile.opened = await toileState(page);
+  checkToile(toile.opened, true, `${width} opened invitation`);
   check(await page.evaluate(() => !document.querySelector('main').inert), `${width}: page stays inert after opening`);
   check(await page.evaluate(() => document.activeElement.id === 'hero-title'), `${width}: focus not restored to first scene heading`);
   const copyBox = await page.locator('.hero-copy').boundingBox();
@@ -267,7 +298,7 @@ async function exerciseViewport(browser, baseURL, width) {
     check(Math.abs(panel.left-linenFlow.main.left) <= 1 && Math.abs(panel.width-linenFlow.main.width) <= 1,
       `${width}: textile scene has a segmented width ${JSON.stringify(panel)}`);
   }
-  check(linenFlow.layers.some(layer => /url\(/.test(layer.image)), `${width}: no shared linen texture on the invitation canvas`);
+  check(linenFlow.layers.some(layer => layer.image.includes('assets/loom/linen-ivory.webp')), `${width}: no shared linen texture beneath the Toile background`);
   for (const section of linenFlow.sections) {
     check(section.background === 'rgba(0, 0, 0, 0)' && section.image === 'none',
       `${width}: a scrolling section covers the continuous linen canvas ${JSON.stringify(section)}`);
@@ -607,14 +638,19 @@ async function exerciseViewport(browser, baseURL, width) {
   check(await photo.evaluate(element => document.activeElement === element), `${width}: photo focus restoration failed`);
   await overflow(page, `${width} dialogs complete`);
   await page.locator('#replay').click();
+  toile.replay = await toileState(page);
+  checkToile(toile.replay, false, `${width} replay immediately`);
   await page.locator('#opening').waitFor({ state: 'visible' });
   await page.waitForFunction(() => scrollY === 0, null, { timeout: 1000 });
   check(await page.evaluate(() => scrollY === 0), `${width}: replay does not reveal top scene`);
   await page.keyboard.press('Escape');
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
+  await page.waitForFunction(() => Number(getComputedStyle(document.body, '::before').opacity) >= .579);
+  toile.reopened = await toileState(page);
+  checkToile(toile.reopened, true, `${width} reopened invitation`);
   check(errors.length === 0, `${width}: browser errors ${errors.join('; ')}`);
   results.push({ width, height, centerColors: diversity, ornaments: ornaments.length, cover, heroPlacement, linenFlow, panels, sceneDetails,
-    farewell, rsvpArtwork, timelineIcons, fallbackVisibility, errors });
+    farewell, rsvpArtwork, timelineIcons, fallbackVisibility, toile, errors });
   console.log(`${failures.length === startingFailures ? 'PASS' : 'FAIL'} viewport ${width}×${height}: continuous linen, equal widths, farewell swans, opener, art, keyboard, dialogs`);
   await context.close();
 }
@@ -623,10 +659,17 @@ async function reducedMotion(browser, baseURL) {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
   const page = await context.newPage();
   await page.goto(baseURL, { waitUntil: 'networkidle' });
+  const toile = { closed: await toileState(page) };
+  checkToile(toile.closed, false, 'reduced motion closed cover');
   const start = Date.now();
   await page.locator('#open-invitation').click();
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 1500 });
   check(Date.now() - start < 1500, 'Reduced motion keeps the long opening animation');
+  await page.waitForFunction(() => Number(getComputedStyle(document.body, '::before').opacity) >= .579);
+  toile.opened = await toileState(page);
+  checkToile(toile.opened, true, 'reduced motion opened invitation');
+  check(toile.opened.transition.split(',').every(duration => parseFloat(duration) === 0),
+    'Reduced motion keeps the Toile background fade');
   const animations = await page.evaluate(() => [...document.querySelectorAll('.garden-frame,.hero-copy,.panel-copy,.hero-discover span')]
     .map(element => ({ selector: element.className, animation: getComputedStyle(element).animationName, transition: getComputedStyle(element).transitionDuration })));
   check(animations.every(style => style.animation === 'none' && style.transition === '0s'), 'Reduced motion has active decorative animations');
@@ -634,7 +677,7 @@ async function reducedMotion(browser, baseURL) {
   check(await page.locator('.welcome-copy').evaluate(element => Number(getComputedStyle(element).opacity) === 1), 'Reduced motion hides revealed content');
   await overflow(page, 'reduced motion');
   await page.screenshot({ path: path.join(output, 'reduced-motion-390.png') });
-  results.push({ reducedMotion: true });
+  results.push({ reducedMotion: true, toile });
   console.log('PASS reduced motion: immediate opening and visible static content');
   await context.close();
 }

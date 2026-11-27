@@ -5,6 +5,31 @@
 @font-face{font-family:Manrope;src:url('assets/fonts/manrope-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}
 :root{--paper:#f6f3ed;--ink:#14263e;--smoke:#506d8d;--blue-wash:#e6ecf2;--line:#c3cbd3;--serif:Cormorant,Georgia,serif;--sans:Manrope,Arial,sans-serif;--script:Cormorant,Georgia,serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}body{margin:0;background:var(--paper) url('assets/loom/linen-ivory.webp') repeat;background-size:560px 560px;color:var(--ink);font:clamp(1.125rem, 2.4vw, 1.3125rem)/1.55 var(--serif);-webkit-font-smoothing:antialiased}button,input,textarea{font:inherit;color:inherit}button,a{-webkit-tap-highlight-color:transparent}button{cursor:pointer}a{color:inherit;text-decoration:none}img{display:block;max-width:100%;height:auto}[hidden]{display:none!important}h1,h2,h3,p,figure{margin:0}h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.12;text-wrap:balance}h2{font-size:clamp(2.15rem, 5.7cqw, 3.25rem);letter-spacing:-.018em}h3{font-size:33px}p{white-space:pre-line}em{font-weight:400}button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--smoke);outline-offset:5px}.skip-link{position:fixed;left:20px;top:-100px;z-index:100;background:var(--blue-wash);color:var(--ink);padding:12px}.skip-link:focus{top:12px}main,footer{width:100%;margin:auto}.text-button{display:inline-flex;align-items:center;gap:15px;border:0;border-bottom:1px solid var(--line);background:none;padding:9px 0;font:11px/1.5 var(--sans);letter-spacing:.8px}.primary-button{background:var(--blue-wash);color:var(--ink);border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;gap:30px;padding:15px 30px;min-width:235px;font:11px/1.6 var(--sans);letter-spacing:1px;transition:background .2s}.primary-button:hover{background:#d6e0eb}.text-button>span,.nav-rsvp>span,.primary-button>span{font-size:0;width:14px;height:14px;position:relative;display:inline-block;flex:0 0 14px}.text-button>span:before,.nav-rsvp>span:before,.primary-button>span:before{content:"";position:absolute;left:1px;bottom:2px;width:15px;height:1px;background:currentColor;transform:rotate(-45deg);transform-origin:left center}.text-button>span:after,.nav-rsvp>span:after,.primary-button>span:after{content:"";position:absolute;right:1px;top:2px;width:6px;height:6px;border-top:1px solid currentColor;border-right:1px solid currentColor}
+/* Keep a single pattern behind the opened invitation and soften the tile joins. */
+body {
+  position: relative;
+  isolation: isolate;
+}
+
+body::before {
+  --toile-width: max(100vw, 34rem);
+  --toile-height: calc(var(--toile-width) * 2 / 3);
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('assets/art/toile-de-jouy.webp') center top / var(--toile-width) var(--toile-height) repeat-y;
+  mask: linear-gradient(transparent, #000 5%, #000 95%, transparent) center top / 100% var(--toile-height) repeat-y;
+  opacity: .58;
+  transition: opacity .45s ease-out;
+  pointer-events: none;
+}
+
+body.opening-active::before {
+  opacity: 0;
+  transition: none;
+}
+
 /* The double frame emerges from behind the curtain hems. */
 .invitation-sheet {
   --sheet-gutter: clamp(16px, 3vw, 27px);
