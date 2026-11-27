@@ -13,7 +13,7 @@ Die aktuelle Gestaltung setzt freigestellte Originalmotive auf eine einzige durc
 | `timeline-blue.webp` | Sechs freigestellte Ablaufmotive mit blauen Stickdetails im proportionalen 3×2-Bogen |
 | `church-edition.webp` | Freigestellte eigene Kirche mit abgerundeter Pflanzung und freien Rändern |
 | `mago-flow.webp` | Freigestelltes Mago mit Terrasse |
-| `farewell-swans-blue.webp` | Schwäne mit einer rauchblauen Fadenspur zwischen Rosen und Blättern |
+| `farewell-swans-blue.webp` | Gestickte Schwäne als Abschied bei geänderten Namen oder anderem Datum |
 
 Mit Ausnahme der Leinentextur besitzen die Motive transparente Hintergründe. Die Ranke der Ortsansicht und die Geschenkschleife haben ein Verhältnis von etwa 3:1. Die flache Begrüßungsborte misst 750 × 130 Pixel. Die Schwäne haben ein Seitenverhältnis von 3:2. Die quadratische Icondatei enthält sechs 2:3-Zellen. CSS erhält alle Proportionen. Namen und Angaben bleiben bearbeitbarer HTML-Text.
 

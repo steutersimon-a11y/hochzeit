@@ -4,13 +4,15 @@ Eine digitale Hochzeitseinladung auf einem durchgehenden Leinentuch: Namen und H
 
 [Auftakt](preview-opener.png) · [Handy-Vorschau](preview-mobile.png) · [Desktop-Vorschau](preview-desktop.png) · [Die Locations](preview-locations.png) · [Eure Fotos](preview-fotos.png)
 
-[Abschied mit Schwänen](preview-abschied.png) · [Siegel](preview-siegel-mobile.png) · [Während der Öffnung](preview-ouverture.png) · [Öffnung als Video](preview-oeffnung.mp4)
+[Rückmeldung und Abschied](preview-abschied.png) · [Siegel](preview-siegel-mobile.png) · [Während der Öffnung](preview-ouverture.png) · [Öffnung als Video](preview-oeffnung.mp4)
 
 ## Neue Gestaltung
 
 Die öffentliche Referenz und ihre vollständige Live-Einladung wurden erneut geöffnet und visuell untersucht. Die nachtblaue Schrift verbindet den Umschlag mit dem hellen Leinen im Inneren. Rauchblaue Details setzen Akzente in der Stickerei zwischen Salbei, Mauve und Elfenbein. Eine einzige gekachelte Leinentextur läuft hinter der gesamten Einladung durch. Die Stickmotive sind transparente Auflagen ohne eigene rechteckige Leinenfläche. Die Illustrationen im Ortsabschnitt basieren auf der eigenen Kirchen- und Restaurantillustration. Der Ablauf zeigt Kirche, Ringe, Sektgläser, Cocktail, Dinner und Discokugel.
 
 Die Vorhänge hängen direkt an der inneren Rahmenlinie. Eine kleine Stickborte leitet den Willkommensgruß ein. Ein einzelnes nachtblaues Medaillon zeigt die verbleibenden Kalendertage bis zur Hochzeit. Ortsangaben und Illustrationen stehen zusammen. Eine gestickte Ranke leitet die Ortsansicht ein, eine kleine Perlenschleife begleitet den Geschenkhinweis. Die Geschichte und ihre beiden Fotos teilen sich auf großen Bildschirmen eine Zeile. Die Beschriftungen bleiben auf kleinen Displays frei. Eine durchgehende Stichlinie verbindet die sechs Stationen des Tagesablaufs.
+
+Die beiden hochgeladenen Aquarellbänder rahmen die Rückmeldung auf dem hellen Leinen ein. Die neuen Aquarellschwäne bilden mit dem Datum und den Initialen den Abschluss.
 
 Die Sachangaben stehen in `wedding-config.js`. Die angefragten neuen Fotos fehlen noch. Aktuell zeigt die Einladung das vorhandene Paar- und Ringfoto. [Analyse und Umsetzung](DESIGN-REFERENZ.md) · [Neue Bildserie](assets/loom/README.md).
 
@@ -20,7 +22,7 @@ Die Sachangaben stehen in `wedding-config.js`. Die angefragten neuen Fotos fehle
 
 Auf dem Umschlag ist das M&S-Siegel der einzige sichtbare Inhalt. Zum Öffnen auf das Siegel klicken oder es per Tab anwählen und mit Enter öffnen. Im Footer lässt sich die Öffnung wiederholen. Die Kartenöffnung dauert etwa 3,15 Sekunden; bei reduzierter Bewegung erscheint die Einladung sofort. Tastaturbedienung, modale Dialoge und sichtbare Fokusmarkierungen sind vorhanden.
 
-Der Bearbeitungsmodus wird mit `?edit=1` an der Adresse geöffnet. Dort können Namen, Datum, Kontaktadresse und die vier Bildplätze angepasst werden. Der Auftakt zeigt die hochgeladene Schriftgrafik für Marie und Simon am 28. August 2027. Bei anderen Namen oder einem anderen Datum erscheinen die bearbeiteten Angaben als Text. „HTML mit Bildern speichern“ erzeugt eine neue vollständige Datei. Die Bearbeitung erfolgt im Browser.
+Der Bearbeitungsmodus wird mit `?edit=1` an der Adresse geöffnet. Dort können Namen, Datum, Kontaktadresse und die vier Bildplätze angepasst werden. Der Auftakt und die Aquarellschwäne zeigen die personalisierten Angaben für Marie und Simon am 28. August 2027. Bei anderen Namen oder einem anderen Datum erscheinen die bearbeiteten Angaben als Text, begleitet von einem zeitlosen Schwanenmotiv. „HTML mit Bildern speichern“ erzeugt eine neue vollständige Datei. Die Bearbeitung erfolgt im Browser.
 
 ## Angaben und Build
 

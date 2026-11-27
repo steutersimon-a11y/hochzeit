@@ -21,7 +21,7 @@ const requiredArt = ['welcome-border.webp', 'curtain-navy.webp',
   'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp',
   'countdown-navy.webp', 'timeline-blue.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
 const missing = requiredArt.filter(file => !fs.existsSync(path.join(root, 'assets/loom', file)));
-for (const file of ['linen-navy.webp', 'seal-relief-ms.webp']) {
+for (const file of ['linen-navy.webp', 'seal-relief-ms.webp', 'rsvp-ribbon-top.webp', 'rsvp-ribbon-bottom.webp', 'farewell-swans-watercolor.webp']) {
   if (!fs.existsSync(path.join(root, 'assets/art', file))) missing.push('assets/art/' + file);
 }
 if (missing.length) {
@@ -45,8 +45,11 @@ for (const [src, count] of sourceCounts) {
   check(count === (src === 'assets/loom/curtain-navy.webp' ? 2 : 1),
     `Static markup repeats a decorative scene: ${src} appears ${count} times`);
 }
-for (const file of ['welcome-border.webp', 'countdown-navy.webp', 'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp']) {
+for (const file of ['welcome-border.webp', 'countdown-navy.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp']) {
   check(sourceCounts.get('assets/loom/' + file) === 1, `Missing unique textile scene: ${file}`);
+}
+for (const file of ['rsvp-ribbon-top.webp', 'rsvp-ribbon-bottom.webp', 'farewell-swans-watercolor.webp']) {
+  check(sourceCounts.get('assets/art/' + file) === 1, `Missing unique uploaded scene: ${file}`);
 }
 // Guests' own information stays intact; the requested Dresscode is removed,
 // and uploaded personal photos may replace the two existing story photographs.
@@ -291,7 +294,8 @@ async function exerciseViewport(browser, baseURL, width) {
   });
   await page.waitForTimeout(850);
   const ornaments = await page.evaluate(() => [...document.querySelectorAll('img[src*="assets/loom/"],img[src*="assets/art/"]')]
-    .filter(image => !image.classList.contains('garden-frame') && image.clientWidth > 0)
+    .filter(image => !image.classList.contains('garden-frame') && image.clientWidth > 0 && image.clientHeight > 0
+      && getComputedStyle(image).visibility !== 'hidden' && Number(getComputedStyle(image).opacity) > 0)
     .map(image => ({
       src: image.getAttribute('src'),
       width: image.clientWidth, height: image.clientHeight,
@@ -397,8 +401,30 @@ async function exerciseViewport(browser, baseURL, width) {
     return mismatches;
   });
   check(textBindings.length === 0, `${width}: missing or changed invitation text ${textBindings.join(', ')}`);
+  const rsvpArtwork = await page.locator('#rueckmeldung .rsvp-frame').evaluate(frame => {
+    const box = frame.getBoundingClientRect(), copy = frame.querySelector('.rsvp-copy').getBoundingClientRect();
+    const ribbons = [...frame.querySelectorAll(':scope > img')].map(image => {
+      const rect = image.getBoundingClientRect();
+      return { src: image.getAttribute('src'), loaded: image.complete && image.naturalWidth > 0,
+        width: rect.width, height: rect.height, top: rect.top, bottom: rect.bottom,
+        contained: rect.left >= box.left - 1 && rect.right <= box.right + 1 && rect.top >= box.top - 1 && rect.bottom <= box.bottom + 1,
+        aspectError: Math.abs((rect.width / rect.height) / (image.naturalWidth / image.naturalHeight) - 1),
+        fit: getComputedStyle(image).objectFit };
+    });
+    return { ribbons, centerError: Math.abs((copy.left + copy.width / 2) - (box.left + box.width / 2)),
+      copyContained: copy.left >= box.left - 1 && copy.right <= box.right + 1 && copy.top >= box.top - 1 && copy.bottom <= box.bottom + 1 };
+  });
+  check(rsvpArtwork.ribbons.length === 2
+    && rsvpArtwork.ribbons[0].src === 'assets/art/rsvp-ribbon-top.webp'
+    && rsvpArtwork.ribbons[1].src === 'assets/art/rsvp-ribbon-bottom.webp'
+    && rsvpArtwork.ribbons.every(image => image.loaded && image.contained && (image.aspectError < .012 || image.fit === 'contain'))
+    && Math.abs(rsvpArtwork.ribbons[0].bottom - rsvpArtwork.ribbons[1].top) <= 1
+    && rsvpArtwork.copyContained && rsvpArtwork.centerError <= 1,
+    `${width}: uploaded RSVP borders or centered copy clip, stretch, or leave a seam ${JSON.stringify(rsvpArtwork)}`);
   const farewell = await page.evaluate(() => {
-    const artwork = [...document.querySelectorAll('img')].filter(image => image.matches('[data-farewell-art],.farewell-art') || /swans|swan|schwaene|schwan|farewell/i.test(image.getAttribute('src') || ''));
+    const visible = image => image.getBoundingClientRect().width > 0 && image.getBoundingClientRect().height > 0
+      && getComputedStyle(image).visibility !== 'hidden' && Number(getComputedStyle(image).opacity) > 0;
+    const artwork = [...document.querySelectorAll('footer img[data-farewell-art],footer img.farewell-art')].filter(visible);
     const rsvp = document.querySelector('#rueckmeldung').getBoundingClientRect();
     return artwork.map(image => ({ src: image.getAttribute('src'), footer: !!image.closest('footer'),
       top: image.getBoundingClientRect().top, rsvpBottom: rsvp.bottom, loaded: image.complete && image.naturalWidth > 0,
@@ -406,7 +432,8 @@ async function exerciseViewport(browser, baseURL, width) {
   });
   check(farewell.length === 1, `${width}: swans must have one farewell home, found ${farewell.length}`);
   for (const image of farewell) {
-    check(image.footer && image.top >= image.rsvpBottom - 1 && image.loaded && image.lastScene,
+    check(image.footer && image.top >= image.rsvpBottom - 1 && image.loaded && image.lastScene
+      && image.src === 'assets/art/farewell-swans-watercolor.webp',
       `${width}: swans are not the final farewell after RSVP ${JSON.stringify(image)}`);
   }
   const timelineIcons = await page.evaluate(() => [...document.querySelectorAll('.timeline-icon')].map(icon => {
@@ -439,7 +466,7 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.screenshot({ path: path.join(output, `page-${width}.png`), fullPage: true });
   for (const [selector, filename] of [['.welcome', 'welcome'], ['#datum', 'countdown'], ['.venues-intro', 'venues-intro'],
     ['.venue-grid', 'locations'], ['.story-framed', 'story-framed'], ['.story-photos', 'photos'],
-    ['.gift-section', 'gift-section'], ['.timeline-section', 'timeline-section'], ['footer', 'farewell']]) {
+    ['.gift-section', 'gift-section'], ['.timeline-section', 'timeline-section'], ['#rueckmeldung', 'rsvp'], ['footer', 'farewell']]) {
     await page.locator(selector).evaluate(element => element.scrollIntoView({ block: 'start', behavior: 'instant' }));
     await page.waitForTimeout(50);
     await page.locator(selector).screenshot({ path: path.join(output, `${filename}-${width}.png`) });
@@ -467,7 +494,7 @@ async function exerciseViewport(browser, baseURL, width) {
       && !/DTSTART:\d{8}T/.test(calendar), `${width}: provisional schedule exports an unconfirmed calendar time`);
   }
 
-  const trigger = page.locator('[data-rsvp]').first();
+  const trigger = page.locator('.rsvp-copy [data-rsvp]');
   await trigger.click();
   await page.locator('#rsvp-dialog').waitFor({ state: 'visible' });
   const dialogBox = await page.locator('#rsvp-dialog').boundingBox();
@@ -484,7 +511,7 @@ async function exerciseViewport(browser, baseURL, width) {
   }
   await page.keyboard.press('Escape');
   await page.locator('#rsvp-dialog').waitFor({ state: 'hidden' });
-  await page.waitForFunction(() => document.activeElement === document.querySelector('[data-rsvp]'));
+  await page.waitForFunction(() => document.activeElement === document.querySelector('.rsvp-copy [data-rsvp]'));
   check(await trigger.evaluate(element => document.activeElement === element), `${width}: RSVP focus restoration failed`);
 
   const photo = page.locator('.photo-main [data-photo]');
@@ -508,7 +535,7 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
   check(errors.length === 0, `${width}: browser errors ${errors.join('; ')}`);
   results.push({ width, height, centerColors: diversity, ornaments: ornaments.length, cover, heroPlacement, linenFlow, panels, sceneDetails,
-    farewell, timelineIcons, fallbackVisibility, errors });
+    farewell, rsvpArtwork, timelineIcons, fallbackVisibility, errors });
   console.log(`${failures.length === startingFailures ? 'PASS' : 'FAIL'} viewport ${width}×${height}: continuous linen, equal widths, farewell swans, opener, art, keyboard, dialogs`);
   await context.close();
 }

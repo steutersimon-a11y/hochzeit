@@ -17,3 +17,7 @@ Die sieben Motive sind zwei Leinenhüllen für Handy und Desktop, Elfenbeinsiege
 ## Schriftgrafik im Auftakt
 
 `hero-lettering.webp` ist die verlustfrei konvertierte Fassung der hochgeladenen Datei `Wir heiraten_ Marie & Simon.png`. Der Zuschnitt kürzt den transparenten Außenrand für die Darstellung zwischen den Vorhängen.
+
+## Aquarellbänder und Abschied
+
+`rsvp-ribbon-top.webp` und `rsvp-ribbon-bottom.webp` sind die für die Seite skalierten Fassungen von `Dunkelblaues Aquarellbandornament.png` und `Dunkelblauer Aquarell-Rahmen mit Schleifenwicklungen.png`. `farewell-swans-watercolor.webp` enthält die hochgeladenen Aquarellschwäne mit Datum und Initialen als verlustfreies WebP mit verkürztem transparentem Außenrand. Die Originale liegen im selben Ordner.

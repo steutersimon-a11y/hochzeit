@@ -11,18 +11,32 @@
   const heroLettering = $('.hero-lettering');
   const heroTitleText = $('.hero-title-text');
   const heroDate = $('.hero-date');
+  const farewellArtwork = $('[data-farewell-art]');
+  const fallbackSwans = $('.farewell-fallback');
+  const footerDate = $('.footer-date');
+
+  function matchesPersonalizedArtwork() {
+    const artwork = heroLettering.dataset;
+    return artwork.names === inlineNames() && artwork.date === config.date && artwork.dateLabel === config.dateLabel;
+  }
 
   function renderHero() {
-    const artwork = heroLettering.dataset;
-    const showArtwork = heroLettering.complete && heroLettering.naturalWidth > 0
-      && artwork.names === inlineNames() && artwork.date === config.date && artwork.dateLabel === config.dateLabel;
+    const showArtwork = matchesPersonalizedArtwork() && heroLettering.complete && heroLettering.naturalWidth > 0;
     heroLettering.hidden = !showArtwork;
     heroTitleText.hidden = showArtwork;
     heroDate.hidden = showArtwork;
   }
 
+  function renderFarewell() {
+    const showArtwork = matchesPersonalizedArtwork() && (!farewellArtwork.complete || farewellArtwork.naturalWidth > 0);
+    farewellArtwork.hidden = !showArtwork;
+    fallbackSwans.hidden = showArtwork;
+    footerDate.hidden = showArtwork;
+  }
+
   heroLettering.addEventListener('load', renderHero);
   heroLettering.addEventListener('error', renderHero);
+  farewellArtwork.addEventListener('error', renderFarewell);
 
   function render() {
     const initials = config.names.map(name => [...name.trim()][0] || '');
@@ -33,6 +47,7 @@
     $$('[data-bind]').forEach(el => { el.textContent = pathValue(el.dataset.bind) ?? ''; });
     $$('[data-name]').forEach(el => { el.textContent = config.names[+el.dataset.name] ?? ''; });
     renderHero();
+    renderFarewell();
     $$('[data-initial]').forEach(el => { el.textContent = initials[+el.dataset.initial] || ''; });
     $$('.names-inline').forEach(el => { el.textContent = inlineNames(); });
     $$('.initials').forEach(el => { el.textContent = initials.join(' · '); });

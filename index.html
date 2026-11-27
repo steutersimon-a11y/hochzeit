@@ -132,14 +132,27 @@
     </section>
 
     <section class="rsvp-section section-pad" id="rueckmeldung" aria-labelledby="rsvp-title">
-
-      <h2 id="rsvp-title" class="reveal">Mit euch wird es<br><em>unvergesslich.</em></h2>
-      <p class="reveal" id="rsvp-intro">Lasst uns bis zum <span data-bind="rsvpDeadline"></span> wissen, ob wir mit euch feiern dürfen.</p>
-      <p class="reveal" id="rsvp-availability" hidden>Die Rückmeldung öffnet in Kürze.</p>
-      <button class="primary-button reveal" data-rsvp>Zur Rückmeldung <span aria-hidden="true">↗︎</span></button>
+      <div class="rsvp-frame">
+        <img class="rsvp-ribbon rsvp-ribbon-top" src="assets/art/rsvp-ribbon-top.webp" alt="" width="768" height="512" loading="lazy">
+        <img class="rsvp-ribbon rsvp-ribbon-bottom" src="assets/art/rsvp-ribbon-bottom.webp" alt="" width="768" height="512" loading="lazy">
+        <div class="rsvp-copy reveal">
+          <h2 id="rsvp-title">Mit euch wird es<br><em>unvergesslich.</em></h2>
+          <p id="rsvp-intro">Lasst uns bis zum <span data-bind="rsvpDeadline"></span> wissen, ob wir mit euch feiern dürfen.</p>
+          <p id="rsvp-availability" hidden>Die Rückmeldung öffnet in Kürze.</p>
+          <button class="primary-button" data-rsvp>Zur Rückmeldung <span aria-hidden="true">↗︎</span></button>
+        </div>
+      </div>
     </section>
   </main>
-  <footer><a class="footer-monogram initials" href="#einladung">M · S</a><p data-bind="footer"></p><span><span data-bind="dateLabel"></span> · <span data-bind="region"></span></span><button class="footer-replay" id="replay">Einladung noch einmal öffnen</button><img class="farewell-art" data-farewell-art src="assets/loom/farewell-swans-blue.webp" alt="Zwei gestickte Schwäne, deren Hälse ein Herz bilden" width="1536" height="1024" loading="lazy"></footer>
+  <footer>
+    <p data-bind="footer"></p>
+    <span><span class="footer-date" hidden><span data-bind="dateLabel"></span> · </span><span data-bind="region"></span></span>
+    <button class="footer-replay" id="replay">Einladung noch einmal öffnen</button>
+    <a class="farewell-link" href="#einladung" aria-label="Zum Anfang der Einladung">
+      <img class="farewell-art" data-farewell-art src="assets/art/farewell-swans-watercolor.webp" alt="Zwei Aquarellschwäne mit Herz, den Initialen M &amp; S und dem Datum 28. August 2027" width="1995" height="699" loading="lazy">
+      <img class="farewell-art farewell-fallback" src="assets/loom/farewell-swans-blue.webp" alt="Zwei gestickte Schwäne, deren Hälse ein Herz bilden" width="1536" height="1024" loading="lazy" hidden>
+    </a>
+  </footer>
   </div>
 
   <dialog id="rsvp-dialog" aria-labelledby="rsvp-dialog-title">
