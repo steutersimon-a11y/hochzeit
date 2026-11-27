@@ -17,7 +17,7 @@ if (!playwright) throw new Error('Playwright or playwright-core is required.');
 
 const root = path.resolve(__dirname, '..');
 const output = process.env.INVITATION_QA_OUTPUT || '/tmp/wedding-qa';
-const requiredArt = ['opener-blue.webp', 'opener-blue-desktop.webp', 'welcome-border.webp', 'curtain-navy.webp',
+const requiredArt = ['welcome-border.webp', 'curtain-navy.webp',
   'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp',
   'countdown-navy.webp', 'timeline-blue.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
 const missing = requiredArt.filter(file => !fs.existsSync(path.join(root, 'assets/loom', file)));
@@ -45,7 +45,7 @@ for (const [src, count] of sourceCounts) {
   check(count === (src === 'assets/loom/curtain-navy.webp' ? 2 : 1),
     `Static markup repeats a decorative scene: ${src} appears ${count} times`);
 }
-for (const file of ['opener-blue.webp', 'welcome-border.webp', 'countdown-navy.webp', 'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp']) {
+for (const file of ['welcome-border.webp', 'countdown-navy.webp', 'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp']) {
   check(sourceCounts.get('assets/loom/' + file) === 1, `Missing unique textile scene: ${file}`);
 }
 // Guests' own information stays intact; the requested Dresscode is removed,
@@ -142,14 +142,14 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.waitForTimeout(1550);
   const mid = await page.evaluate(() => {
     const hero = document.querySelector('.hero');
-    const image = document.querySelector('.garden-frame');
+    const images = [...hero.querySelectorAll('img')];
     const copy = document.querySelector('.hero-copy');
     const pseudo = getComputedStyle(document.body, '::after');
     return {
       scrollY: window.scrollY,
       y: hero.getBoundingClientRect().top,
-      loaded: image.complete && image.naturalWidth > 0,
-      source: image.currentSrc,
+      loaded: images.length === 2 && images.every(image => image.matches('.hero-curtain') && image.complete && image.naturalWidth > 0),
+      sources: images.map(image => image.currentSrc),
       opacity: Number(getComputedStyle(copy).opacity),
       pseudoContent: pseudo.content,
       pseudoBackground: pseudo.backgroundColor,
@@ -160,8 +160,7 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.screenshot({ path: midFile });
   const diversity = centerDiversity(midFile);
   check(mid.scrollY === 0 && mid.y >= 0 && mid.y < 50 && mid.loaded && mid.opacity > .7, `${width}: live first scene missing during opening ${JSON.stringify(mid)}`);
-  check(diversity > 150, `${width}: mid-opening central scene is blank (${diversity} sampled colors)`);
-  check(mid.source.includes('assets/loom/opener-blue'), `${width}: wrong first-scene artwork source`);
+  check(mid.sources.every(source => source.includes('assets/loom/curtain-navy.webp')), `${width}: opening contains another illustration ${JSON.stringify(mid.sources)}`);
   check(mid.pseudoContent === 'none' || mid.pseudoBackground === 'rgba(0, 0, 0, 0)', `${width}: opaque page pseudo-element covers opener`);
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
   check(await page.evaluate(() => !document.querySelector('main').inert), `${width}: page stays inert after opening`);
@@ -170,23 +169,27 @@ async function exerciseViewport(browser, baseURL, width) {
   const heroBox = await page.locator('.hero').boundingBox();
   check(copyBox.y + copyBox.height <= heroBox.y + heroBox.height - 20, `${width}: opening copy clips below hero`);
   const heroPlacement = await page.evaluate(() => {
-    const image = document.querySelector('.garden-frame');
-    const imageBox = image.getBoundingClientRect(), copy = document.querySelector('.hero-copy').getBoundingClientRect();
-    const scale = Math.min(imageBox.width / image.naturalWidth, imageBox.height / image.naturalHeight);
-    const artworkHeight = image.naturalHeight * scale;
-    const artworkTop = imageBox.top + (imageBox.height - artworkHeight) / 2;
-    return { top: (copy.top-artworkTop)/artworkHeight, bottom: (copy.bottom-artworkTop)/artworkHeight };
+    const hero = document.querySelector('.hero'), box = hero.getBoundingClientRect();
+    const title = hero.querySelector('#hero-title').getBoundingClientRect();
+    const date = hero.querySelector('.hero-date').getBoundingClientRect();
+    const discover = hero.querySelector('.hero-discover').getBoundingClientRect();
+    const text = hero.querySelector('.hero-copy').textContent.replace(/\s+/g, '');
+    const expected = (window.WEDDING.names.join('&') + window.WEDDING.dateLabel).replace(/\s+/g, '');
+    return { images: hero.querySelectorAll('img').length, removedChurch: hero.querySelectorAll('picture,.garden-frame').length === 0,
+      removedRegion: hero.querySelectorAll('.hero-place,[data-bind="region"]').length === 0,
+      text, expected, dateAfterTitle: date.top >= title.bottom - 1, discoverAfterDate: discover.top >= date.bottom + 8,
+      textContained: [title, date, discover].every(rect => rect.left >= box.left - 1 && rect.right <= box.right + 1
+        && rect.top >= box.top - 1 && rect.bottom <= box.bottom + 1) };
   });
-  // Portrait and landscape compositions share the same chapel and clear upper text area.
-  check(heroPlacement.bottom <= (width <= 700 ? .475 : .365), `${width}: opening text overlaps the chapel ${JSON.stringify(heroPlacement)}`);
+  check(heroPlacement.images === 2 && heroPlacement.removedChurch && heroPlacement.removedRegion
+    && heroPlacement.text === heroPlacement.expected, `${width}: simplified opening retains a church, region, or unexpected content ${JSON.stringify(heroPlacement)}`);
+  check(heroPlacement.dateAfterTitle && heroPlacement.discoverAfterDate && heroPlacement.textContained,
+    `${width}: simplified opening text overlaps or clips ${JSON.stringify(heroPlacement)}`);
   const linenFlow = await page.evaluate(() => {
     const main = document.querySelector('main');
     const mainBox = main.getBoundingClientRect();
     const hero = document.querySelector('.hero');
     const heroBox = hero.getBoundingClientRect();
-    const heroImage = document.querySelector('.garden-frame');
-    const imageBox = heroImage.getBoundingClientRect();
-    const imageScale = Math.min(imageBox.width / heroImage.naturalWidth, imageBox.height / heroImage.naturalHeight);
     const layers = [document.body, main, document.querySelector('.invitation-sheet')].filter(Boolean).flatMap(element => [null, '::before', '::after'].map(pseudo => {
       const style = getComputedStyle(element, pseudo);
       return { element: element.tagName, pseudo, image: style.backgroundImage };
@@ -199,11 +202,11 @@ async function exerciseViewport(browser, baseURL, width) {
       return { class: panel.className, left: box.left, width: box.width };
     });
     return { main: { left: mainBox.left, width: mainBox.width }, hero: { left: heroBox.left, width: heroBox.width },
-      renderedArtWidth: heroImage.naturalWidth * imageScale, layers, sections, panels,
+      layers, sections, panels,
       dresscodeText: /dresscode|was ziehen wir an/i.test(main.innerText), dresscodeNodes: document.querySelectorAll('.dresscode,#dresscode-title').length };
   });
   check(Math.abs(linenFlow.hero.left-linenFlow.main.left) <= 1 && Math.abs(linenFlow.hero.width-linenFlow.main.width) <= 1,
-    `${width}: church opener and scrolling canvas have different widths ${JSON.stringify(linenFlow)}`);
+    `${width}: opening and scrolling canvas have different widths ${JSON.stringify(linenFlow)}`);
   const border = await page.locator('.invitation-border').evaluate(element => {
     const frame = element.getBoundingClientRect();
     const main = document.querySelector('main').getBoundingClientRect();
@@ -218,8 +221,6 @@ async function exerciseViewport(browser, baseURL, width) {
   });
   check(border.enclosesInvitation && border.lines.every(line => line === 'solid') && border.pearls === 4 && border.decorative,
     `${width}: double border and corner pearls do not enclose the invitation ${JSON.stringify(border)}`);
-  check(Math.abs(linenFlow.renderedArtWidth-linenFlow.main.width) <= 1,
-    `${width}: the visible church artwork is narrower than the invitation canvas (${linenFlow.renderedArtWidth} vs ${linenFlow.main.width})`);
   for (const panel of linenFlow.panels) {
     check(Math.abs(panel.left-linenFlow.main.left) <= 1 && Math.abs(panel.width-linenFlow.main.width) <= 1,
       `${width}: textile scene has a segmented width ${JSON.stringify(panel)}`);
@@ -290,6 +291,12 @@ async function exerciseViewport(browser, baseURL, width) {
     check(image.loaded && image.primaryVisible, `${width}: primary photo not visible ${JSON.stringify(image)}`);
     check(!(image.primaryVisible && image.fallbackVisible), `${width}: duplicate primary/fallback illustrations ${JSON.stringify(image)}`);
   }
+  const venueChurch = await page.locator('#orte [data-photo="church"]').evaluate(image => ({
+    visible: !image.hidden && image.getBoundingClientRect().width > 0,
+    loaded: image.complete && image.naturalWidth > 0, source: image.getAttribute('src'),
+  }));
+  check(venueChurch.visible && venueChurch.loaded && venueChurch.source === currentConfig.photos.church,
+    `${width}: church illustration is missing from its venue section ${JSON.stringify(venueChurch)}`);
   const panels = await page.evaluate(() => [...document.querySelectorAll('.textile-panel')].map(panel => {
     const copy = panel.querySelector('.panel-copy');
     const a = panel.getBoundingClientRect(), b = copy.getBoundingClientRect();

@@ -5,8 +5,6 @@ Die aktuelle Gestaltung setzt freigestellte Originalmotive auf eine einzige durc
 | Aktuelle Datei | Verwendung |
 | --- | --- |
 | `linen-ivory.webp` | Gemeinsamer heller, feiner Leinenhintergrund des ganzen Dokuments |
-| `opener-blue.webp` | Hochformat der Kirche mit hellem Pflaster und zwei kleinen Pflanzengruppen |
-| `opener-blue-desktop.webp` | Breite transparente Desktop-Komposition der Kirche |
 | `curtain-navy.webp` | Separater hochauflösender Perlenvorhang, für die rechte Seite gespiegelt |
 | `welcome-border.webp` | Schmale Begrüßungsborte mit blauen Knötchen, Perlen und Blättern |
 | `stitched-sprig-blue.webp` | Offene Ranke mit Rosen, Perlen und rauchblauen Knötchen |
@@ -17,6 +15,6 @@ Die aktuelle Gestaltung setzt freigestellte Originalmotive auf eine einzige durc
 | `mago-flow.webp` | Freigestelltes Mago mit Terrasse |
 | `farewell-swans-blue.webp` | Schwäne mit einer rauchblauen Fadenspur zwischen Rosen und Blättern |
 
-Mit Ausnahme der Leinentextur besitzen die Motive transparente Hintergründe. Der mobile Opener hat ein 2:3-Seitenverhältnis. Die Ranke der Ortsansicht und die Geschenkschleife haben ein Verhältnis von etwa 3:1. Die flache Begrüßungsborte misst 750 × 130 Pixel. Der Desktop-Opener ist 4:3, die Schwäne 3:2. Die quadratische Icondatei enthält sechs 2:3-Zellen. CSS erhält alle Proportionen. Namen und Angaben bleiben bearbeitbarer HTML-Text.
+Mit Ausnahme der Leinentextur besitzen die Motive transparente Hintergründe. Die Ranke der Ortsansicht und die Geschenkschleife haben ein Verhältnis von etwa 3:1. Die flache Begrüßungsborte misst 750 × 130 Pixel. Die Schwäne haben ein Seitenverhältnis von 3:2. Die quadratische Icondatei enthält sechs 2:3-Zellen. CSS erhält alle Proportionen. Namen und Angaben bleiben bearbeitbarer HTML-Text.
 
 Die Grafikdateien der Referenzwebsite werden nicht eingebunden. Die Analyse des tatsächlichen Seitenaufbaus ist in `../../DESIGN-REFERENZ.md` dokumentiert. Originale und frühere eigene Gestaltungen bleiben erhalten.

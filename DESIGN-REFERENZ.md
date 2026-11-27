@@ -13,14 +13,14 @@ Die vorherige Gestaltung traf diesen Aufbau zu wenig: Ihre Gartenlandschaft und 
 Die Recherche vom 27. November 2026 ergänzt den Aufbau der Referenz um Ideen aus Stickerei, Papeterie und Editorial Design. Die Bildquellen wurden angesehen. Die dargestellten Motive der Einladung sind eigene Arbeiten.
 
 - In den historischen Textilien von V&A und Met verbinden fortlaufende Ranken, sichtbare Fäden, Perlen und Pflanzen kleine Szenen auf einem Stoff. Die offene neue Ranke aus Salbeiblättern und Rosen nutzt diese Idee vor der Ortsansicht. [V&A](https://www.vam.ac.uk/collections/embroidery) · [The Met](https://www.metmuseum.org/essays/english-embroidery-of-the-late-tudor-and-stuart-eras) · [Royal School of Needlework](https://rsnstitchbank.org/stitch/stem-stitch)
-- Auf den Seiten von Papier und Kinfolk geben Schriftgröße, Bildmaßstab und freie Ränder dem langen Verlauf Struktur. Die Einladung übernimmt dieses Prinzip mit einem bildreichen Auftakt, ruhigen Textstrecken, dem Fotoensemble und einer eigenen Perlenschleife beim Geschenkhinweis. Die Architekturillustrationen bleiben im Zusammenhang mit Ort und Zeit sichtbar. [Papier](https://www.papier.com/us/wedding/) · [Kinfolk](https://www.kinfolk.com/)
+- Auf den Seiten von Papier und Kinfolk geben Schriftgröße, Bildmaßstab und freie Ränder dem langen Verlauf Struktur. Die Einladung übernimmt dieses Prinzip mit einem ruhigen Auftakt, ruhigen Textstrecken, dem Fotoensemble und einer eigenen Perlenschleife beim Geschenkhinweis. Die Architekturillustrationen bleiben im Zusammenhang mit Ort und Zeit sichtbar. [Papier](https://www.papier.com/us/wedding/) · [Kinfolk](https://www.kinfolk.com/)
 - Größere Bedienelemente und dunklere Nebeninformationen halten Ortsdetails und Navigation auf kleiner Fläche lesbar. [Web.dev Typografie](https://web.dev/learn/design/typography) · [WCAG Textkontrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
 
 ## Die neue Gestaltung
 
 Die aktuellen Bilddateien in [assets/loom](assets/loom/README.md) bilden eine gemeinsame Materialwelt: elfenbeinfarbenes Leinen, Salbeigrün, gedämpftes Mauve, Perlen und sichtbare Stickstiche. Jede große dekorative Szene hat genau einen Platz. Die beiden Vorhänge spiegeln dasselbe Stickmotiv.
 
-Der Opener zeigt die eigene Kirche aus dem Repository. Der helle polygonale Baukörper mit rotem Dach und dunklem Dachreiter steht auf einem offenen, hell gepflasterten Vorplatz. Zwei niedrige Pflanzengruppen mit kleinen Blüten flankieren die Kirche am hinteren Rand. Nachtblaue Vorhänge mit Perlenkante und rauchblauen Schleifen hängen direkt an der inneren Rahmenlinie. Die separate hochauflösende Vorhanggrafik fällt bis auf Höhe der Kirchturmspitze und skaliert proportional. Die Szene ist schon geladen, bevor die Kartenflügel öffnen. Ihre natürlichen Bildkoordinaten bestimmen die Textposition. Datum und Ortsangabe bleiben oberhalb des Turms.
+Namen und Datum stehen mittig auf hellem Leinen. Nachtblaue Vorhänge mit Perlenkante und rauchblauen Schleifen hängen direkt an der inneren Rahmenlinie. Die Vorhanggrafiken skalieren proportional und werden vor Beginn der Kartenöffnung geladen.
 
 Eine kleine Stickborte aus blauen Knötchen, Blättern und Perlen leitet den Willkommensgruß ein. Im einzelnen nachtblauen Countdown-Medaillon steht die Zahl der verbleibenden Kalendertage. Es folgen beide illustrierten Orte mit ihren Angaben. Die neue Mago-Illustration übernimmt die Architektur, Fenster, Dach und Terrasse des eigenen Repository-Bildes. Die eigene Kirchenillustration wird freigestellt und im Ortsabschnitt vollständig dargestellt. Beide Orte behalten ihre Proportionen.
 
@@ -30,7 +30,7 @@ Cormorant Garamond trägt Namen, Überschriften und Fließtext. Kleine Beschrift
 
 ## Nachtblauer Umschlag
 
-Beim Öffnen steht das geprägte M&S allein auf einem ovalen, champagnerfarbenen Wachssiegel. Die aufrechten Buchstaben stehen auf einer gemeinsamen Mittelachse. Eingerollte Enden geben dem Monogramm mehr Schwung. Lichtkanten und Schatten geben dem Monogramm dasselbe Relief wie dem Doppeloval. Der bereitgestellte Screenshot war die Vorlage für die Form und das feine Doppeloval. Siegel und nachtblaues Leinen sind neu erzeugt. Ein Klick auf das Siegel lässt die beiden Leinenflügel auseinandergehen und legt die helle Kirchenszene frei.
+Beim Öffnen steht das geprägte M&S allein auf einem ovalen, champagnerfarbenen Wachssiegel. Die aufrechten Buchstaben stehen auf einer gemeinsamen Mittelachse. Eingerollte Enden geben dem Monogramm mehr Schwung. Lichtkanten und Schatten geben dem Monogramm dasselbe Relief wie dem Doppeloval. Der bereitgestellte Screenshot war die Vorlage für die Form und das feine Doppeloval. Siegel und nachtblaues Leinen sind neu erzeugt. Ein Klick auf das Siegel lässt die beiden Leinenflügel auseinandergehen und legt die Namen und das Hochzeitsdatum auf hellem Leinen frei.
 
 ## Blau im Inneren
 
@@ -44,7 +44,7 @@ Zwei durchgezogene Linien in Nacht- und Rauchblau fassen die gesamte geöffnete 
 
 Eine einzige feine Leinentextur bildet den Hintergrund des gesamten Dokuments. Opener, Begrüßung, Orte und Footer besitzen keinen eigenen deckenden Hintergrund und keine Abschnittsrandnähte. Die Motive wurden intern freigestellt; der Leinenuntergrund bleibt zwischen und hinter ihnen sichtbar. Header und Footer sind ebenfalls transparent.
 
-Die Breite der Einladung beträgt auf großen Bildschirmen maximal 880 Pixel, einschließlich des Openers. Eine breite Desktop-Komposition zeigt die Kirche im ersten Bildschirm. Auf kleinen Bildschirmen bleibt der Opener im Hochformat. Beide Varianten werden ohne Verzerrung auf der vollen Inhaltsbreite dargestellt. Die Begrüßung wurde nach dem Versetzen der Schwäne verkürzt, damit kein leerer Bildabschnitt zurückbleibt.
+Die Breite der Einladung beträgt auf großen Bildschirmen maximal 880 Pixel, einschließlich des Openers. Die Höhe des Auftakts richtet sich nach der Länge der Vorhänge. Auf kleinen Bildschirmen stehen die Namen untereinander. Die Begrüßung wurde nach dem Versetzen der Schwäne verkürzt, damit kein leerer Bildabschnitt zurückbleibt.
 
 ## Eigene Inhalte und Herkunft
 

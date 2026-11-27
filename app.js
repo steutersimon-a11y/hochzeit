@@ -122,7 +122,7 @@
   async function openInvitation() {
     if (opening.classList.contains('is-opening') || opening.hasAttribute('aria-busy')) return;
     opening.setAttribute('aria-busy', 'true');
-    const heroImages = $$('.garden-frame,.hero-curtain');
+    const heroImages = $$('.hero-curtain');
     let readyDeadline;
     try {
       await Promise.race([
