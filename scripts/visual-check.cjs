@@ -18,8 +18,8 @@ if (!playwright) throw new Error('Playwright or playwright-core is required.');
 const root = path.resolve(__dirname, '..');
 const output = process.env.INVITATION_QA_OUTPUT || '/tmp/wedding-qa';
 const requiredArt = ['opener-flow.webp', 'opener-flow-desktop.webp', 'welcome-flow.webp',
-  'farewell-swans.webp', 'venues-flow.webp', 'story-flow.webp',
-  'gift-flow.webp', 'medallion.webp', 'timeline-flow.webp', 'mago-flow.webp', 'church-flow.webp', 'linen-ivory.webp'];
+  'farewell-swans.webp', 'stitched-sprig.webp', 'gift-bow.webp',
+  'medallion.webp', 'timeline-flow.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
 const missing = requiredArt.filter(file => !fs.existsSync(path.join(root, 'assets/loom', file)));
 if (missing.length) {
   console.error('WAITING FOR ART: ' + missing.join(', '));
@@ -30,7 +30,7 @@ fs.mkdirSync(output, { recursive: true });
 const failures = [];
 const results = [];
 function check(value, message) {
-  if (!value) failures.push(message);
+  if (!value) { failures.push(message); console.error('CHECK FAILED: ' + message); }
 }
 // Decorative scenes have one deliberate home. Only the three countdown seals repeat.
 const source = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
@@ -42,7 +42,7 @@ for (const [src, count] of sourceCounts) {
   check(count === (src === 'assets/loom/medallion.webp' ? 3 : 1),
     `Static markup repeats a decorative scene: ${src} appears ${count} times`);
 }
-for (const file of ['opener-flow.webp', 'welcome-flow.webp', 'farewell-swans.webp', 'venues-flow.webp', 'story-flow.webp', 'gift-flow.webp']) {
+for (const file of ['opener-flow.webp', 'welcome-flow.webp', 'farewell-swans.webp', 'stitched-sprig.webp', 'gift-bow.webp']) {
   check(sourceCounts.get('assets/loom/' + file) === 1, `Missing unique textile scene: ${file}`);
 }
 // Guests' own information stays intact; the requested Dresscode is removed,
@@ -57,8 +57,9 @@ const previous = spawnSync('git', ['show', 'HEAD:wedding-config.js'], { cwd: roo
 if (previous.status === 0) {
   const baseline = readConfig(previous.stdout);
   baseline.photos = currentConfig.photos;
+  baseline.scheduleConfirmed = currentConfig.scheduleConfirmed;
   baseline.details = baseline.details.filter(detail => !/dresscode|was ziehen wir an/i.test(detail.title));
-  check(isDeepStrictEqual(baseline, currentConfig), 'Invitation inputs changed beyond Dresscode removal and requested photographic/illustrated assets');
+  check(isDeepStrictEqual(baseline, currentConfig), 'Invitation inputs changed beyond schedule confirmation status, Dresscode removal and requested photographic/illustrated assets');
 }
 check(!currentConfig.details.some(detail => /dresscode|was ziehen wir an/i.test(detail.title)), 'Dresscode remains in the invitation configuration');
 check(!/class=["'][^"']*\bdresscode\b/i.test(source), 'Dresscode section remains in the markup');
@@ -127,7 +128,7 @@ async function exerciseViewport(browser, baseURL, width) {
   check(mid.pseudoContent === 'none' || mid.pseudoBackground === 'rgba(0, 0, 0, 0)', `${width}: opaque page pseudo-element covers opener`);
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
   check(await page.evaluate(() => !document.querySelector('main').inert), `${width}: page stays inert after opening`);
-  check(await page.evaluate(() => document.activeElement.classList.contains('hero-discover')), `${width}: focus not restored to first scene`);
+  check(await page.evaluate(() => document.activeElement.id === 'hero-title'), `${width}: focus not restored to first scene heading`);
   const copyBox = await page.locator('.hero-copy').boundingBox();
   const heroBox = await page.locator('.hero').boundingBox();
   check(copyBox.y + copyBox.height <= heroBox.y + heroBox.height - 20, `${width}: opening copy clips below hero`);
@@ -178,6 +179,13 @@ async function exerciseViewport(browser, baseURL, width) {
       `${width}: a scrolling section covers the continuous linen canvas ${JSON.stringify(section)}`);
   }
   check(!linenFlow.dresscodeText && linenFlow.dresscodeNodes === 0, `${width}: Dresscode still shown to guests`);
+  if (width <= 700) {
+    check(await page.locator('.site-header nav a').evaluateAll(links => links.length > 0 && links.every(link => link.getBoundingClientRect().width > 0)),
+      `${width}: invitation navigation is hidden on mobile`);
+  }
+  if (!currentConfig.scheduleConfirmed) {
+    check(await page.locator('main').evaluate(main => /vorläufig/i.test(main.innerText)), `${width}: provisional schedule has no visible label`);
+  }
   await page.evaluate(() => document.activeElement?.blur());
   await page.screenshot({ path: path.join(output, `opened-${width}.png`) });
   await page.locator('.hero').screenshot({ path: path.join(output, `hero-${width}.png`) });
@@ -199,7 +207,11 @@ async function exerciseViewport(browser, baseURL, width) {
   });
   await page.evaluate(async () => {
     await Promise.all([...document.images].filter(image => image.getAttribute('src') && image.clientWidth > 0 && image.clientHeight > 0)
-      .map(image => image.decode().catch(() => {})));
+      .map(image => {
+        // The guest scroll above exercises lazy loading; resolve offscreen art for the full-page capture too.
+        image.loading = 'eager';
+        return image.decode().catch(() => {});
+      }));
   });
   await page.waitForTimeout(850);
   const ornaments = await page.evaluate(() => [...document.querySelectorAll('img[src*="assets/loom/"],img[src*="assets/art/"]')]
@@ -236,11 +248,6 @@ async function exerciseViewport(browser, baseURL, width) {
   for (const panel of panels) {
     check(!panel.clipped && panel.top >= 0 && panel.bottom <= 1 && panel.left >= 0 && panel.right <= 1,
       `${width}: panel text clips outside its textile scene ${JSON.stringify(panel)}`);
-    const safeBand = panel.class.includes('welcome') ? [0, 1]
-      : panel.class.includes('venues-intro') ? [.22, .81]
-      : panel.class.includes('story-framed') ? [.28, .73] : [.15, .90];
-    check(panel.top >= safeBand[0]-.002 && panel.bottom <= safeBand[1]+.002,
-      `${width}: text reaches a decorated part of its frame ${JSON.stringify(panel)}`);
   }
   const textBindings = await page.evaluate(() => {
     const get = key => key.split('.').reduce((value, part) => value?.[part], window.WEDDING);
@@ -322,6 +329,12 @@ async function exerciseViewport(browser, baseURL, width) {
   const calendar = fs.readFileSync(calendarPath, 'utf8').replace(/\r\n /g, '');
   check(calendar.includes('BEGIN:VEVENT') && calendar.includes('SUMMARY:Hochzeit von ' + currentConfig.names.join(' & ')),
     `${width}: calendar omits invitation event`);
+  if (!currentConfig.scheduleConfirmed) {
+    const date = currentConfig.date.replaceAll('-', '');
+    const followingDay = new Date(Date.parse(currentConfig.date + 'T12:00:00Z') + 86400000).toISOString().slice(0, 10).replaceAll('-', '');
+    check(calendar.includes('DTSTART;VALUE=DATE:' + date) && calendar.includes('DTEND;VALUE=DATE:' + followingDay)
+      && !/DTSTART:\d{8}T/.test(calendar), `${width}: provisional schedule exports an unconfirmed calendar time`);
+  }
 
   const trigger = page.locator('[data-rsvp]').first();
   await trigger.click();
@@ -329,11 +342,13 @@ async function exerciseViewport(browser, baseURL, width) {
   const dialogBox = await page.locator('#rsvp-dialog').boundingBox();
   check(dialogBox.x >= 0 && dialogBox.x + dialogBox.width <= width + 1, `${width}: RSVP dialog outside viewport`);
   check(dialogBox.height <= height * .91, `${width}: RSVP dialog exceeds viewport height`);
-  await page.locator('#rsvp-form input[name=names]').fill('Testgäste QA');
-  await page.locator('#rsvp-form textarea').fill('Reine lokale Funktionsprüfung.');
   if (!await page.evaluate(() => window.WEDDING.rsvpEmail)) {
-    await page.locator('#rsvp-form button[type=submit]').click();
-    check((await page.locator('#rsvp-result').textContent()).includes('keine Antwort'), `${width}: preview RSVP incorrectly claims delivery`);
+    check(!await page.locator('#rsvp-form').isVisible(), `${width}: unconfigured RSVP asks guests to fill a form`);
+    check(await page.locator('#rsvp-note').isVisible() && (await page.locator('#rsvp-note').textContent()).trim().length > 0,
+      `${width}: unconfigured RSVP omits its status message`);
+  } else {
+    await page.locator('#rsvp-form input[name=names]').fill('Testgäste QA');
+    await page.locator('#rsvp-form textarea').fill('Reine lokale Funktionsprüfung.');
   }
   await page.keyboard.press('Escape');
   await page.locator('#rsvp-dialog').waitFor({ state: 'hidden' });
@@ -355,6 +370,7 @@ async function exerciseViewport(browser, baseURL, width) {
   await overflow(page, `${width} dialogs complete`);
   await page.locator('#replay').click();
   await page.locator('#opening').waitFor({ state: 'visible' });
+  await page.waitForFunction(() => scrollY === 0, null, { timeout: 1000 });
   check(await page.evaluate(() => scrollY === 0), `${width}: replay does not reveal top scene`);
   await page.keyboard.press('Escape');
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });

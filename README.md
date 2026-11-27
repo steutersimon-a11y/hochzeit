@@ -1,8 +1,8 @@
 # Marie & Simon · Embroidered Garden
 
-Eine digitale Hochzeitseinladung auf einem durchgehenden Leinentuch: eigene Kirche unter Perlenvorhängen, Glyzinien, individuelle Blütenrahmen, passende Ortsillustrationen und sechs Ablaufmotive. Die beiden Schwäne bilden ganz unten den Abschied. Opener und weiterer Verlauf haben dieselbe Breite. Salbeifarbene Leinenflügel öffnen direkt auf die fertige Kirchenszene. Inspiriert vom tatsächlichen Bildaufbau von [The Digital Yes](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
+Eine digitale Hochzeitseinladung auf einem durchgehenden Leinentuch: eigene Kirche unter Perlenvorhängen, Glyzinien, offene Stickranken, passende Ortsillustrationen und sechs Ablaufmotive. Die beiden Schwäne bilden ganz unten den Abschied. Opener und weiterer Verlauf haben dieselbe Breite. Salbeifarbene Leinenflügel öffnen direkt auf die fertige Kirchenszene. Inspiriert vom tatsächlichen Bildaufbau von [The Digital Yes](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
 
-[Neuer Auftakt](preview-opener.png) · [Handy-Vorschau](preview-mobile.png) · [Desktop-Vorschau](preview-desktop.png) · [Die Locations](preview-locations.png) · [Eure Fotos](preview-fotos.png)
+[Auftakt](preview-opener.png) · [Handy-Vorschau](preview-mobile.png) · [Desktop-Vorschau](preview-desktop.png) · [Die Locations](preview-locations.png) · [Eure Fotos](preview-fotos.png)
 
 [Abschied mit Schwänen](preview-abschied.png) · [Siegel](preview-siegel-mobile.png) · [Während der Öffnung](preview-ouverture.png) · [Öffnung als Video](preview-oeffnung.mp4)
 
@@ -10,9 +10,9 @@ Eine digitale Hochzeitseinladung auf einem durchgehenden Leinentuch: eigene Kirc
 
 Die öffentliche Referenz und ihre vollständige Live-Einladung wurden erneut geöffnet und visuell untersucht. Die gemeinsame Materialwelt besteht aus hellem Leinen, Salbeigrün, Mauve, Perlen und Stickstichen. Eine einzige gekachelte Leinentextur läuft hinter der gesamten Einladung durch. Die Stickmotive sind transparente Auflagen ohne eigene rechteckige Leinenfläche. Der Opener wurde anhand der eigenen Kirchenillustration gestaltet; das neue Mago-Bild anhand der eigenen Restaurantillustration. Der Ablauf zeigt Kirche, Ringe, Sektgläser, Cocktail, Dinner und Discokugel.
 
-Jede große dekorative Szene erscheint einmal. Die alten mehrfach eingesetzten Rosen und Girlanden sind entfernt. Bilder behalten ihre Proportionen, Text bleibt in den freien Bildbereichen. Der Dresscode wurde auf Wunsch vollständig entfernt. Der Geschenkhinweis erscheint einmal. Ruhige Einblendungen verbinden die Abschnitte beim Scrollen.
+Ortsangaben und Illustrationen stehen zusammen. Eine gestickte Ranke leitet die Ortsansicht ein, eine kleine Perlenschleife begleitet den Geschenkhinweis. Die Geschichte und ihre beiden Fotos teilen sich auf großen Bildschirmen eine Zeile. Die Beschriftungen bleiben auf kleinen Displays frei. Eine durchgehende Stichlinie verbindet die sechs Stationen des Tagesablaufs.
 
-Alle übrigen Texte und Sachangaben in `wedding-config.js` sind erhalten. Die Ortsbilder verweisen auf freigestellte Stickmotive. Die angefragten neuen Fotoanhänge waren in der Nachricht nicht verfügbar; die vorhandenen Paar- und Ringfotos sind bis zum Austausch weiterhin eingebunden. [Analyse und Umsetzung](DESIGN-REFERENZ.md) · [Neue Bildserie](assets/loom/README.md).
+Die Sachangaben stehen in `wedding-config.js`. Die angefragten neuen Fotos fehlen noch. Aktuell zeigt die Einladung das vorhandene Paar- und Ringfoto. [Analyse und Umsetzung](DESIGN-REFERENZ.md) · [Neue Bildserie](assets/loom/README.md).
 
 ## Einladung ansehen
 
@@ -51,13 +51,13 @@ Die Seite ist statisch und braucht keinen Servercode, kein Abo und keine laufend
 
 Für GitHub Pages im öffentlichen Repository unter **Settings → Pages** „Deploy from a branch“, Branch **main**, Ordner **/(root)** wählen. Die vorgesehene Adresse lautet `https://steutersimon-a11y.github.io/hochzeit/`. Pages muss in den Repository-Einstellungen aktiviert sein.
 
-Ohne `rsvpEmail` ist die Rückmeldung eine Vorschau und verschickt nichts. Mit Kontaktadresse bereitet sie eine E-Mail im E-Mail-Programm der Gäste vor; die Gäste senden sie selbst ab. Der Kalenderbutton lädt eine ICS-Datei und berücksichtigt `Europe/Berlin` samt Sommerzeit.
+Sobald `rsvpEmail` eingetragen ist, bereitet das Formular eine E-Mail im E-Mail-Programm der Gäste vor. Die Gäste senden sie dort selbst ab. Bis zur Freigabe zeigt die Einladung den Status der Rückmeldung. Der Kalenderbutton lädt bei vorläufigen Uhrzeiten einen ganztägigen Eintrag. Nach Bestätigung der Zeiten `scheduleConfirmed` auf `true` setzen. Der Kalenderexport berücksichtigt dann `Europe/Berlin` samt Sommerzeit.
 
 ## Herkunft und Prüfung
 
 Die neuen Grafiken wurden intern erzeugt. Als Quellen wurden die öffentliche Referenz und eigene Repository-Bilder verwendet; weitere Daten vom Computer des Nutzers wurden nicht abgerufen. Grafikdateien, Film und Code der Referenzwebsite werden nicht als Produktassets übernommen. Cormorant Garamond und Manrope sind frei nutzbare Schriften mit Lizenztexten in `assets/fonts/`.
 
-Mit laufender Seite unter `http://localhost:8000`:
+Die Prüfungen starten bei Bedarf einen eigenen lokalen Server. Mit `INVITATION_QA_URL` lässt sich ein bestehender Server angeben.
 
 ```sh
 node scripts/visual-check.cjs

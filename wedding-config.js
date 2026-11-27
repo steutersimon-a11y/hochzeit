@@ -14,7 +14,7 @@ window.WEDDING = {
   photos: {
     couple: 'assets/images/paar.jpg',
     hands: 'assets/images/haende.jpg',
-    church: 'assets/loom/church-flow.webp',
+    church: 'assets/loom/church-edition.webp',
     party: 'assets/loom/mago-flow.webp',
   },
   ceremony: {
@@ -52,6 +52,7 @@ window.WEDDING = {
   ],
   rsvpDeadline: '1. Mai 2027',
   rsvpEmail: '', // Später eure echte E-Mail eintragen; Antworten werden als E-Mail vorbereitet.
+  scheduleConfirmed: false, // Erst nach Bestätigung der Uhrzeiten aktivieren.
   calendar: { startTime: '14:00', endTime: '23:59', timezone: 'Europe/Berlin' },
   footer: 'Mit Liebe geplant. Mit euch unvergesslich.'
 };

@@ -21,7 +21,7 @@
       <div class="gate-door gate-left" aria-hidden="true"><div class="door-face"></div><div class="door-back"></div></div>
       <div class="gate-door gate-right" aria-hidden="true"><div class="door-face"></div><div class="door-back"></div></div>
       <div class="seal-carrier">
-        <button class="wax-seal" id="open-invitation" aria-label="Einladung mit unserem Siegel M und S öffnen"><img src="assets/art/seal-ivory.webp" alt="" width="1086" height="1448" fetchpriority="high"><span class="seal-monogram"><span data-initial="0">M</span><em>&amp;</em><span data-initial="1">S</span></span></button>
+        <button class="wax-seal" id="open-invitation" aria-label="Einladung über das Siegel öffnen"><img src="assets/art/seal-ivory.webp" alt="" width="600" height="800" fetchpriority="high"><span class="seal-monogram"><span data-initial="0">M</span><em>&amp;</em><span data-initial="1">S</span></span></button>
       </div>
     </div>
     <div class="opening-note"><span>FÜR UNSERE LIEBLINGSMENSCHEN</span><p class="opening-names names-inline">Marie &amp; Simon</p></div>
@@ -32,7 +32,7 @@
     <section class="hero" aria-labelledby="hero-title">
       <picture class="hero-art"><source media="(min-width:701px)" srcset="assets/loom/opener-flow-desktop.webp" width="1448" height="1086"><img class="garden-frame" src="assets/loom/opener-flow.webp" alt="" width="1024" height="1536" fetchpriority="high"></picture>
       <div class="hero-copy">
-        <h1 id="hero-title"><span data-name="0">Marie</span><em>&amp;</em><span data-name="1">Simon</span></h1>
+        <h1 id="hero-title" tabindex="-1"><span data-name="0">Marie</span><em>&amp;</em><span data-name="1">Simon</span></h1>
         <p class="hero-date" data-bind="dateLabel">28. August 2027</p>
         <p class="hero-place" data-bind="region">Schermbeck</p>
       </div>
@@ -43,9 +43,9 @@
   <header class="site-header">
     <a class="brand" href="#einladung" aria-label="Zum Anfang"><span class="initials">M · S</span></a>
     <nav aria-label="Einladung">
-      <a href="#unser-tag">Unser Tag</a><a href="#orte">Die Orte</a><a href="#gut-zu-wissen">Gut zu wissen</a>
+      <a href="#orte">Die Orte</a><a href="#unser-tag">Ablauf</a><a href="#gut-zu-wissen">Gut zu wissen</a>
     </nav>
-    <button class="nav-rsvp" data-rsvp>Wir sind dabei <span aria-hidden="true">↗︎</span></button>
+    <button class="nav-rsvp" data-rsvp>Zur Rückmeldung <span aria-hidden="true">↗︎</span></button>
   </header>
     <section class="welcome textile-panel" id="willkommen" aria-labelledby="welcome-title">
       <img class="panel-art" src="assets/loom/welcome-flow.webp" alt="" width="1024" height="1536" loading="lazy">
@@ -57,14 +57,18 @@
       <p class="eyebrow reveal">BIS ZU UNSEREM GROSSEN TAG</p>
       <h2 id="date-title" class="reveal">Countdown</h2>
       <div class="date-display reveal"><span data-bind="weekday">Samstag</span><strong data-bind="dateLabel">28. August 2027</strong><span data-bind="region">Schermbeck</span></div>
-      <button class="text-button calendar-button reveal" id="save-date">In meinem Kalender vormerken <span aria-hidden="true">↗︎</span></button>
-      <div class="countdown reveal" aria-label="Zeit bis zur Hochzeit"><div><img src="assets/loom/medallion.webp" alt="" width="1024" height="1024" loading="lazy"><strong id="count-days">254</strong><span>TAGE</span></div><i>·</i><div><img src="assets/loom/medallion.webp" alt="" width="1024" height="1024" loading="lazy"><strong id="count-hours">00</strong><span>STUNDEN</span></div><i>·</i><div><img src="assets/loom/medallion.webp" alt="" width="1024" height="1024" loading="lazy"><strong id="count-minutes">00</strong><span>MINUTEN</span></div></div>
-      <p class="countdown-note" id="countdown-note">Bis wir gemeinsam Erinnerungen sammeln.</p>
+      <div class="countdown reveal" aria-label="Zeit bis zur Hochzeit"><div><img src="assets/loom/medallion.webp" alt="" width="480" height="480" loading="lazy"><strong id="count-days">254</strong><span>TAGE</span></div><div><img src="assets/loom/medallion.webp" alt="" width="480" height="480" loading="lazy"><strong id="count-hours">00</strong><span>STUNDEN</span></div><div><img src="assets/loom/medallion.webp" alt="" width="480" height="480" loading="lazy"><strong id="count-minutes">00</strong><span>MINUTEN</span></div></div>
+      <button class="text-button calendar-button reveal" id="save-date">Datum im Kalender vormerken <span aria-hidden="true">↗︎</span></button>
+      <p class="countdown-note" id="countdown-note" hidden>Unser Für immer hat begonnen.</p>
     </section>
 
     <section class="venues section-pad" id="orte" aria-labelledby="venues-title">
 
-      <div class="venues-intro textile-panel"><img class="panel-art" src="assets/loom/venues-flow.webp" alt="" width="1024" height="1536" loading="lazy"><div class="panel-copy reveal"><p class="eyebrow">ZWEI ORTE. EINE GESCHICHTE.</p><h2 id="venues-title">Trauung &amp; Feier</h2><p class="venue-intro-date" data-bind="dateLabel"></p><p class="venue-intro-line"><span data-bind="ceremony.name"></span><br><span data-bind="ceremony.time"></span></p><span class="venue-intro-amp" aria-hidden="true">&amp;</span><p class="venue-intro-line"><span data-bind="party.name"></span><br><span data-bind="party.time"></span></p><p class="venue-intro-note">Vom ersten Ja bis zum letzten Tanz.</p></div></div>
+      <div class="venues-intro reveal">
+        <img class="section-ornament venue-ornament" src="assets/loom/stitched-sprig.webp" alt="" width="624" height="208" loading="lazy">
+        <h2 id="venues-title">Trauung &amp; Feier</h2>
+        <p class="section-note" data-provisional>Die Uhrzeiten sind vorläufig.</p>
+      </div>
       <div class="venue-grid">
         <article class="venue-card reveal">
           <div class="venue-art venue-church"><img data-photo="church" alt="Gestickte Illustration der Reformierten Kirche in Schermbeck" hidden><img class="venue-fallback" src="assets/church.svg" alt="Florale Illustration der Reformierten Kirche" width="420" height="370" loading="lazy"></div>
@@ -77,36 +81,52 @@
       </div>
     </section>
 
-    <section class="story" id="unsere-geschichte" aria-labelledby="story-title">
-      <div class="story-framed textile-panel"><img class="panel-art" src="assets/loom/story-flow.webp" alt="" width="1024" height="1536" loading="lazy"><div class="story-copy panel-copy reveal"><p class="eyebrow">UNSERE LIEBLINGSGESCHICHTE</p><h2>Unsere Geschichte</h2><p data-bind="story"></p></div></div>
-      <div class="story-photos section-pad">
-      <div class="photo-duo reveal">
-        <figure class="photo-main photo-frame"><img data-photo="couple" alt="Marie und Simon, ein gemeinsamer Lieblingsmoment" hidden><div class="photo-fallback"><img src="assets/wreath.svg" alt=""><span>Wir zwei.</span><small>Unser Lieblingsmoment</small></div><figcaption>DU. ICH. UND ALLES, WAS KOMMT.</figcaption></figure>
-        <figure class="photo-detail photo-frame"><img data-photo="hands" alt="Unsere Hände und der Verlobungsring" hidden><div class="photo-fallback"><span class="fallback-amp">&</span><span>Für immer.</span></div><figcaption>Ein kleines Versprechen.</figcaption></figure>
+    <section class="story section-pad" id="unsere-geschichte" aria-labelledby="story-title">
+      <div class="story-framed story-copy reveal">
+        <h2 id="story-title">Unsere Geschichte</h2>
+        <p data-bind="story"></p>
       </div>
-      <h2 class="story-quote reveal" id="story-title" data-bind="quote"></h2>
+      <div class="story-photos reveal">
+        <div class="photo-duo">
+          <figure class="photo-main photo-frame">
+            <img data-photo="couple" alt="Marie und Simon, ein gemeinsamer Lieblingsmoment" hidden>
+            <div class="photo-fallback"><img src="assets/wreath.svg" alt=""><span>Wir zwei.</span><small>Unser Lieblingsmoment</small></div>
+            <figcaption>Du, ich und alles, was kommt.</figcaption>
+          </figure>
+          <figure class="photo-detail photo-frame">
+            <img data-photo="hands" alt="Unsere Hände und der Verlobungsring" hidden>
+            <div class="photo-fallback"><span class="fallback-amp">&amp;</span><span>Für immer.</span></div>
+            <figcaption>Ein kleines Versprechen.</figcaption>
+          </figure>
+        </div>
       </div>
+      <p class="story-quote reveal" data-bind="quote"></p>
     </section>
 
     <section class="timeline-section section-pad" id="unser-tag" aria-labelledby="timeline-title">
-      <div class="timeline-header reveal"><p class="eyebrow">VOM JA BIS ZUM LETZTEN LIED</p><h2 id="timeline-title">Ein Tag, der bleibt.</h2><p>Ein bisschen Aufregung. Ganz viel Liebe.<br>Und hoffentlich eine sehr volle Tanzfläche.</p></div>
+      <div class="timeline-header reveal"><p class="eyebrow">VOM JA BIS ZUM LETZTEN LIED</p><h2 id="timeline-title">Ein Tag, der bleibt.</h2><p class="section-note" data-provisional>Die Uhrzeiten sind vorläufig.</p></div>
       <ol class="timeline" id="timeline"></ol>
     </section>
 
     <section class="details section-pad" id="gut-zu-wissen" aria-labelledby="details-title">
 
-      <div class="details-layout"><div class="details-title reveal"><h2 id="details-title">Gut zu wissen.</h2><p>Alles, was euren Tag mit uns<br>noch ein bisschen schöner macht.</p></div><div class="faq-list reveal" id="faq-list"></div></div>
+      <div class="details-layout"><div class="details-title reveal"><h2 id="details-title">Gut zu wissen</h2></div><div class="faq-list reveal" id="faq-list"></div></div>
     </section>
 
-    <section class="gift-section textile-panel" aria-labelledby="gift-title"><img class="panel-art" src="assets/loom/gift-flow.webp" alt="" width="1024" height="1536" loading="lazy"><div class="gift-copy panel-copy reveal"><h2 id="gift-title" data-detail-title="2"></h2><p data-detail-text="2"></p></div></section>
+    <section class="gift-section section-pad" aria-labelledby="gift-title">
+      <img class="section-ornament gift-ornament" src="assets/loom/gift-bow.webp" alt="" width="624" height="208" loading="lazy">
+      <div class="gift-copy reveal">
+        <h2 id="gift-title" data-detail-title="2"></h2>
+        <p data-detail-text="2"></p>
+      </div>
+    </section>
 
     <section class="rsvp-section section-pad" id="rueckmeldung" aria-labelledby="rsvp-title">
 
-      <p class="eyebrow reveal">DER SCHÖNSTE TEIL? IHR SEID DABEI.</p>
       <h2 id="rsvp-title" class="reveal">Mit euch wird es<br><em>unvergesslich.</em></h2>
-      <p class="reveal">Lasst uns bis zum <span data-bind="rsvpDeadline"></span> wissen,<br>ob wir mit euch feiern dürfen.</p>
-      <button class="primary-button reveal" data-rsvp>Wir sind dabei <span aria-hidden="true">↗︎</span></button>
-      <p class="rsvp-signature names-inline reveal">Marie & Simon</p>
+      <p class="reveal" id="rsvp-intro">Lasst uns bis zum <span data-bind="rsvpDeadline"></span> wissen, ob wir mit euch feiern dürfen.</p>
+      <p class="reveal" id="rsvp-availability" hidden>Die Rückmeldung öffnet in Kürze.</p>
+      <button class="primary-button reveal" data-rsvp>Zur Rückmeldung <span aria-hidden="true">↗︎</span></button>
     </section>
   </main>
   <footer><a class="footer-monogram initials" href="#einladung">M · S</a><p data-bind="footer"></p><span><span data-bind="dateLabel"></span> · <span data-bind="region"></span></span><button class="footer-replay" id="replay">Einladung noch einmal öffnen</button><img class="farewell-art" data-farewell-art src="assets/loom/farewell-swans.webp" alt="Zwei gestickte Schwäne, deren Hälse ein Herz bilden" width="1536" height="1024" loading="lazy"></footer>
@@ -115,13 +135,13 @@
   <dialog id="rsvp-dialog" aria-labelledby="rsvp-dialog-title">
     <button class="dialog-close" data-close aria-label="Schließen">×</button>
 
-    <p class="eyebrow">EIN PLATZ FÜR EUCH</p><h2 id="rsvp-dialog-title">Feiert ihr mit uns?</h2>
-    <form id="rsvp-form">
+    <h2 id="rsvp-dialog-title">Rückmeldung</h2>
+    <p class="form-note" id="rsvp-note"></p>
+    <form id="rsvp-form" hidden>
       <label>Eure Namen<input name="names" autocomplete="name" required placeholder="Vor- und Nachnamen"></label>
       <fieldset><legend>Seid ihr dabei?</legend><label class="radio-label"><input type="radio" name="attendance" value="Ja, wir feiern mit euch!" checked> Ja, von Herzen gern.</label><label class="radio-label"><input type="radio" name="attendance" value="Leider können wir nicht dabei sein."> Leider schaffen wir es nicht.</label></fieldset>
-      <div class="form-row"><label>Erwachsene<input name="adults" type="number" min="1" max="20" value="2" required></label><label>Kinder<input name="children" type="number" min="0" max="20" value="0" required></label></div>
+      <div class="form-row" id="rsvp-party"><label>Erwachsene<input name="adults" type="number" min="1" max="20" value="2" required></label><label>Kinder<input name="children" type="number" min="0" max="20" value="0" required></label></div>
       <label>Wünsche & liebe Worte<textarea name="message" rows="3" placeholder="Allergien, Essenswünsche oder etwas, das ihr uns sagen möchtet …"></textarea></label>
-      <p class="form-note" id="rsvp-note"></p>
       <button class="primary-button" type="submit">Antwort vorbereiten <span aria-hidden="true">↗︎</span></button>
       <p id="rsvp-result" role="status" hidden></p>
     </form>

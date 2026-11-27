@@ -16,7 +16,12 @@
     $$('.names-inline').forEach(el => { el.textContent = inlineNames(); });
     $$('.initials').forEach(el => { el.textContent = config.names.map(n => [...n.trim()][0] || '').join(' · '); });
     document.title = inlineNames() + ' · Wir heiraten';
-    $$('[data-map]').forEach(el => { el.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(config[el.dataset.map].mapQuery); });
+    $$('[data-map]').forEach(link => {
+      const route = new URL('https://www.google.com/maps/dir/');
+      route.searchParams.set('api', '1');
+      route.searchParams.set('destination', config[link.dataset.map].mapQuery);
+      link.href = route.href;
+    });
     $('#timeline').replaceChildren();
     config.timeline.forEach(item => {
       const li = document.createElement('li'); li.className = 'reveal';
@@ -33,9 +38,14 @@
       const details = document.createElement('details'), summary = document.createElement('summary'), text = document.createElement('p');
       summary.textContent = item.title; text.textContent = item.text; details.append(summary,text); if (i === 0) details.open = true; $('#faq-list').append(details);
     });
-    $('#rsvp-note').textContent = config.rsvpEmail
-      ? 'Eure Antwort wird in eurem E-Mail-Programm vorbereitet. Ihr könnt sie dort noch einmal prüfen und absenden.'
+    const rsvpOpen = Boolean(config.rsvpEmail);
+    $('#rsvp-form').hidden = !rsvpOpen;
+    $('#rsvp-intro').hidden = !rsvpOpen;
+    $('#rsvp-availability').hidden = rsvpOpen;
+    $('#rsvp-note').textContent = rsvpOpen
+      ? 'Wir bereiten eure Antwort im E-Mail-Programm vor. Dort könnt ihr sie prüfen und absenden.'
       : 'Die Rückmeldung öffnet in Kürze. Wir freuen uns schon jetzt auf euch.';
+    $$('[data-provisional]').forEach(el => { el.hidden = Boolean(config.scheduleConfirmed); });
     $$('[data-photo]').forEach(loadPhoto);
     updateCountdown(); observeReveals();
   }
@@ -43,16 +53,31 @@
   function loadPhoto(el) {
     const src = config.photos[el.dataset.photo];
     const fallback = el.parentElement.querySelector('.photo-fallback,.venue-fallback');
-    el.hidden = true; if(fallback) fallback.hidden = false;
-    if(!src) return;
-    el.onload = () => { el.hidden = false; if(fallback) fallback.hidden = true; };
-    el.onerror = () => { el.hidden = true; if(fallback) fallback.hidden = false; };
+    el.hidden = !src;
+    if (fallback) fallback.hidden = Boolean(src);
+    if (!src) {
+      el.removeAttribute('src');
+      return;
+    }
+    el.loading = 'lazy';
+    el.decoding = 'async';
+    el.onerror = () => {
+      el.hidden = true;
+      if (fallback) fallback.hidden = false;
+    };
     el.src = src;
   }
 
   // A timezone-independent epoch for the Berlin ceremony, including summer time.
   function eventEpoch() {
-    const time = config.calendar.startTime;
+    if (!config.scheduleConfirmed) {
+      // A date-only countdown ends at midnight in the wedding's local time.
+      return localEventEpoch('00:00');
+    }
+    return localEventEpoch(config.calendar.startTime);
+  }
+
+  function localEventEpoch(time) {
     const tentative = Date.parse(config.date + 'T' + time + ':00Z');
     if (!Number.isFinite(tentative)) return NaN;
     const parts = new Intl.DateTimeFormat('en-US',{timeZone:config.calendar.timezone,timeZoneName:'shortOffset',hour:'2-digit'}).formatToParts(tentative);
@@ -67,7 +92,7 @@
     $('#count-days').textContent = String(Math.floor(minutes/1440)).padStart(2,'0');
     $('#count-hours').textContent = String(Math.floor(minutes%1440/60)).padStart(2,'0');
     $('#count-minutes').textContent = String(minutes%60).padStart(2,'0');
-    $('#countdown-note').textContent = left > 0 ? 'Bis wir gemeinsam Erinnerungen sammeln.' : 'Unser Für immer hat begonnen.';
+    $('#countdown-note').hidden = left > 0;
   }
   let observer;
   function observeReveals() {
@@ -83,8 +108,17 @@
     if ($('#opening').classList.contains('is-opening') || $('#opening').hasAttribute('aria-busy')) return;
     $('#opening').setAttribute('aria-busy', 'true');
     const hero = $('.garden-frame');
-    try { if (hero.decode) await hero.decode(); } catch (error) { /* The linen fallback remains visible if an image fails. */ }
-    await document.fonts.ready;
+    let readyDeadline;
+    try {
+      await Promise.race([
+        Promise.all([
+          hero?.decode ? hero.decode().catch(() => {}) : Promise.resolve(),
+          document.fonts?.ready || Promise.resolve()
+        ]),
+        new Promise(resolve => { readyDeadline = setTimeout(resolve, 900); })
+      ]);
+    } catch (error) { /* Opening remains available when artwork or fonts fail. */ }
+    finally { clearTimeout(readyDeadline); }
     $('#opening').removeAttribute('aria-busy');
     $('#opening').classList.add('is-opening');
     document.body.classList.add('opening-running');
@@ -93,7 +127,7 @@
       $('#opening').classList.remove('is-opening');
       document.body.classList.remove('opening-active', 'opening-running');
       $$('.skip-link,.site-header,main,footer').forEach(el => { el.inert = false; });
-      $('.hero-discover').focus({ preventScroll: true });
+      ($('#hero-title') || $('.hero-discover')).focus({ preventScroll: true });
     }, reducedMotion ? 0 : 3150);
     try { sessionStorage.setItem('invitation-opened-linen-v6', 'yes'); } catch (error) {}
   }
@@ -125,17 +159,30 @@
   });
   $$('.photo-frame>[data-photo]').forEach(img => {
     img.tabIndex=0; img.setAttribute('role','button');
-    const show = () => { if(img.hidden) return; $('#large-photo').src=img.src; $('#large-photo').alt=img.alt; openDialog($('#photo-dialog'),img); };
+    const show = () => { if(img.hidden || !img.naturalWidth) return; $('#large-photo').src=img.src; $('#large-photo').alt=img.alt; openDialog($('#photo-dialog'),img); };
     img.addEventListener('click',show); img.addEventListener('keydown',e => {if(e.key==='Enter'||e.key===' '){e.preventDefault();show();}});
   });
 
+  const rsvpForm = $('#rsvp-form');
+  rsvpForm.addEventListener('change', event => {
+    if (event.target.name !== 'attendance') return;
+    const attending = rsvpForm.elements.attendance[0].checked;
+    $('#rsvp-party').hidden = !attending;
+    rsvpForm.elements.adults.disabled = !attending;
+    rsvpForm.elements.children.disabled = !attending;
+  });
   $('#rsvp-form').addEventListener('submit',event => {
     event.preventDefault(); const result = $('#rsvp-result'); result.hidden = false;
     if(!config.rsvpEmail){result.textContent='Unsere Rückmeldung ist noch nicht geöffnet. Bitte schaut bald wieder vorbei. Es wurde keine Antwort verschickt oder gespeichert.';return;}
     const data = new FormData(event.currentTarget);
-    const body = ['Liebe '+inlineNames()+',','',String(data.get('attendance')),'Namen: '+data.get('names'),'Erwachsene: '+data.get('adults'),'Kinder: '+data.get('children'),'','Wünsche & liebe Worte:',String(data.get('message'))].join('\n');
-    const link = document.createElement('a'); link.href='mailto:'+encodeURIComponent(config.rsvpEmail)+'?subject='+encodeURIComponent('Unsere Rückmeldung zu eurer Hochzeit')+'&body='+encodeURIComponent(body); link.click();
-    result.textContent='Eure E-Mail ist vorbereitet. Bitte sendet sie in eurem E-Mail-Programm ab, damit eure Rückmeldung bei uns ankommt.';
+    const body = ['Liebe ' + inlineNames() + ',', '', data.get('attendance'), 'Namen: ' + data.get('names')];
+    if (data.has('adults')) body.push('Erwachsene: ' + data.get('adults'), 'Kinder: ' + data.get('children'));
+    if (data.get('message')?.trim()) body.push('', 'Wünsche & liebe Worte:', data.get('message').trim());
+    const link = document.createElement('a');
+    link.href = 'mailto:' + encodeURIComponent(config.rsvpEmail) + '?subject=' +
+      encodeURIComponent('Unsere Rückmeldung zu eurer Hochzeit') + '&body=' + encodeURIComponent(body.join('\r\n'));
+    link.click();
+    result.textContent = 'Bitte sendet die vorbereitete E-Mail in eurem E-Mail-Programm ab.';
   });
 
   function download(content,type,name) {
@@ -144,10 +191,29 @@
   const icsEscape = value => String(value).replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/,/g,'\\,').replace(/;/g,'\\;');
   const utcICS = date => new Date(date).toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
   $('#save-date').addEventListener('click',() => {
-    const start=eventEpoch();if(!Number.isFinite(start))return;
-    const [sh,sm]=config.calendar.startTime.split(':').map(Number),[eh,em]=config.calendar.endTime.split(':').map(Number);
-    let duration=(eh*60+em-sh*60-sm)*60000;if(duration<=0)duration+=86400000;
-    const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Unser Hochzeitsgarten//DE','CALSCALE:GREGORIAN','BEGIN:VEVENT','UID:'+config.date+'-'+config.names.map(n=>encodeURIComponent(n)).join('-')+'@hochzeitsgarten.local','DTSTAMP:'+utcICS(Date.now()),'DTSTART:'+utcICS(start),'DTEND:'+utcICS(start+duration),'SUMMARY:'+icsEscape('Hochzeit von '+inlineNames()),'LOCATION:'+icsEscape(config.ceremony.name+', '+config.ceremony.address),'DESCRIPTION:'+icsEscape('Trauung: '+config.ceremony.time+' · '+config.ceremony.name+'\nFeier: '+config.party.time+' · '+config.party.name),'END:VEVENT','END:VCALENDAR'];
+    const day = Date.parse(config.date + 'T00:00:00Z');
+    if (!Number.isFinite(day)) return;
+    const nextDay = new Date(day + 86400000).toISOString().slice(0, 10);
+    let dates = ['DTSTART;VALUE=DATE:' + config.date.replaceAll('-', ''),
+      'DTEND;VALUE=DATE:' + nextDay.replaceAll('-', '')];
+    let description = 'Trauung: ' + config.ceremony.name + '\nFeier: ' + config.party.name + '\nUhrzeiten folgen.';
+    if (config.scheduleConfirmed) {
+      const start = eventEpoch();
+      const [sh, sm] = config.calendar.startTime.split(':').map(Number);
+      const [eh, em] = config.calendar.endTime.split(':').map(Number);
+      let duration = (eh * 60 + em - sh * 60 - sm) * 60000;
+      if (duration <= 0) duration += 86400000;
+      if (!Number.isFinite(start + duration)) return;
+      dates = ['DTSTART:' + utcICS(start), 'DTEND:' + utcICS(start + duration)];
+      description = 'Trauung: ' + config.ceremony.time + ' · ' + config.ceremony.name +
+        '\nFeier: ' + config.party.time + ' · ' + config.party.name;
+    }
+    const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Unser Hochzeitsgarten//DE',
+      'CALSCALE:GREGORIAN', 'BEGIN:VEVENT',
+      'UID:' + config.date + '-' + config.names.map(n => encodeURIComponent(n)).join('-') + '@hochzeitsgarten.local',
+      'DTSTAMP:' + utcICS(Date.now()), ...dates, 'SUMMARY:' + icsEscape('Hochzeit von ' + inlineNames()),
+      'LOCATION:' + icsEscape(config.ceremony.name + ', ' + (config.ceremony.address || config.region)),
+      'DESCRIPTION:' + icsEscape(description), 'END:VEVENT', 'END:VCALENDAR'];
     // RFC 5545 folds by UTF-8 bytes, preserving multibyte characters.
     const folded=lines.map(line=>{let out='',bytes=0;for(const ch of line){const size=new TextEncoder().encode(ch).length;if(bytes+size>73){out+='\r\n ';bytes=1;}out+=ch;bytes+=size;}return out;}).join('\r\n')+'\r\n';
     download(folded,'text/calendar;charset=utf-8','Unsere-Hochzeit.ics');
