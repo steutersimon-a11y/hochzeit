@@ -12,15 +12,18 @@ body {
 }
 
 body::before {
-  --toile-width: max(100vw, 34rem);
+  --toile-width: max(50vw, 17rem);
   --toile-height: calc(var(--toile-width) * 2 / 3);
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: url('assets/art/toile-de-jouy.webp') center top / var(--toile-width) var(--toile-height) repeat-y;
-  mask: linear-gradient(transparent, #000 5%, #000 95%, transparent) center top / 100% var(--toile-height) repeat-y;
-  opacity: .58;
+  background: url('assets/art/toile-de-jouy.webp') center top / var(--toile-width) var(--toile-height) repeat;
+  mask:
+    linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent) center top / var(--toile-width) 100% repeat-x,
+    linear-gradient(transparent, #000 5%, #000 95%, transparent) center top / 100% var(--toile-height) repeat-y;
+  mask-composite: intersect;
+  opacity: .28;
   transition: opacity .45s ease-out;
   pointer-events: none;
 }

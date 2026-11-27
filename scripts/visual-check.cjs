@@ -87,6 +87,8 @@ async function toileState(page) {
     return { image: style.backgroundImage, opacity: Number(style.opacity), content: style.content,
       display: style.display, visibility: style.visibility, pointerEvents: style.pointerEvents,
       position: style.position, repeat: style.backgroundRepeat, width: parseFloat(style.width), height: parseFloat(style.height),
+      tileSize: style.backgroundSize, rootFontSize: parseFloat(getComputedStyle(document.documentElement).fontSize),
+      maskImage: style.maskImage, maskSize: style.maskSize, maskRepeat: style.maskRepeat, maskComposite: style.maskComposite,
       zIndex: Number(style.zIndex), isolation: getComputedStyle(document.body).isolation, transition: style.transitionDuration,
       viewportWidth: innerWidth, viewportHeight: innerHeight, documentHeight: document.documentElement.scrollHeight,
       opening: document.body.classList.contains('opening-active') };
@@ -94,15 +96,28 @@ async function toileState(page) {
 }
 function checkToile(state, visible, label) {
   check(state.image.includes('assets/art/toile-de-jouy.webp') && state.pointerEvents === 'none'
-    && (visible ? !state.opening && Math.abs(state.opacity - .58) <= .001 && state.display !== 'none' && state.visibility === 'visible'
+    && (visible ? !state.opening && Math.abs(state.opacity - .28) <= .001 && state.display !== 'none' && state.visibility === 'visible'
       : state.opening && state.opacity === 0 && state.transition.split(',').every(duration => parseFloat(duration) === 0)),
     `${label}: Toile layer appears in the wrong opening phase ${JSON.stringify(state)}`);
   if (visible) {
-    check(state.content !== 'none' && ['repeat', 'repeat-y', 'no-repeat repeat'].includes(state.repeat)
+    check(state.content !== 'none' && ['repeat', 'repeat repeat'].includes(state.repeat)
       && state.zIndex < 0 && state.isolation === 'isolate'
       && ['absolute', 'fixed'].includes(state.position) && state.width >= state.viewportWidth - 1
       && state.height >= (state.position === 'fixed' ? state.viewportHeight : state.documentHeight) - 1,
       `${label}: Toile background does not span the continuous invitation ${JSON.stringify(state)}`);
+    const [tileWidth, tileHeight] = state.tileSize.split(/\s+/).map(parseFloat);
+    const expectedWidth = Math.max(state.viewportWidth / 2, state.rootFontSize * 17);
+    const expectedHeight = expectedWidth * 2 / 3;
+    check(Math.abs(tileWidth - expectedWidth) <= .1 && Math.abs(tileHeight - expectedHeight) <= .1,
+      `${label}: Toile motifs are not half the previous linear dimensions ${JSON.stringify(state)}`);
+    const directions = [...state.maskImage.matchAll(/linear-gradient\(([^,]*)/g)].map(match => match[1]);
+    const maskSizes = state.maskSize.split(',').map(size => size.trim().split(/\s+/));
+    check(directions.length === 2 && /90deg|to right/.test(directions[0]) && !/90deg|270deg|to right|to left/.test(directions[1])
+      && state.maskRepeat.split(',').map(repeat => repeat.trim()).join(',') === 'repeat-x,repeat-y'
+      && state.maskComposite.split(',').every(composite => composite.trim() === 'intersect')
+      && maskSizes.length === 2 && Math.abs(parseFloat(maskSizes[0][0]) - expectedWidth) <= .1 && maskSizes[0][1] === '100%'
+      && maskSizes[1][0] === '100%' && Math.abs(parseFloat(maskSizes[1][1]) - expectedHeight) <= .1,
+      `${label}: Toile tile seams are not softened in both directions ${JSON.stringify(state)}`);
   }
 }
 async function navyText(page, selector, label) {
@@ -202,7 +217,7 @@ async function exerciseViewport(browser, baseURL, width) {
     `${width}: opening contains another illustration ${JSON.stringify(mid.sources)}`);
   check(mid.pseudoContent === 'none' || mid.pseudoBackground === 'rgba(0, 0, 0, 0)', `${width}: opaque page pseudo-element covers opener`);
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
-  await page.waitForFunction(() => Number(getComputedStyle(document.body, '::before').opacity) >= .579);
+  await page.waitForFunction(() => Number(getComputedStyle(document.body, '::before').opacity) >= .279);
   toile.opened = await toileState(page);
   checkToile(toile.opened, true, `${width} opened invitation`);
   check(await page.evaluate(() => !document.querySelector('main').inert), `${width}: page stays inert after opening`);
@@ -645,7 +660,7 @@ async function exerciseViewport(browser, baseURL, width) {
   check(await page.evaluate(() => scrollY === 0), `${width}: replay does not reveal top scene`);
   await page.keyboard.press('Escape');
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
-  await page.waitForFunction(() => Number(getComputedStyle(document.body, '::before').opacity) >= .579);
+  await page.waitForFunction(() => Number(getComputedStyle(document.body, '::before').opacity) >= .279);
   toile.reopened = await toileState(page);
   checkToile(toile.reopened, true, `${width} reopened invitation`);
   check(errors.length === 0, `${width}: browser errors ${errors.join('; ')}`);
@@ -665,7 +680,7 @@ async function reducedMotion(browser, baseURL) {
   await page.locator('#open-invitation').click();
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 1500 });
   check(Date.now() - start < 1500, 'Reduced motion keeps the long opening animation');
-  await page.waitForFunction(() => Number(getComputedStyle(document.body, '::before').opacity) >= .579);
+  await page.waitForFunction(() => Number(getComputedStyle(document.body, '::before').opacity) >= .279);
   toile.opened = await toileState(page);
   checkToile(toile.opened, true, 'reduced motion opened invitation');
   check(toile.opened.transition.split(',').every(duration => parseFloat(duration) === 0),
