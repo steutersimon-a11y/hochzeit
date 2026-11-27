@@ -5,7 +5,7 @@ Die aktuelle Gestaltung setzt freigestellte Originalmotive auf eine einzige durc
 | Aktuelle Datei | Verwendung |
 | --- | --- |
 | `linen-ivory.webp` | Gemeinsamer heller, feiner Leinenhintergrund des ganzen Dokuments |
-| `opener-blue.webp` | Hochformat mit nachtblauen Perlenvorhängen, rauchblauen Schleifen und eigener Kirche auf hellem gesticktem Pflaster |
+| `opener-blue.webp` | Hochformat mit nachtblauen Perlenvorhängen, eigener Kirche, hellem Pflaster und zwei kleinen Pflanzengruppen |
 | `opener-blue-desktop.webp` | Breite transparente Desktop-Komposition derselben Motive |
 | `welcome-blue.webp` | Rauchblaue und mauvefarbene Glyzinien, Perlen und Seitenrosen |
 | `stitched-sprig-blue.webp` | Offene Ranke mit Rosen, Perlen und rauchblauen Knötchen |
