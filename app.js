@@ -104,9 +104,13 @@
     $$('.reveal:not(.is-visible)').forEach(el => observer.observe(el));
   }
 
+  const opening = $('#opening');
+  const seal = $('#open-invitation');
+  const openingSessionKey = 'invitation-opened-navy-v7';
+
   async function openInvitation() {
-    if ($('#opening').classList.contains('is-opening') || $('#opening').hasAttribute('aria-busy')) return;
-    $('#opening').setAttribute('aria-busy', 'true');
+    if (opening.classList.contains('is-opening') || opening.hasAttribute('aria-busy')) return;
+    opening.setAttribute('aria-busy', 'true');
     const hero = $('.garden-frame');
     let readyDeadline;
     try {
@@ -119,34 +123,38 @@
       ]);
     } catch (error) { /* Opening remains available when artwork or fonts fail. */ }
     finally { clearTimeout(readyDeadline); }
-    $('#opening').removeAttribute('aria-busy');
-    $('#opening').classList.add('is-opening');
+    opening.removeAttribute('aria-busy');
+    opening.classList.add('is-opening');
     document.body.classList.add('opening-running');
     setTimeout(() => {
-      $('#opening').hidden = true;
-      $('#opening').classList.remove('is-opening');
+      opening.hidden = true;
+      opening.classList.remove('is-opening');
       document.body.classList.remove('opening-active', 'opening-running');
       $$('.skip-link,.site-header,main,footer').forEach(el => { el.inert = false; });
       ($('#hero-title') || $('.hero-discover')).focus({ preventScroll: true });
     }, reducedMotion ? 0 : 3150);
-    try { sessionStorage.setItem('invitation-opened-linen-v6', 'yes'); } catch (error) {}
+    try { sessionStorage.setItem(openingSessionKey, 'yes'); } catch (error) {}
   }
   function showOpening() {
-    $$('.skip-link,.site-header,main,footer').forEach(el=>{el.inert=true;});window.scrollTo({top:0,behavior:'instant'});
-    $('#opening').hidden = false; document.body.classList.add('opening-active'); $('#opening').focus({preventScroll:true});
+    $$('.skip-link,.site-header,main,footer').forEach(el => { el.inert = true; });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    opening.hidden = false;
+    document.body.classList.add('opening-active');
+    opening.focus({ preventScroll: true });
   }
-  $('#opening').addEventListener('keydown',event=>{
-    if(event.key==='Escape'){event.preventDefault();openInvitation();}
-    if(event.key==='Tab'){
-      const first=$('#open-invitation'),last=$('#open-text');
-      if(event.shiftKey&&(document.activeElement===first||document.activeElement===$('#opening'))){event.preventDefault();last.focus();}
-      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+  opening.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      openInvitation();
+    } else if (event.key === 'Tab') {
+      event.preventDefault();
+      seal.focus({ preventScroll: true });
     }
   });
-  $('#open-invitation').addEventListener('click',openInvitation); $('#open-text').addEventListener('click',openInvitation);
+  seal.addEventListener('click', openInvitation);
   $('#replay').addEventListener('click',showOpening);
   let alreadyOpened = false;
-  try { alreadyOpened = sessionStorage.getItem('invitation-opened-linen-v6') === 'yes'; } catch(e) {}
+  try { alreadyOpened = sessionStorage.getItem(openingSessionKey) === 'yes'; } catch(e) {}
   const editMode = new URLSearchParams(location.search).has('edit');
   if(!alreadyOpened && !location.hash && !editMode) showOpening();
 

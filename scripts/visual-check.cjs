@@ -21,6 +21,9 @@ const requiredArt = ['opener-flow.webp', 'opener-flow-desktop.webp', 'welcome-fl
   'farewell-swans.webp', 'stitched-sprig.webp', 'gift-bow.webp',
   'medallion.webp', 'timeline-flow.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
 const missing = requiredArt.filter(file => !fs.existsSync(path.join(root, 'assets/loom', file)));
+for (const file of ['linen-navy.webp', 'seal-champagne.webp']) {
+  if (!fs.existsSync(path.join(root, 'assets/art', file))) missing.push('assets/art/' + file);
+}
 if (missing.length) {
   console.error('WAITING FOR ART: ' + missing.join(', '));
   process.exit(2);
@@ -94,13 +97,32 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.locator('#opening').waitFor({ state: 'visible' });
   await overflow(page, `${width} initial`);
   check(await page.evaluate(() => document.querySelector('main').inert), `${width}: main is interactive behind opening`);
+  const cover = await page.locator('#opening').evaluate(opening => {
+    const focusable = [...opening.querySelectorAll('a[href],button,input,select,textarea,[tabindex]')]
+      .filter(element => !element.disabled && element.tabIndex >= 0 && element.getBoundingClientRect().width > 0);
+    return { text: opening.innerText.replace(/\s+/g, ''), expected: window.WEDDING.names.map(name => [...name.trim()][0]).join('&'),
+      buttons: [...opening.querySelectorAll('button')].map(button => button.id), focusable: focusable.map(element => element.id),
+      sealTag: opening.querySelector('#open-invitation')?.tagName,
+      seal: opening.querySelector('#open-invitation img')?.getAttribute('src'),
+      linen: getComputedStyle(opening.querySelector('.door-face')).backgroundImage,
+      removed: opening.querySelectorAll('#open-text,.opening-note,.opening-bottom').length };
+  });
+  check(cover.text === cover.expected && cover.removed === 0, `${width}: cover contains extra text or old opening content ${JSON.stringify(cover)}`);
+  check(cover.sealTag === 'BUTTON' && cover.buttons.length === 1 && cover.buttons[0] === 'open-invitation'
+    && cover.focusable.length === 1 && cover.focusable[0] === 'open-invitation', `${width}: seal is not the only cover control ${JSON.stringify(cover)}`);
+  check(cover.seal?.includes('assets/art/seal-champagne.webp') && cover.linen.includes('assets/art/linen-navy.webp'),
+    `${width}: navy linen or champagne seal is missing ${JSON.stringify(cover)}`);
+  check(await page.evaluate(() => document.activeElement.id === 'opening'), `${width}: initial cover focus should avoid a seal halo`);
+  await page.screenshot({ path: path.join(output, `closed-${width}.png`) });
   await page.keyboard.press('Tab');
   check(await page.evaluate(() => document.activeElement.id === 'open-invitation'), `${width}: first opening keyboard stop is wrong`);
   await page.keyboard.press('Shift+Tab');
-  check(await page.evaluate(() => document.activeElement.id === 'open-text'), `${width}: opening reverse focus trap fails`);
+  check(await page.evaluate(() => document.activeElement.id === 'open-invitation'), `${width}: opening reverse focus trap leaves the seal`);
+  await page.locator('#opening').focus();
+  await page.keyboard.press('Shift+Tab');
+  check(await page.evaluate(() => document.activeElement.id === 'open-invitation'), `${width}: reverse keyboard entry misses the seal`);
   await page.keyboard.press('Tab');
-  check(await page.evaluate(() => document.activeElement.id === 'open-invitation'), `${width}: opening forward focus trap fails`);
-  await page.screenshot({ path: path.join(output, `closed-${width}.png`) });
+  check(await page.evaluate(() => document.activeElement.id === 'open-invitation'), `${width}: opening forward focus trap leaves the seal`);
   await page.keyboard.press('Enter');
   await page.waitForFunction(() => document.querySelector('#opening').classList.contains('is-opening'));
   await page.waitForTimeout(1550);
@@ -375,7 +397,7 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.keyboard.press('Escape');
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
   check(errors.length === 0, `${width}: browser errors ${errors.join('; ')}`);
-  results.push({ width, height, centerColors: diversity, ornaments: ornaments.length, heroPlacement, linenFlow, panels,
+  results.push({ width, height, centerColors: diversity, ornaments: ornaments.length, cover, heroPlacement, linenFlow, panels,
     farewell, timelineIcons, fallbackVisibility, errors });
   console.log(`${failures.length === startingFailures ? 'PASS' : 'FAIL'} viewport ${width}×${height}: continuous linen, equal widths, farewell swans, opener, art, keyboard, dialogs`);
   await context.close();

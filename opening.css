@@ -1,7 +1,170 @@
-/* The card leaves reveal the already rendered first scene. */
-.opening{position:fixed;inset:0;z-index:60;overflow:hidden;background:transparent;isolation:isolate}.opening:focus{outline:0}.opening-active{overflow:hidden}.gatefold{position:absolute;inset:0;perspective:1800px;transform-style:preserve-3d}.gate-door,.seal-carrier{position:absolute;top:0;bottom:0;width:50%;transform-style:preserve-3d;transition:transform 2.85s cubic-bezier(.35,0,.18,1);will-change:transform}.gate-left{left:0;transform-origin:left center;z-index:2}.gate-right{right:0;transform-origin:right center;z-index:3}.seal-carrier{right:0;transform-origin:right center;z-index:10;pointer-events:none}.door-face,.door-back{position:absolute;inset:0;backface-visibility:hidden;background:#929e80 url('assets/linen-sage.svg') repeat;background-size:480px 720px;border-top:1px solid #d6d9b866;border-bottom:1px solid #45593866}.door-face:before{content:"";position:absolute;inset:18px;border:1px solid #e7e8c928;pointer-events:none}.gate-left .door-face:before{border-right:0;right:0}.gate-right .door-face:before{border-left:0;left:0}.gate-left .door-face{box-shadow:inset -3px 0 3px #26351fcc,inset -20px 0 32px #2a3c2233,8px 0 24px #25301b33}.gate-right .door-face{box-shadow:inset 2px 0 2px #d9dfb77a,inset 14px 0 22px #26321e2b,-2px 0 7px #20331bcc}.door-face:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,#f9f1c91a,transparent 60%,#21301920)}.door-back{transform:rotateY(180deg) translateZ(2px);background-color:#d0d4ba;background-blend-mode:soft-light}.wax-seal{position:absolute;left:0;top:48%;width:210px;aspect-ratio:1086/1448;padding:0;border:0;background:none;transform:translate3d(-50%,-50%,28px);backface-visibility:hidden;pointer-events:auto;filter:drop-shadow(-3px 10px 5px #23332069);transition:transform .35s,filter .35s}.wax-seal>img{width:100%;height:auto;pointer-events:none}.wax-seal:hover{transform:translate3d(-50%,-50%,34px) scale(1.025);filter:drop-shadow(-4px 13px 7px #26301a78)}.wax-seal:focus-visible{outline:1px solid #fdf4d7;outline-offset:12px;border-radius:40%}.seal-monogram{position:absolute;top:52%;left:0;right:0;transform:translateY(-50%);display:flex;justify-content:center;align-items:baseline;gap:4px;font:63px/1 var(--script);letter-spacing:0;color:#ab8446;text-shadow:0 -1px #fff8df,1px 1px #694c2959;pointer-events:none}.seal-monogram em{font:italic 30px var(--serif);margin-inline:1px}.opening-note{position:absolute;top:11%;left:15px;right:15px;text-align:center;color:#202e21;z-index:20;font:500 .6875rem/1.5 var(--sans);letter-spacing:.2em;text-shadow:0 1px 2px #e6ead166;transition:opacity .6s}.opening-names{font:46px/1.2 var(--script);letter-spacing:0;margin-top:17px}.opening-bottom{position:absolute;left:20px;right:20px;bottom:9%;z-index:20;text-align:center;transition:opacity .5s,transform .8s}.opening-prompt{font:italic 25px var(--serif);color:#202e21;margin-bottom:16px}.opening-bottom .text-button{font-size:.75rem;letter-spacing:.06em;color:#fffaf0;background:#2f4031;border:1px solid #2f4031;border-radius:2px;padding:9px 14px;gap:15px}.opening-date{font:19px var(--serif);color:#202e21;letter-spacing:1px;margin-top:20px}.is-opening .gate-left{transform:rotateY(-112deg);transition-delay:.12s}.is-opening .gate-right,.is-opening .seal-carrier{transform:rotateY(112deg);transition-delay:0s}.is-opening .opening-note{opacity:0}.is-opening .opening-bottom{opacity:0;transform:translateY(12px)}.opening.is-opening,.is-opening .wax-seal{pointer-events:none}.is-opening .wax-seal{transform:translate3d(-50%,-50%,28px)}
-@media(max-width:700px){.gatefold{perspective:1100px}.door-face,.door-back{background-size:360px 540px}.wax-seal{width:176px}.seal-monogram{font-size:53px}.seal-monogram em{font-size:25px}.opening-note{top:12%;letter-spacing:.16em}.opening-names{font-size:42px}.opening-bottom{bottom:11%}.opening-prompt{font-size:22px}.opening-date{font-size:18px}}
-@media(max-height:560px){.opening-note{top:5%}.opening-names{font-size:30px;margin-top:7px}.wax-seal{width:116px;top:49%}.seal-monogram{font-size:37px}.seal-monogram em{font-size:19px}.opening-bottom{bottom:4%}.opening-prompt{font-size:18px;margin-bottom:5px}.opening-date{font-size:13px;margin-top:8px}}
-@media(prefers-reduced-motion:reduce){.opening.is-opening{visibility:hidden}}
+@font-face {
+  font-family: SealScript;
+  src: url('assets/fonts/pinyon-script-latin-400-normal.woff2') format('woff2');
+  font-display: swap;
+}
 
-.opening-bottom .text-button:focus-visible { outline-color: #fffaf0; }
+/* The navy cloth leaves part to reveal the already rendered invitation. */
+.opening {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.opening:focus { outline: 0; }
+.opening-active { overflow: hidden; }
+
+.gatefold {
+  position: absolute;
+  inset: 0;
+  perspective: 1800px;
+  transform-style: preserve-3d;
+}
+
+.gate-door,
+.seal-carrier {
+  position: absolute;
+  inset-block: 0;
+  width: 50%;
+  transform-style: preserve-3d;
+  transition: transform 2.85s cubic-bezier(.35, 0, .18, 1);
+  will-change: transform;
+}
+
+.gate-left {
+  left: 0;
+  z-index: 2;
+  transform-origin: left center;
+}
+
+.gate-right,
+.seal-carrier {
+  right: 0;
+  transform-origin: right center;
+}
+
+.gate-right { z-index: 3; }
+.seal-carrier { z-index: 10; pointer-events: none; }
+
+.door-face,
+.door-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  background: #14263e url('assets/art/linen-navy.webp') repeat;
+  background-size: 540px 540px;
+  border-block: 1px solid #111f30;
+}
+
+.door-face::before {
+  content: "";
+  position: absolute;
+  inset: clamp(12px, 2vw, 24px);
+  border: 1px solid #b2c2d224;
+  pointer-events: none;
+}
+
+.gate-left .door-face::before { right: 0; border-right: 0; }
+.gate-right .door-face::before { left: 0; border-left: 0; }
+
+.gate-left .door-face {
+  box-shadow: inset -3px 0 3px #060d19c4, inset -16px 0 30px #0712215b;
+}
+
+.gate-right .door-face {
+  box-shadow: inset 2px 0 2px #91a8c06b, inset 13px 0 25px #050d1b37;
+}
+
+.door-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, #b4c5d712, transparent 55%, #01061024);
+}
+
+.door-back {
+  transform: rotateY(180deg) translateZ(2px);
+  background-color: #435778;
+  background-blend-mode: soft-light;
+}
+
+.wax-seal {
+  --seal-width: min(clamp(10.75rem, 22vw, 14.5rem), 30svh);
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: var(--seal-width);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translate3d(-50%, -50%, 28px);
+  backface-visibility: hidden;
+  pointer-events: auto;
+  filter: drop-shadow(0 8px 8px #000c);
+  transition: transform .35s, filter .35s;
+}
+
+.wax-seal > img {
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .wax-seal:hover {
+    transform: translate3d(-50%, -50%, 31px) scale(1.035);
+    filter: drop-shadow(0 10px 10px #000b);
+  }
+}
+
+.wax-seal:focus-visible {
+  outline: 2px solid #fbe7c7;
+  outline-offset: 5px;
+  border-radius: 48%;
+}
+
+.seal-monogram {
+  position: absolute;
+  inset: 0;
+  color: #d0ae8b;
+  font: calc(var(--seal-width) * .345)/1 SealScript, var(--serif);
+  text-shadow: 0 -1px 0 #ffe9c9, 0 1px 0 #654728, 0 2px 3px #634429bb;
+  -webkit-text-stroke: .25px #917055;
+  pointer-events: none;
+}
+
+.seal-monogram > * {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.seal-monogram > [data-initial="0"] { left: 46%; top: 42%; }
+.seal-monogram > em {
+  z-index: 1;
+  left: 49%;
+  top: 52%;
+  font: italic calc(var(--seal-width) * .235)/1 var(--serif);
+}
+.seal-monogram > [data-initial="1"] {
+  left: 57%;
+  top: 61%;
+  font: italic calc(var(--seal-width) * .36)/1 var(--serif);
+}
+
+.is-opening .gate-left { transform: rotateY(-112deg); transition-delay: .12s; }
+.is-opening .gate-right,
+.is-opening .seal-carrier { transform: rotateY(112deg); }
+.opening.is-opening,
+.is-opening .wax-seal { pointer-events: none; }
+.is-opening .wax-seal { transform: translate3d(-50%, -50%, 28px); }
+
+@media (max-width: 700px) {
+  .gatefold { perspective: 1100px; }
+  .door-face, .door-back { background-size: 400px 400px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opening.is-opening { visibility: hidden; }
+}

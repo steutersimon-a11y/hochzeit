@@ -28,6 +28,10 @@ Geschichte, eigene Fotos, Tagesablauf, Hinweise, Geschenke und Rückmeldung schl
 
 Cormorant Garamond trägt Namen, Überschriften und Fließtext. Kleine Beschriftungen und Bedienfelder verwenden Manrope. Kartenöffnung und ruhige Scroll-Einblendungen unterstützen den Verlauf. Die Einstellung für reduzierte Bewegung wird berücksichtigt.
 
+## Nachtblauer Umschlag
+
+Beim Öffnen steht das geprägte M&S allein auf einem ovalen, champagnerfarbenen Wachssiegel. Der bereitgestellte Screenshot war die Vorlage für die Form und das feine Doppeloval. Siegel und nachtblaues Leinen sind neu erzeugt. Ein Klick auf das Siegel lässt die beiden Leinenflügel auseinandergehen und legt die helle Kirchenszene frei.
+
 ## Durchgehendes Leinen
 
 Eine einzige feine Leinentextur bildet den Hintergrund des gesamten Dokuments. Opener, Begrüßung, Orte und Footer besitzen keinen eigenen deckenden Hintergrund und keine Abschnittsrandnähte. Die Motive wurden intern freigestellt; der Leinenuntergrund bleibt zwischen und hinter ihnen sichtbar. Header und Footer sind ebenfalls transparent.

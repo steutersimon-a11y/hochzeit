@@ -32,8 +32,17 @@ async function openInvitation(page) {
   await page.evaluate(() => document.fonts.ready);
   const opening = page.locator('#opening');
   if (await opening.isVisible()) {
-    await page.locator('#open-text').click();
+    const cover = await opening.evaluate(element => ({ text: element.innerText.replace(/\s+/g, ''),
+      expected: window.WEDDING.names.map(name => [...name.trim()][0]).join('&'),
+      oldContent: element.querySelectorAll('#open-text,.opening-note,.opening-bottom').length,
+      buttons: [...element.querySelectorAll('button')].map(button => button.id) }));
+    assert.equal(cover.oldContent, 0, 'Standalone cover retains old opening text or buttons.');
+    assert.equal(cover.text, cover.expected, 'Standalone cover must show only the monogram.');
+    assert.deepEqual(cover.buttons, ['open-invitation'], 'Standalone cover must open from its single seal button.');
+    await page.locator('#open-invitation').click();
     await opening.waitFor({ state: 'hidden' });
+    await page.waitForFunction(() => document.activeElement.id === 'hero-title');
+    assert.equal(await page.evaluate(() => document.activeElement.id), 'hero-title', 'Seal opening must focus the invitation heading.');
   }
 }
 

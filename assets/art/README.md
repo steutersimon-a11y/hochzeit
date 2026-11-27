@@ -8,4 +8,8 @@ Die sieben Motive sind zwei Leinenhüllen für Handy und Desktop, Elfenbeinsiege
 
 ## Erneute Gestaltung vom 8. Oktober 2026
 
-`garden-new-landscape.webp`, `garden-new-portrait.webp`, `rose-new.webp` und `garland-new.webp` wurden intern neu erzeugt. Die beiden Gartenbilder sind getrennte Kompositionen im Quer- und Hochformat; ihr Seitenverhältnis wird in der Darstellung erhalten. Diese Garten- und Blütenmotive sind inzwischen frühere Varianten und werden nicht mehr auf der Seite angezeigt. Die aktuelle Stickserie liegt in `../loom/`; aus diesem Ordner wird weiterhin das Elfenbeinsiegel verwendet.
+`garden-new-landscape.webp`, `garden-new-portrait.webp`, `rose-new.webp` und `garland-new.webp` wurden intern neu erzeugt. Die beiden Gartenbilder sind getrennte Kompositionen im Quer- und Hochformat; ihr Seitenverhältnis wird in der Darstellung erhalten. Diese Garten- und Blütenmotive sind inzwischen frühere Varianten und werden nicht mehr auf der Seite angezeigt. Die aktuelle Stickserie liegt in `../loom/`.
+
+## Nachtblauer Umschlag
+
+`linen-navy.webp` ist die neue Leinentextur der Kartenflügel. `seal-champagne.webp` ist ein eigenständig erzeugtes, freigestelltes Wachssiegel mit leicht unregelmäßigem Rand und feinem Doppeloval. Der bereitgestellte Screenshot diente als Stilvorlage. Das geprägte Monogramm wird aus den Initialen der Einladung gesetzt und lässt sich im Editor automatisch anpassen.
