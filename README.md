@@ -1,6 +1,6 @@
 # Marie & Simon · Embroidered Garden
 
-Eine digitale Hochzeitseinladung auf einem durchgehenden Leinentuch: eigene Kirche unter nachtblauen Perlenvorhängen mit rauchblauen Schleifen, Glyzinien, offene Stickranken, passende Ortsillustrationen und sechs Ablaufmotive. Die beiden Schwäne bilden ganz unten den Abschied. Opener und weiterer Verlauf haben dieselbe Breite. Ein ovales M&S-Siegel aus champagnerfarbenem Wachs öffnet die nachtblauen Leinenflügel direkt auf die Kirchenszene. Inspiriert vom tatsächlichen Bildaufbau von [The Digital Yes](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
+Eine digitale Hochzeitseinladung auf einem durchgehenden Leinentuch: eigene Kirche unter nachtblauen Perlenvorhängen mit rauchblauen Schleifen, Glyzinien, offene Stickranken, passende Ortsillustrationen und sechs Ablaufmotive. Die beiden Schwäne bilden ganz unten den Abschied. Eine durchgehende Doppellinie in Nacht- und Rauchblau mit vier Eckperlen fasst die geöffnete Einladung ein. Opener und weiterer Verlauf haben dieselbe Breite. Ein ovales M&S-Siegel aus champagnerfarbenem Wachs öffnet die nachtblauen Leinenflügel direkt auf die Kirchenszene. Inspiriert vom tatsächlichen Bildaufbau von [The Digital Yes](https://www.thedigitalyes.com/demo/embroidered-garden), mit eigenen Grafiken und eigenem Code.
 
 [Auftakt](preview-opener.png) · [Handy-Vorschau](preview-mobile.png) · [Desktop-Vorschau](preview-desktop.png) · [Die Locations](preview-locations.png) · [Eure Fotos](preview-fotos.png)
 

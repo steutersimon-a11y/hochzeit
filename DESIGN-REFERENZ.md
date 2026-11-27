@@ -40,6 +40,8 @@ Die Schrift verwendet durchgehend Nachtblau (`#14263E`). Rauchblau (`#506D8D`) z
 
 ## Durchgehendes Leinen
 
+Zwei durchgezogene Linien in Nacht- und Rauchblau fassen die gesamte geöffnete Einladung ein. Vier kleine elfenbeinfarbene Perlen schmücken die Ecken. Der seitliche Abstand lässt auf dem Handy Platz für Vorhänge, Schrift und Stickmotive.
+
 Eine einzige feine Leinentextur bildet den Hintergrund des gesamten Dokuments. Opener, Begrüßung, Orte und Footer besitzen keinen eigenen deckenden Hintergrund und keine Abschnittsrandnähte. Die Motive wurden intern freigestellt; der Leinenuntergrund bleibt zwischen und hinter ihnen sichtbar. Header und Footer sind ebenfalls transparent.
 
 Die Breite der Einladung beträgt auf großen Bildschirmen maximal 880 Pixel, einschließlich des Openers. Eine breite Desktop-Komposition zeigt die Kirche im ersten Bildschirm. Auf kleinen Bildschirmen bleibt der Opener im Hochformat. Beide Varianten werden ohne Verzerrung auf der vollen Inhaltsbreite dargestellt. Die Begrüßung wurde nach dem Versetzen der Schwäne verkürzt, damit kein leerer Bildabschnitt zurückbleibt.

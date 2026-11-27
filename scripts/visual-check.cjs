@@ -146,6 +146,7 @@ async function exerciseViewport(browser, baseURL, width) {
     const copy = document.querySelector('.hero-copy');
     const pseudo = getComputedStyle(document.body, '::after');
     return {
+      scrollY: window.scrollY,
       y: hero.getBoundingClientRect().top,
       loaded: image.complete && image.naturalWidth > 0,
       source: image.currentSrc,
@@ -158,7 +159,7 @@ async function exerciseViewport(browser, baseURL, width) {
   const midFile = path.join(output, `opening-${width}.png`);
   await page.screenshot({ path: midFile });
   const diversity = centerDiversity(midFile);
-  check(mid.y === 0 && mid.loaded && mid.opacity > .7, `${width}: live first scene missing during opening ${JSON.stringify(mid)}`);
+  check(mid.scrollY === 0 && mid.y >= 0 && mid.y < 50 && mid.loaded && mid.opacity > .7, `${width}: live first scene missing during opening ${JSON.stringify(mid)}`);
   check(diversity > 150, `${width}: mid-opening central scene is blank (${diversity} sampled colors)`);
   check(mid.source.includes('assets/loom/opener-blue'), `${width}: wrong first-scene artwork source`);
   check(mid.pseudoContent === 'none' || mid.pseudoBackground === 'rgba(0, 0, 0, 0)', `${width}: opaque page pseudo-element covers opener`);
@@ -203,6 +204,20 @@ async function exerciseViewport(browser, baseURL, width) {
   });
   check(Math.abs(linenFlow.hero.left-linenFlow.main.left) <= 1 && Math.abs(linenFlow.hero.width-linenFlow.main.width) <= 1,
     `${width}: church opener and scrolling canvas have different widths ${JSON.stringify(linenFlow)}`);
+  const border = await page.locator('.invitation-border').evaluate(element => {
+    const frame = element.getBoundingClientRect();
+    const main = document.querySelector('main').getBoundingClientRect();
+    const footer = document.querySelector('footer').getBoundingClientRect();
+    return {
+      enclosesInvitation: frame.top < main.top && frame.left < main.left &&
+        frame.right > main.right && frame.bottom > footer.bottom,
+      lines: [getComputedStyle(element).borderTopStyle, getComputedStyle(element, '::before').borderTopStyle],
+      pearls: element.children.length,
+      decorative: element.getAttribute('aria-hidden') === 'true' && getComputedStyle(element).pointerEvents === 'none',
+    };
+  });
+  check(border.enclosesInvitation && border.lines.every(line => line === 'solid') && border.pearls === 4 && border.decorative,
+    `${width}: double border and corner pearls do not enclose the invitation ${JSON.stringify(border)}`);
   check(Math.abs(linenFlow.renderedArtWidth-linenFlow.main.width) <= 1,
     `${width}: the visible church artwork is narrower than the invitation canvas (${linenFlow.renderedArtWidth} vs ${linenFlow.main.width})`);
   for (const panel of linenFlow.panels) {
