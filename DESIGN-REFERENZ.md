@@ -20,7 +20,7 @@ Die Recherche vom 27. November 2026 ergänzt den Aufbau der Referenz um Ideen au
 
 Die aktuellen Bilddateien in [assets/loom](assets/loom/README.md) bilden eine gemeinsame Materialwelt: elfenbeinfarbenes Leinen, Salbeigrün, gedämpftes Mauve, Perlen und sichtbare Stickstiche. Jede große dekorative Szene hat genau einen Platz. Nur die drei Countdown-Medaillons wiederholen sich bewusst als zusammengehörige Anzeigen.
 
-Der Opener zeigt die eigene Kirche aus dem Repository: heller polygonaler Baukörper, rotes Dach und dunkler Dachreiter. Nachtblaue Vorhänge mit elfenbeinfarbener Perlenkante und rauchblauen Seidenschleifen rahmen die Namen ein. Die Szene ist schon geladen, bevor die Kartenflügel öffnen. Ihre natürlichen Bildkoordinaten bestimmen die Textposition; Datum und Ortsangabe bleiben oberhalb des Turms.
+Der Opener zeigt die eigene Kirche aus dem Repository. Der helle polygonale Baukörper mit rotem Dach und dunklem Dachreiter steht auf einem offenen, hell gepflasterten Vorplatz. Nachtblaue Vorhänge mit elfenbeinfarbener Perlenkante und rauchblauen Seidenschleifen rahmen die Namen ein. Die Szene ist schon geladen, bevor die Kartenflügel öffnen. Ihre natürlichen Bildkoordinaten bestimmen die Textposition. Datum und Ortsangabe bleiben oberhalb des Turms.
 
 Beim Weiterscrollen folgen die florale Begrüßung, Countdown sowie die beiden illustrierten Orte mit ihren Angaben. Die neue Mago-Illustration übernimmt die Architektur, Fenster, Dach und Terrasse des eigenen Repository-Bildes. Die eigene Kirchenillustration wird freigestellt und im Ortsabschnitt vollständig dargestellt. Beide Orte behalten ihre Proportionen.
 
