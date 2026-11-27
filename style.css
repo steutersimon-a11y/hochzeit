@@ -66,9 +66,16 @@
   z-index: 2;
 }
 
-.hero h1{display:flex;flex-direction:column;gap:0;font:62px/1.04 var(--serif);letter-spacing:-.5px}
+.hero h1{font:62px/1.04 var(--serif);letter-spacing:-.5px}
+.hero-title-text{display:flex;flex-direction:column}
 .hero h1 em{font:42px/1 var(--serif);margin:7px 0}
 .hero-date{font-size:21px;letter-spacing:1.5px;margin-top:24px}
+.hero-lettering {
+  width: auto;
+  max-height: clamp(12rem, 70cqw, 23rem);
+  margin-inline: auto;
+  object-fit: contain;
+}
 .opening-running .hero-copy{animation:soft-arrive 1.6s ease both}
 .site-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 35px;border:0;background:transparent}.brand{font:24px var(--serif)}.site-header nav{display:flex;gap:27px;font:9px var(--sans);letter-spacing:.5px}.nav-rsvp{border:0;border-bottom:1px solid var(--line);background:none;padding:8px 0;display:flex;align-items:center;gap:13px;font:9px var(--sans)}
 
@@ -106,11 +113,9 @@
   position: absolute;
   bottom: 5px;
   left: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  width: max-content;
+  display: grid;
+  place-items: center;
+  min-width: 44px;
   min-height: 44px;
   padding: 4px 14px;
   transform: translateX(-50%);
@@ -458,7 +463,8 @@ dialog{width:550px;max-width:calc(100% - 32px);max-height:90svh;padding:42px;bor
   .hero { --curtain-drop: 51cqw; }
   .hero-curtain { width: 27cqw; }
   .hero-copy { width: 64%; }
-  .hero h1 { flex-direction: row; justify-content: center; align-items: baseline; font-size: clamp(2.4rem, 7.3cqw, 4rem); }
+  .hero h1 { font-size: clamp(2.4rem, 7.3cqw, 4rem); }
+  .hero-title-text { flex-direction: row; justify-content: center; align-items: baseline; }
   .hero h1 em { font-size: .7em; margin: 0 .3em; }
   .hero-date { margin-top: 17px; }
 }

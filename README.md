@@ -20,7 +20,7 @@ Die Sachangaben stehen in `wedding-config.js`. Die angefragten neuen Fotos fehle
 
 Auf dem Umschlag ist das M&S-Siegel der einzige sichtbare Inhalt. Zum Öffnen auf das Siegel klicken oder es per Tab anwählen und mit Enter öffnen. Im Footer lässt sich die Öffnung wiederholen. Die Kartenöffnung dauert etwa 3,15 Sekunden; bei reduzierter Bewegung erscheint die Einladung sofort. Tastaturbedienung, modale Dialoge und sichtbare Fokusmarkierungen sind vorhanden.
 
-Der Bearbeitungsmodus wird mit `?edit=1` an der Adresse geöffnet. Dort können Namen, Datum, Kontaktadresse und die vier Bildplätze angepasst werden. „HTML mit Bildern speichern“ erzeugt eine neue vollständige Datei. Die Bearbeitung erfolgt im Browser.
+Der Bearbeitungsmodus wird mit `?edit=1` an der Adresse geöffnet. Dort können Namen, Datum, Kontaktadresse und die vier Bildplätze angepasst werden. Der Auftakt zeigt die hochgeladene Schriftgrafik für Marie und Simon am 28. August 2027. Bei anderen Namen oder einem anderen Datum erscheinen die bearbeiteten Angaben als Text. „HTML mit Bildern speichern“ erzeugt eine neue vollständige Datei. Die Bearbeitung erfolgt im Browser.
 
 ## Angaben und Build
 

@@ -8,6 +8,21 @@
   let activeTrigger = null;
   const pathValue = (path) => path.split('.').reduce((v,k) => v?.[k], config);
   const inlineNames = () => config.names.join(' & ');
+  const heroLettering = $('.hero-lettering');
+  const heroTitleText = $('.hero-title-text');
+  const heroDate = $('.hero-date');
+
+  function renderHero() {
+    const artwork = heroLettering.dataset;
+    const showArtwork = heroLettering.complete && heroLettering.naturalWidth > 0
+      && artwork.names === inlineNames() && artwork.date === config.date && artwork.dateLabel === config.dateLabel;
+    heroLettering.hidden = !showArtwork;
+    heroTitleText.hidden = showArtwork;
+    heroDate.hidden = showArtwork;
+  }
+
+  heroLettering.addEventListener('load', renderHero);
+  heroLettering.addEventListener('error', renderHero);
 
   function render() {
     const initials = config.names.map(name => [...name.trim()][0] || '');
@@ -17,6 +32,7 @@
     $('.seal-monogram').hidden = hasStampedSeal;
     $$('[data-bind]').forEach(el => { el.textContent = pathValue(el.dataset.bind) ?? ''; });
     $$('[data-name]').forEach(el => { el.textContent = config.names[+el.dataset.name] ?? ''; });
+    renderHero();
     $$('[data-initial]').forEach(el => { el.textContent = initials[+el.dataset.initial] || ''; });
     $$('.names-inline').forEach(el => { el.textContent = inlineNames(); });
     $$('.initials').forEach(el => { el.textContent = initials.join(' · '); });
@@ -122,7 +138,7 @@
   async function openInvitation() {
     if (opening.classList.contains('is-opening') || opening.hasAttribute('aria-busy')) return;
     opening.setAttribute('aria-busy', 'true');
-    const heroImages = $$('.hero-curtain');
+    const heroImages = $$('.hero-curtain,.hero-lettering');
     let readyDeadline;
     try {
       await Promise.race([

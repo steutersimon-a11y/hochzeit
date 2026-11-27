@@ -13,3 +13,7 @@ Die sieben Motive sind zwei Leinenhüllen für Handy und Desktop, Elfenbeinsiege
 ## Nachtblauer Umschlag
 
 `linen-navy.webp` ist die neue Leinentextur der Kartenflügel. `seal-champagne.webp` ist ein eigenständig erzeugtes, freigestelltes Wachssiegel mit leicht unregelmäßigem Rand und feinem Doppeloval. Der bereitgestellte Screenshot diente als Stilvorlage. `seal-relief-ms.webp` zeigt das mittig geprägte M&S mit aufrechten Buchstaben, eingerollten Enden und plastischen Lichtkanten. Bei geänderten Initialen setzt der Editor diese mittig auf das Blankosiegel.
+
+## Schriftgrafik im Auftakt
+
+`hero-lettering.webp` ist die verlustfrei konvertierte Fassung der hochgeladenen Datei `Wir heiraten_ Marie & Simon.png`. Der Zuschnitt kürzt den transparenten Außenrand für die Darstellung zwischen den Vorhängen.

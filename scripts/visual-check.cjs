@@ -142,13 +142,17 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.waitForTimeout(1550);
   const mid = await page.evaluate(() => {
     const hero = document.querySelector('.hero');
-    const images = [...hero.querySelectorAll('img')];
+    const images = [...hero.querySelectorAll('img')].filter(image => image.getBoundingClientRect().width > 0 && image.getBoundingClientRect().height > 0);
+    const lettering = hero.querySelector('.hero-lettering');
+    const artworkExpected = lettering.dataset.names === window.WEDDING.names.join(' & ')
+      && lettering.dataset.date === window.WEDDING.date && lettering.dataset.dateLabel === window.WEDDING.dateLabel;
     const copy = document.querySelector('.hero-copy');
     const pseudo = getComputedStyle(document.body, '::after');
     return {
       scrollY: window.scrollY,
       y: hero.getBoundingClientRect().top,
-      loaded: images.length === 2 && images.every(image => image.matches('.hero-curtain') && image.complete && image.naturalWidth > 0),
+      loaded: images.length === (artworkExpected ? 3 : 2)
+        && images.every(image => image.matches('.hero-curtain,.hero-lettering') && image.complete && image.naturalWidth > 0),
       sources: images.map(image => image.currentSrc),
       opacity: Number(getComputedStyle(copy).opacity),
       pseudoContent: pseudo.content,
@@ -160,7 +164,8 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.screenshot({ path: midFile });
   const diversity = centerDiversity(midFile);
   check(mid.scrollY === 0 && mid.y >= 0 && mid.y < 50 && mid.loaded && mid.opacity > .7, `${width}: live first scene missing during opening ${JSON.stringify(mid)}`);
-  check(mid.sources.every(source => source.includes('assets/loom/curtain-navy.webp')), `${width}: opening contains another illustration ${JSON.stringify(mid.sources)}`);
+  check(mid.sources.every(source => source.includes('assets/loom/curtain-navy.webp') || source.includes('assets/art/hero-lettering.webp')),
+    `${width}: opening contains another illustration ${JSON.stringify(mid.sources)}`);
   check(mid.pseudoContent === 'none' || mid.pseudoBackground === 'rgba(0, 0, 0, 0)', `${width}: opaque page pseudo-element covers opener`);
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
   check(await page.evaluate(() => !document.querySelector('main').inert), `${width}: page stays inert after opening`);
@@ -170,19 +175,37 @@ async function exerciseViewport(browser, baseURL, width) {
   check(copyBox.y + copyBox.height <= heroBox.y + heroBox.height - 20, `${width}: opening copy clips below hero`);
   const heroPlacement = await page.evaluate(() => {
     const hero = document.querySelector('.hero'), box = hero.getBoundingClientRect();
+    const visible = element => element.getBoundingClientRect().width > 0 && element.getBoundingClientRect().height > 0;
     const title = hero.querySelector('#hero-title').getBoundingClientRect();
-    const date = hero.querySelector('.hero-date').getBoundingClientRect();
+    const dateElement = hero.querySelector('.hero-date'), date = dateElement.getBoundingClientRect();
+    const lettering = hero.querySelector('.hero-lettering'), artwork = lettering.getBoundingClientRect();
+    const titleText = hero.querySelector('.hero-title-text');
+    const artworkExpected = lettering.dataset.names === window.WEDDING.names.join(' & ')
+      && lettering.dataset.date === window.WEDDING.date && lettering.dataset.dateLabel === window.WEDDING.dateLabel;
+    const artworkVisible = visible(lettering), fallbackVisible = visible(titleText) && visible(dateElement);
     const discover = hero.querySelector('.hero-discover').getBoundingClientRect();
     const text = hero.querySelector('.hero-copy').textContent.replace(/\s+/g, '');
     const expected = (window.WEDDING.names.join('&') + window.WEDDING.dateLabel).replace(/\s+/g, '');
-    return { images: hero.querySelectorAll('img').length, removedChurch: hero.querySelectorAll('picture,.garden-frame').length === 0,
+    const content = artworkVisible ? [artwork] : [title, date];
+    return { images: [...hero.querySelectorAll('img')].filter(visible).length,
+      artworkExpected, artworkVisible, fallbackVisible, duplicateText: visible(titleText) || visible(dateElement),
+      altCorrect: window.WEDDING.names.every(name => lettering.alt.includes(name)) && lettering.alt.includes(window.WEDDING.dateLabel),
+      arrowOnly: hero.querySelector('.hero-discover').textContent.trim() === '↓'
+        && hero.querySelector('.hero-discover').getAttribute('aria-label') === 'Unsere Einladung entdecken',
+      removedChurch: hero.querySelectorAll('picture,.garden-frame').length === 0,
       removedRegion: hero.querySelectorAll('.hero-place,[data-bind="region"]').length === 0,
-      text, expected, dateAfterTitle: date.top >= title.bottom - 1, discoverAfterDate: discover.top >= date.bottom + 8,
-      textContained: [title, date, discover].every(rect => rect.left >= box.left - 1 && rect.right <= box.right + 1
+      text, expected, dateAfterTitle: artworkVisible || date.top >= title.bottom - 1,
+      discoverGap: discover.top - (artworkVisible ? artwork.bottom : date.bottom),
+      discoverAfterDate: discover.top >= (artworkVisible ? artwork.bottom + 4 : date.bottom + 8),
+      textContained: [...content, discover].every(rect => rect.left >= box.left - 1 && rect.right <= box.right + 1
         && rect.top >= box.top - 1 && rect.bottom <= box.bottom + 1) };
   });
-  check(heroPlacement.images === 2 && heroPlacement.removedChurch && heroPlacement.removedRegion
+  check(heroPlacement.images === (heroPlacement.artworkExpected ? 3 : 2) && heroPlacement.removedChurch && heroPlacement.removedRegion
     && heroPlacement.text === heroPlacement.expected, `${width}: simplified opening retains a church, region, or unexpected content ${JSON.stringify(heroPlacement)}`);
+  check(heroPlacement.arrowOnly && (heroPlacement.artworkExpected
+    ? heroPlacement.artworkVisible && !heroPlacement.duplicateText && heroPlacement.altCorrect
+    : !heroPlacement.artworkVisible && heroPlacement.fallbackVisible),
+    `${width}: lettering image or editable fallback is wrong ${JSON.stringify(heroPlacement)}`);
   check(heroPlacement.dateAfterTitle && heroPlacement.discoverAfterDate && heroPlacement.textContained,
     `${width}: simplified opening text overlaps or clips ${JSON.stringify(heroPlacement)}`);
   const linenFlow = await page.evaluate(() => {

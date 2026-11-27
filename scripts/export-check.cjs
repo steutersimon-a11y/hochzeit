@@ -70,6 +70,34 @@ async function openInvitation(page) {
   }
 }
 
+async function checkHeroLettering(page, imageFailed = false) {
+  const hero = await page.evaluate(() => {
+    const visible = element => element.getBoundingClientRect().width > 0 && element.getBoundingClientRect().height > 0;
+    const image = document.querySelector('.hero-lettering'), title = document.querySelector('.hero-title-text');
+    const date = document.querySelector('.hero-date');
+    return { names: window.WEDDING.names, date: window.WEDDING.date, dateLabel: window.WEDDING.dateLabel,
+      artworkMatches: image.dataset.names === window.WEDDING.names.join(' & ')
+        && image.dataset.date === window.WEDDING.date && image.dataset.dateLabel === window.WEDDING.dateLabel,
+      imageVisible: visible(image), titleVisible: visible(title), dateVisible: visible(date),
+      imageLoaded: image.complete && image.naturalWidth > 0, alt: image.alt,
+      imageEmbedded: image.getAttribute('src').startsWith('data:image/webp;base64,'),
+      visibleNames: [...title.querySelectorAll('[data-name]')].filter(visible).map(element => element.textContent),
+      boundNames: [...title.querySelectorAll('[data-name]')].map(element => element.textContent),
+      renderedDate: date.textContent };
+  });
+  assert.deepEqual(hero.boundNames, hero.names, 'Hero must retain its editable name bindings.');
+  assert.equal(hero.renderedDate, hero.dateLabel, 'Hero must retain its editable date binding.');
+  if (hero.artworkMatches && !imageFailed) {
+    assert(hero.imageVisible && hero.imageLoaded && hero.imageEmbedded, 'Default hero must show its embedded lettering image.');
+    assert(!hero.titleVisible && !hero.dateVisible, 'Default lettering must not duplicate the visible HTML names/date.');
+    assert(hero.names.every(name => hero.alt.includes(name)) && hero.alt.includes(hero.dateLabel), 'Lettering alt must provide the names and date.');
+  } else {
+    assert(!hero.imageVisible && hero.titleVisible && hero.dateVisible, 'Changed or unavailable lettering must show editable names/date.');
+    assert.deepEqual(hero.visibleNames, hero.names, 'Fallback must visibly show the current names.');
+  }
+  return hero;
+}
+
 async function readCalendar(page) {
   const downloading = page.waitForEvent('download');
   await page.locator('#save-date').click();
@@ -85,7 +113,7 @@ function checkProvisionalCalendar(calendar, date) {
   assert(!/^DTSTART:/m.test(calendar), 'Unconfirmed schedule must not publish a precise starting time.');
 }
 
-async function verifyOfflineFile(browser, filename, { names, date, confirmed = false } = {}) {
+async function verifyOfflineFile(browser, filename, { names, date, confirmed = false, editNames, editDate, verifyImageFailure = false } = {}) {
   const context = await browser.newContext({ offline: true, reducedMotion: 'reduce' });
   let page = await context.newPage();
   const requests = [], errors = [];
@@ -95,21 +123,29 @@ async function verifyOfflineFile(browser, filename, { names, date, confirmed = f
   };
   trackPage(page);
   await context.route(/^https?:\/\//, route => route.abort('internetdisconnected'));
-  if (confirmed) {
+  if (confirmed || editNames || editDate) {
     // Override the fixture before either inline config or app code runs.
-    await context.addInitScript(() => {
+    await context.addInitScript(({ confirmed, editNames, editDate }) => {
       let config;
       Object.defineProperty(window, 'WEDDING', {
         configurable: true,
         get: () => config,
         set(value) {
-          value.scheduleConfirmed = true;
-          value.date = '2027-08-28';
-          value.calendar = { ...value.calendar, startTime: '14:00', endTime: '23:59', timezone: 'Europe/Berlin' };
+          if (editNames) value.names = editNames;
+          if (editDate) {
+            value.date = editDate;
+            value.dateLabel = new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+              .format(new Date(editDate + 'T12:00:00Z'));
+          }
+          if (confirmed) {
+            value.scheduleConfirmed = true;
+            value.date = '2027-08-28';
+            value.calendar = { ...value.calendar, startTime: '14:00', endTime: '23:59', timezone: 'Europe/Berlin' };
+          }
           config = value;
         },
       });
-    });
+    }, { confirmed, editNames, editDate });
   }
   try {
     let url = pathToFileURL(filename).href;
@@ -133,9 +169,11 @@ async function verifyOfflineFile(browser, filename, { names, date, confirmed = f
     await page.evaluate(() => document.querySelectorAll('img[src]').forEach(image => { image.loading = 'eager'; }));
     await page.waitForFunction(() => [...document.querySelectorAll('img[src]')]
       .every(image => image.complete && image.naturalWidth > 0));
+    await checkHeroLettering(page);
     const actual = await page.evaluate(() => ({ names: window.WEDDING.names, date: window.WEDDING.date,
       scheduleConfirmed: window.WEDDING.scheduleConfirmed,
-      visibleNames: [...document.querySelectorAll('.hero-copy [data-name]')].map(element => element.textContent) }));
+      visibleNames: [...document.querySelectorAll('.hero-copy [data-name]')]
+        .filter(element => element.getBoundingClientRect().width > 0).map(element => element.textContent) }));
     if (names) {
       assert.deepEqual(actual.names, names, 'Edited names must survive the exported file.');
       assert.deepEqual(actual.visibleNames, names, 'Exported opening must render the edited names.');
@@ -155,6 +193,12 @@ async function verifyOfflineFile(browser, filename, { names, date, confirmed = f
     }
     assert.deepEqual(requests, [url], 'Offline standalone must use only its own HTML file, with no external or sibling-file resources.');
     assert.deepEqual(errors, [], 'Offline standalone raised browser errors.');
+    if (verifyImageFailure) {
+      await page.locator('.hero-lettering').evaluate(image => { image.src = 'data:image/webp;base64,AA=='; });
+      await page.waitForFunction(() => document.querySelector('.hero-lettering').hidden
+        && !document.querySelector('.hero-title-text').hidden && !document.querySelector('.hero-date').hidden);
+      await checkHeroLettering(page, true);
+    }
   } finally {
     await context.close();
   }
@@ -182,8 +226,11 @@ async function localServer() {
   try {
     browser = await playwright.chromium.launch({ headless: true,
       executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium', args: ['--no-sandbox'] });
-    await verifyOfflineFile(browser, standalonePath, { date: '2027-08-28' });
+    await verifyOfflineFile(browser, standalonePath, { date: '2027-08-28', verifyImageFailure: true });
     console.log('PASS built standalone: offline browser, embedded images and calendar');
+    await verifyOfflineFile(browser, standalonePath, { names: fixtureNames, date: '2027-08-28', editNames: fixtureNames });
+    await verifyOfflineFile(browser, standalonePath, { names: ['Marie', 'Simon'], date: fixtureDate, editDate: fixtureDate });
+    console.log('PASS lettering fallback: changing names only or date only hides the fixed artwork');
 
     let baseURL = process.env.INVITATION_QA_URL;
     if (!baseURL) ({ server, url: baseURL } = await localServer());

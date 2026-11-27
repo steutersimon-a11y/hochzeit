@@ -20,13 +20,13 @@ Die Recherche vom 27. November 2026 ergänzt den Aufbau der Referenz um Ideen au
 
 Die aktuellen Bilddateien in [assets/loom](assets/loom/README.md) bilden eine gemeinsame Materialwelt: elfenbeinfarbenes Leinen, Salbeigrün, gedämpftes Mauve, Perlen und sichtbare Stickstiche. Jede große dekorative Szene hat genau einen Platz. Die beiden Vorhänge spiegeln dasselbe Stickmotiv.
 
-Namen und Datum stehen mittig auf hellem Leinen. Nachtblaue Vorhänge mit Perlenkante und rauchblauen Schleifen hängen direkt an der inneren Rahmenlinie. Die Vorhanggrafiken skalieren proportional und werden vor Beginn der Kartenöffnung geladen.
+Die hochgeladene Schriftgrafik mit „WIR HEIRATEN“, den handgeschriebenen Namen und dem Datum steht mittig auf hellem Leinen. Ein Pfeil führt zur Begrüßung. Nachtblaue Vorhänge mit Perlenkante und rauchblauen Schleifen hängen direkt an der inneren Rahmenlinie. Die Grafiken skalieren proportional und werden vor Beginn der Kartenöffnung geladen.
 
 Eine kleine Stickborte aus blauen Knötchen, Blättern und Perlen leitet den Willkommensgruß ein. Im einzelnen nachtblauen Countdown-Medaillon steht die Zahl der verbleibenden Kalendertage. Es folgen beide illustrierten Orte mit ihren Angaben. Die neue Mago-Illustration übernimmt die Architektur, Fenster, Dach und Terrasse des eigenen Repository-Bildes. Die eigene Kirchenillustration wird freigestellt und im Ortsabschnitt vollständig dargestellt. Beide Orte behalten ihre Proportionen.
 
 Geschichte, eigene Fotos, Tagesablauf, Hinweise, Geschenke und Rückmeldung schließen die Einladung ab. Die beiden Schwäne stehen ausschließlich ganz am Ende im Footer. Der Ablauf zeigt sechs verschiedene Stickmotive: Kirche für Ankunft, Ringe für Trauung, Sektgläser für Anstoßen, Cocktail für Aperitif, Teller und Besteck für Dinner sowie Discokugel für Tanz. Eine feine durchgehende Stichlinie verbindet die Stationen. Der Dresscode wurde auf Wunsch entfernt. Der Geschenkhinweis erscheint einmal und wird im FAQ nicht wiederholt.
 
-Cormorant Garamond trägt Namen, Überschriften und Fließtext. Kleine Beschriftungen und Bedienfelder verwenden Manrope. Kartenöffnung und ruhige Scroll-Einblendungen unterstützen den Verlauf. Die Einstellung für reduzierte Bewegung wird berücksichtigt.
+Cormorant Garamond trägt Überschriften und Fließtext. Kleine Beschriftungen und Bedienfelder verwenden Manrope. Kartenöffnung und ruhige Scroll-Einblendungen unterstützen den Verlauf. Die Einstellung für reduzierte Bewegung wird berücksichtigt.
 
 ## Nachtblauer Umschlag
 
