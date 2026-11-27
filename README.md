@@ -1,6 +1,6 @@
 # Marie & Simon · Embroidered Garden
 
-Die digitale Hochzeitseinladung liegt auf einem durchgehenden Leinentuch. Unter einem marineblauen Samtvorhang mit Schleife und Perlen stehen Namen und Hochzeitsdatum. Es folgen eine schmale Begrüßungsborte, offene Stickranken, passende Ortsillustrationen und sechs Ablaufmotive. Die beiden Schwäne bilden ganz unten den Abschied. Eine Doppellinie in Nacht- und Rauchblau tritt unter den Vorhangsäumen hervor und schließt unten mit zwei Perlen ab. Ein ovales M&S-Siegel aus champagnerfarbenem Wachs öffnet die nachtblauen Leinenflügel direkt auf den Auftakt mit Namen und Datum. Die Gestaltung mit eigenen Grafiken und eigenem Code ist vom Bildaufbau der Referenz inspiriert. [The Digital Yes](https://www.thedigitalyes.com/demo/embroidered-garden)
+Die digitale Hochzeitseinladung liegt auf einem durchgehenden Leinentuch. Unter einem marineblauen Samtvorhang mit Schleife und Perlen stehen Namen und Hochzeitsdatum. Es folgen eine schmale Begrüßungsborte, offene Stickranken, passende Ortsillustrationen und ein illustrierter Tagesablauf. Die beiden Schwäne bilden ganz unten den Abschied. Eine Doppellinie in Nacht- und Rauchblau tritt unter den Vorhangsäumen hervor und schließt unten mit zwei Perlen ab. Ein ovales M&S-Siegel aus champagnerfarbenem Wachs öffnet die nachtblauen Leinenflügel direkt auf den Auftakt mit Namen und Datum. Die Gestaltung mit eigenen Grafiken und eigenem Code ist vom Bildaufbau der Referenz inspiriert. [The Digital Yes](https://www.thedigitalyes.com/demo/embroidered-garden)
 
 [Auftakt](preview-opener.png) · [Handy-Vorschau](preview-mobile.png) · [Desktop-Vorschau](preview-desktop.png) · [Die Locations](preview-locations.png) · [Eure Fotos](preview-fotos.png)
 
@@ -8,9 +8,9 @@ Die digitale Hochzeitseinladung liegt auf einem durchgehenden Leinentuch. Unter 
 
 ## Neue Gestaltung
 
-Die öffentliche Referenz und ihre vollständige Live-Einladung wurden erneut geöffnet und visuell untersucht. Die nachtblaue Schrift verbindet den Umschlag mit dem hellen Leinen im Inneren. Rauchblaue Details setzen Akzente in der Stickerei zwischen Salbei, Mauve und Elfenbein. Nach dem Aufklappen erscheint das hochgeladene Toile de Jouy leicht getönt über dem Leinen. Das Muster läuft durchgehend vom Auftakt bis zum Abschied. Die Illustrationen im Ortsabschnitt basieren auf der eigenen Kirchen- und Restaurantillustration. Der Ablauf zeigt Kirche, Ringe, Sektgläser, Cocktail, Dinner und Discokugel.
+Die öffentliche Referenz und ihre vollständige Live-Einladung wurden erneut geöffnet und visuell untersucht. Die nachtblaue Schrift verbindet den Umschlag mit dem hellen Leinen im Inneren. Rauchblaue Details setzen Akzente in der Stickerei zwischen Salbei, Mauve und Elfenbein. Nach dem Aufklappen erscheint das hochgeladene Toile de Jouy leicht getönt über dem Leinen. Das Muster läuft durchgehend vom Auftakt bis zum Abschied. Die Illustrationen im Ortsabschnitt basieren auf der eigenen Kirchen- und Restaurantillustration. Der Tagesablauf steht als zusammenhängende Illustration zwischen der Geschichte und „Gut zu wissen“.
 
-Eine kleine Stickborte leitet den Willkommensgruß ein. Ein einzelnes nachtblaues Medaillon zeigt die verbleibenden Kalendertage bis zur Hochzeit. Ortsangaben und Illustrationen stehen zusammen. Eine gestickte Ranke leitet die Ortsansicht ein, eine kleine Perlenschleife begleitet den Geschenkhinweis. Die Geschichte und ihre beiden Fotos teilen sich auf großen Bildschirmen eine Zeile. Die Beschriftungen bleiben auf kleinen Displays frei. Eine durchgehende Stichlinie verbindet die sechs Stationen des Tagesablaufs.
+Eine kleine Stickborte leitet den Willkommensgruß ein. Ein einzelnes nachtblaues Medaillon zeigt die verbleibenden Kalendertage bis zur Hochzeit. Ortsangaben und Illustrationen stehen zusammen. Eine gestickte Ranke leitet die Ortsansicht ein, eine kleine Perlenschleife begleitet den Geschenkhinweis. Die Geschichte und ihre beiden Fotos teilen sich auf großen Bildschirmen eine Zeile. Die Beschriftungen bleiben auf kleinen Displays frei.
 
 Die hochgeladene nachtblaue Aquarellschleife rahmt die Rückmeldung mit großzügigem Abstand zum Text ein. Die Aquarellschwäne mit Datum und Initialen bilden etwas kleiner gesetzt den Abschluss.
 
@@ -28,7 +28,7 @@ Der Bearbeitungsmodus wird mit `?edit=1` an der Adresse geöffnet. Dort können 
 
 Die Einladung ist für **Marie & Simon am Samstag, 28. August 2027** eingerichtet, mit Reformierter Kirche und Mago Restaurant & Bar in Schermbeck. Die bereits vorhandenen Zeiten, Rückmeldefrist und weitere Hinweise sind weiterhin Beispielangaben. Exakte Adressen und eine Rückmelde-E-Mail sind noch offen.
 
-Alle Angaben stehen in `wedding-config.js`. `index.html` nutzt Änderungen sofort. Anschließend erstellt
+Orte, Zeiten und die bearbeitbaren Texte stehen in `wedding-config.js`. `index.html` nutzt Änderungen sofort. Anschließend erstellt
 
 ```sh
 python3 build.py

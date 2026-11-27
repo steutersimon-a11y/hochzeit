@@ -58,15 +58,6 @@
       route.searchParams.set('destination', config[link.dataset.map].mapQuery);
       link.href = route.href;
     });
-    $('#timeline').replaceChildren();
-    config.timeline.forEach(item => {
-      const li = document.createElement('li'); li.className = 'reveal';
-      const time = document.createElement('time'); time.textContent = item.time; time.dateTime = item.time;
-      const icon = document.createElement('span'); icon.className = 'timeline-icon'; icon.setAttribute('aria-hidden','true');
-      icon.dataset.icon = item.icon;
-      const copy = document.createElement('div'), title = document.createElement('h3'), text = document.createElement('p');
-      title.textContent = item.title; text.textContent = item.text; copy.append(title,text); li.append(time,icon,copy); $('#timeline').append(li);
-    });
     $('#faq-list').replaceChildren();
     $$('[data-detail-title]').forEach(el => { el.textContent = config.details[+el.dataset.detailTitle]?.title || ''; });
     $$('[data-detail-text]').forEach(el => { el.textContent = config.details[+el.dataset.detailText]?.text || ''; });

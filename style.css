@@ -363,73 +363,17 @@ body.opening-active::before {
   font: italic clamp(1.75rem, 5cqw, 2.625rem)/1.2 var(--serif);
 }
 
-.timeline-header { text-align: center; margin-bottom: 1.75rem; }
-.timeline-header h2 { margin-top: .4rem; }
-.timeline {
-  --icon-width: clamp(3.75rem, 16cqw, 5.25rem);
-  --timeline-gap: clamp(1.75rem, 7cqw, 2.75rem);
-  --thread-x: calc(var(--icon-width) + var(--timeline-gap) / 2);
-  position: relative;
-  list-style: none;
-  max-width: 33rem;
-  padding: 0;
-  margin: 0 auto;
-}
+.schedule-section { padding-inline: 0; }
 
-/* The same running stitch joins every stop. */
-.timeline::before {
-  content: "";
-  position: absolute;
-  inset: 1.5rem auto 2rem var(--thread-x);
-  width: 1px;
-  background: repeating-linear-gradient(to bottom, var(--smoke) 0 4px, transparent 4px 8px);
+.schedule-image {
+  width: min(100%, 30rem);
+  margin-inline: auto;
+  mix-blend-mode: multiply;
+  mask:
+    linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent),
+    linear-gradient(transparent, #000 3%, #000 97%, transparent);
+  mask-composite: intersect;
 }
-
-.timeline li {
-  position: relative;
-  display: grid;
-  grid-template-columns: var(--icon-width) minmax(0, 1fr);
-  column-gap: var(--timeline-gap);
-  align-items: start;
-  padding-block: .5rem .9rem;
-}
-
-.timeline li::before {
-  content: "";
-  position: absolute;
-  top: 1.3rem;
-  left: calc(var(--thread-x) - 3px);
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--smoke);
-  box-shadow: 0 0 0 3px var(--paper);
-}
-
-.timeline time {
-  grid-area: 1 / 2;
-  font: 500 .8125rem/1.3 var(--sans);
-  font-variant-numeric: tabular-nums;
-  padding-top: .3rem;
-}
-
-.timeline-icon {
-  grid-area: 1 / 1 / 3;
-  width: 100%;
-  aspect-ratio: 2 / 3;
-  background-image: url('assets/loom/timeline-blue.webp');
-  background-size: 300% 200%;
-  background-repeat: no-repeat;
-}
-
-.timeline-icon[data-icon="rings"] { background-position: 50% 0; }
-.timeline-icon[data-icon="glasses"] { background-position: 100% 0; }
-.timeline-icon[data-icon="leaf"] { background-position: 0 100%; }
-.timeline-icon[data-icon="dinner"] { background-position: 50% 100%; }
-.timeline-icon[data-icon="music"] { background-position: 100% 100%; }
-.timeline li > div { grid-area: 2 / 2; }
-.timeline h3 { margin-top: .25rem; font-size: clamp(1.375rem, 3.5cqw, 1.75rem); line-height: 1.16; }
-.timeline li p { margin-top: .35rem; color: var(--ink); }
 
 .details { text-align: center; }
 .faq-list { text-align: left; max-width: 34rem; margin: 1.5rem auto 0; border-top: 1px solid var(--line); }

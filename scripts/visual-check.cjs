@@ -19,9 +19,9 @@ const root = path.resolve(__dirname, '..');
 const output = process.env.INVITATION_QA_OUTPUT || '/tmp/wedding-qa';
 const requiredArt = ['welcome-border.webp',
   'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp',
-  'countdown-navy.webp', 'timeline-blue.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
+  'countdown-navy.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
 const missing = requiredArt.filter(file => !fs.existsSync(path.join(root, 'assets/loom', file)));
-for (const file of ['linen-navy.webp', 'seal-relief-ms.webp', 'hero-curtain-marine.webp', 'hero-lettering-blue.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp', 'toile-de-jouy.webp']) {
+for (const file of ['linen-navy.webp', 'seal-relief-ms.webp', 'hero-curtain-marine.webp', 'hero-lettering-blue.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp', 'toile-de-jouy.webp', 'tagesablauf.webp']) {
   if (!fs.existsSync(path.join(root, 'assets/art', file))) missing.push('assets/art/' + file);
 }
 if (missing.length) {
@@ -48,7 +48,7 @@ for (const [src, count] of sourceCounts) {
 for (const file of ['welcome-border.webp', 'countdown-navy.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp']) {
   check(sourceCounts.get('assets/loom/' + file) === 1, `Missing unique textile scene: ${file}`);
 }
-for (const file of ['hero-curtain-marine.webp', 'hero-lettering-blue.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp']) {
+for (const file of ['hero-curtain-marine.webp', 'hero-lettering-blue.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp', 'tagesablauf.webp']) {
   check(sourceCounts.get('assets/art/' + file) === 1, `Missing unique uploaded scene: ${file}`);
 }
 for (const file of ['rsvp-ribbon-top.webp', 'rsvp-ribbon-bottom.webp']) {
@@ -67,8 +67,9 @@ if (previous.status === 0) {
   const baseline = readConfig(previous.stdout);
   baseline.photos = currentConfig.photos;
   baseline.scheduleConfirmed = currentConfig.scheduleConfirmed;
+  delete baseline.timeline;
   baseline.details = baseline.details.filter(detail => !/dresscode|was ziehen wir an/i.test(detail.title));
-  check(isDeepStrictEqual(baseline, currentConfig), 'Invitation inputs changed beyond schedule confirmation status, Dresscode removal and requested photographic/illustrated assets');
+  check(isDeepStrictEqual(baseline, currentConfig), 'Invitation inputs changed beyond schedule confirmation status, Dresscode removal, replacement of the timeline with the uploaded image and requested photographic/illustrated assets');
 }
 check(!currentConfig.details.some(detail => /dresscode|was ziehen wir an/i.test(detail.title)), 'Dresscode remains in the invitation configuration');
 check(!/class=["'][^"']*\bdresscode\b/i.test(source), 'Dresscode section remains in the markup');
@@ -269,7 +270,7 @@ async function exerciseViewport(browser, baseURL, width) {
       const style = getComputedStyle(element, pseudo);
       return { element: element.tagName, pseudo, image: style.backgroundImage };
     }));
-    const sections = [...document.querySelectorAll('.hero,.site-header,.welcome,.date-section,#orte,.story,.timeline-section,.details,.gift-section,.rsvp-section,footer')]
+    const sections = [...document.querySelectorAll('.hero,.site-header,.welcome,.date-section,#orte,.story,.schedule-section,.details,.gift-section,.rsvp-section,footer')]
       .map(element => ({ element: element.className || element.tagName, background: getComputedStyle(element).backgroundColor,
         image: getComputedStyle(element).backgroundImage }));
     const panels = [...document.querySelectorAll('.textile-panel')].map(panel => {
@@ -561,17 +562,34 @@ async function exerciseViewport(browser, baseURL, width) {
       && Math.abs(image.displayedWidth / image.previousWidth - .75) < .005,
       `${width}: swans are not reduced to 75% of the previous displayed width ${JSON.stringify(image)}`);
   }
-  const timelineIcons = await page.evaluate(() => [...document.querySelectorAll('.timeline-icon')].map(icon => {
-    const style = getComputedStyle(icon), box = icon.getBoundingClientRect();
-    return { icon: icon.dataset.icon, position: style.backgroundPosition, source: style.backgroundImage,
-      ratio: box.width/box.height, overlays: icon.querySelectorAll('svg,img').length };
-  }));
-  check(new Set(timelineIcons.map(icon => icon.position)).size === timelineIcons.length,
-    `${width}: timeline repeats a sprite cell`);
-  for (const icon of timelineIcons) {
-    check(icon.source.includes('timeline-blue.webp') && Math.abs(icon.ratio-2/3) < .01 && icon.overlays === 0,
-      `${width}: distorted or doubled timeline icon ${JSON.stringify(icon)}`);
-  }
+  const schedule = await page.locator('#unser-tag.schedule-section').evaluate(section => {
+    const image = section.querySelector('img.schedule-image');
+    const box = section.getBoundingClientRect(), artwork = image.getBoundingClientRect(), style = getComputedStyle(image);
+    const following = ['#gut-zu-wissen', '.gift-section', '#rueckmeldung', 'footer'].map(selector => {
+      const element = document.querySelector(selector), rect = element.getBoundingClientRect();
+      return { selector, top: rect.top, bottom: rect.bottom, visible: rect.width > 0 && rect.height > 0
+        && getComputedStyle(element).visibility !== 'hidden' };
+    });
+    return { source: image.getAttribute('src'), alt: image.alt,
+      visible: artwork.width > 0 && artwork.height > 0 && style.visibility !== 'hidden' && Number(style.opacity) > 0,
+      loaded: image.complete && image.naturalWidth > 0, naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight,
+      aspectError: Math.abs((artwork.width / artwork.height) / (image.naturalWidth / image.naturalHeight) - 1),
+      contained: artwork.left >= box.left - 1 && artwork.right <= box.right + 1 && artwork.top >= box.top - 1 && artwork.bottom <= box.bottom + 1,
+      images: section.querySelectorAll('img').length, text: section.innerText.trim(),
+      oldContent: section.querySelectorAll('.timeline-header,.timeline,.timeline-icon,#timeline-title,#timeline').length,
+      next: section.nextElementSibling?.id, bottom: box.bottom, following,
+      navigationAnchor: !!document.querySelector('.site-header nav a[href="#unser-tag"]') };
+  });
+  const stations = ['Standesamt', 'Ankunft bei Mago', 'Anstoßen', 'Kaffee und Kuchen', 'Abendessen', 'Party'];
+  const stationPositions = stations.map(station => schedule.alt.indexOf(station));
+  check(schedule.source === 'assets/art/tagesablauf.webp' && schedule.visible && schedule.loaded
+    && schedule.naturalWidth === 879 && schedule.naturalHeight === 1789 && schedule.aspectError < .005 && schedule.contained
+    && schedule.images === 1 && schedule.text === '' && schedule.oldContent === 0 && !('timeline' in currentConfig)
+    && stationPositions.every((position, index) => position >= 0 && (!index || position > stationPositions[index - 1])),
+    `${width}: uploaded schedule is missing, distorted, clipped or mixed with the old timeline ${JSON.stringify(schedule)}`);
+  check(schedule.next === 'gut-zu-wissen' && schedule.navigationAnchor && schedule.following.every((section, index) =>
+    section.visible && section.top >= (index ? schedule.following[index - 1].bottom : schedule.bottom) - 1),
+    `${width}: content after the schedule is missing, reordered or overlapping ${JSON.stringify(schedule)}`);
   const venueImages = await page.evaluate(() => [...document.querySelectorAll('.venue-art>[data-photo]')].map(image => {
     const frame = image.parentElement;
     const style = getComputedStyle(frame);
@@ -591,7 +609,7 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.screenshot({ path: path.join(output, `page-${width}.png`), fullPage: true });
   for (const [selector, filename] of [['.welcome', 'welcome'], ['#datum', 'countdown'], ['.venues-intro', 'venues-intro'],
     ['.venue-grid', 'locations'], ['.story-framed', 'story-framed'], ['.story-photos', 'photos'],
-    ['.gift-section', 'gift-section'], ['.timeline-section', 'timeline-section'], ['#rueckmeldung', 'rsvp'], ['footer', 'farewell']]) {
+    ['.gift-section', 'gift-section'], ['.schedule-section', 'timeline-section'], ['#rueckmeldung', 'rsvp'], ['footer', 'farewell']]) {
     await page.locator(selector).evaluate(element => element.scrollIntoView({ block: 'start', behavior: 'instant' }));
     await page.waitForTimeout(50);
     await page.locator(selector).screenshot({ path: path.join(output, `${filename}-${width}.png`) });
@@ -665,7 +683,7 @@ async function exerciseViewport(browser, baseURL, width) {
   checkToile(toile.reopened, true, `${width} reopened invitation`);
   check(errors.length === 0, `${width}: browser errors ${errors.join('; ')}`);
   results.push({ width, height, centerColors: diversity, ornaments: ornaments.length, cover, heroPlacement, linenFlow, panels, sceneDetails,
-    farewell, rsvpArtwork, timelineIcons, fallbackVisibility, toile, errors });
+    farewell, rsvpArtwork, schedule, fallbackVisibility, toile, errors });
   console.log(`${failures.length === startingFailures ? 'PASS' : 'FAIL'} viewport ${width}×${height}: continuous linen, equal widths, farewell swans, opener, art, keyboard, dialogs`);
   await context.close();
 }

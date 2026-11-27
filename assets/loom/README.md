@@ -10,7 +10,7 @@ Die aktuelle Gestaltung setzt freigestellte Originalmotive auf eine einzige durc
 | `stitched-sprig-blue.webp` | Offene Ranke mit Rosen, Perlen und rauchblauen Knötchen |
 | `gift-bow-blue.webp` | Rauchblaue Schleife mit Perle für den Geschenkhinweis |
 | `countdown-navy.webp` | Nachtblauer Doppelring mit rauchblauer Schleife für den Tages-Countdown |
-| `timeline-blue.webp` | Sechs freigestellte Ablaufmotive mit blauen Stickdetails im proportionalen 3×2-Bogen |
+| `timeline-blue.webp` | Frühere Ablaufmotive mit blauen Stickdetails im proportionalen 3×2-Bogen |
 | `church-edition.webp` | Freigestellte eigene Kirche mit abgerundeter Pflanzung und freien Rändern |
 | `mago-flow.webp` | Freigestelltes Mago mit Terrasse |
 | `farewell-swans-blue.webp` | Gestickte Schwäne als Abschied bei geänderten Namen oder anderem Datum |

@@ -27,3 +27,7 @@ Die sieben Motive sind zwei Leinenhüllen für Handy und Desktop, Elfenbeinsiege
 ## Toile de Jouy
 
 `toile-de-jouy.webp` enthält die hochgeladene `Elegante Toile-de-Jouy-Hochzeitsidylle.png` im Originalformat von 1536 × 1024 Pixeln. Das Muster wird erst nach dem Aufklappen als durchgehender Hintergrund sichtbar.
+
+## Tagesablauf
+
+`tagesablauf.webp` zeigt die hochgeladene `Unbenannt.png` im Originalformat von 879 × 1789 Pixeln. Der Alternativtext nennt die Stationen in Leserichtung.
