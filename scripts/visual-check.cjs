@@ -21,7 +21,7 @@ const requiredArt = ['welcome-border.webp',
   'farewell-swans-blue.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp',
   'countdown-navy.webp', 'timeline-blue.webp', 'mago-flow.webp', 'church-edition.webp', 'linen-ivory.webp'];
 const missing = requiredArt.filter(file => !fs.existsSync(path.join(root, 'assets/loom', file)));
-for (const file of ['linen-navy.webp', 'seal-relief-ms.webp', 'hero-curtain-velvet.webp', 'hero-lettering-blue.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp']) {
+for (const file of ['linen-navy.webp', 'seal-relief-ms.webp', 'hero-curtain-marine.webp', 'hero-lettering-blue.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp']) {
   if (!fs.existsSync(path.join(root, 'assets/art', file))) missing.push('assets/art/' + file);
 }
 if (missing.length) {
@@ -48,7 +48,7 @@ for (const [src, count] of sourceCounts) {
 for (const file of ['welcome-border.webp', 'countdown-navy.webp', 'stitched-sprig-blue.webp', 'gift-bow-blue.webp']) {
   check(sourceCounts.get('assets/loom/' + file) === 1, `Missing unique textile scene: ${file}`);
 }
-for (const file of ['hero-curtain-velvet.webp', 'hero-lettering-blue.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp']) {
+for (const file of ['hero-curtain-marine.webp', 'hero-lettering-blue.webp', 'rsvp-ribbon-frame.webp', 'farewell-swans-watercolor.webp']) {
   check(sourceCounts.get('assets/art/' + file) === 1, `Missing unique uploaded scene: ${file}`);
 }
 for (const file of ['rsvp-ribbon-top.webp', 'rsvp-ribbon-bottom.webp']) {
@@ -170,7 +170,7 @@ async function exerciseViewport(browser, baseURL, width) {
   await page.screenshot({ path: midFile });
   const diversity = centerDiversity(midFile);
   check(mid.scrollY === 0 && mid.y >= 0 && mid.y < 50 && mid.loaded && mid.opacity > .7, `${width}: live first scene missing during opening ${JSON.stringify(mid)}`);
-  check(mid.sources.every(source => source.includes('assets/art/hero-curtain-velvet.webp') || source.includes('assets/art/hero-lettering-blue.webp')),
+  check(mid.sources.every(source => source.includes('assets/art/hero-curtain-marine.webp') || source.includes('assets/art/hero-lettering-blue.webp')),
     `${width}: opening contains another illustration ${JSON.stringify(mid.sources)}`);
   check(mid.pseudoContent === 'none' || mid.pseudoBackground === 'rgba(0, 0, 0, 0)', `${width}: opaque page pseudo-element covers opener`);
   await page.locator('#opening').waitFor({ state: 'hidden', timeout: 5000 });
@@ -239,17 +239,30 @@ async function exerciseViewport(browser, baseURL, width) {
   const border = await page.locator('.invitation-border').evaluate(element => {
     const frame = element.getBoundingClientRect();
     const main = document.querySelector('main').getBoundingClientRect();
+    const hero = document.querySelector('.hero').getBoundingClientRect();
     const footer = document.querySelector('footer').getBoundingClientRect();
+    const lines = [getComputedStyle(element), getComputedStyle(element, '::before')].map(style => ({
+      top: parseFloat(style.borderTopWidth),
+      sides: ['Left', 'Right', 'Bottom'].map(side => ({ width: parseFloat(style[`border${side}Width`]), style: style[`border${side}Style`] })),
+    }));
+    const pearls = [...element.children].map(pearl => {
+      const box = pearl.getBoundingClientRect();
+      return { bottomDistance: Math.abs(box.top + box.height / 2 - frame.bottom),
+        leftDistance: Math.abs(box.left + box.width / 2 - frame.left),
+        rightDistance: Math.abs(box.left + box.width / 2 - frame.right) };
+    });
     return {
-      enclosesInvitation: frame.top < main.top && frame.left < main.left &&
+      enclosesInvitation: frame.top > main.top && frame.top < hero.bottom && frame.left < main.left &&
         frame.right > main.right && frame.bottom > footer.bottom,
-      lines: [getComputedStyle(element).borderTopStyle, getComputedStyle(element, '::before').borderTopStyle],
-      pearls: element.children.length,
+      lines, pearls,
       decorative: element.getAttribute('aria-hidden') === 'true' && getComputedStyle(element).pointerEvents === 'none',
     };
   });
-  check(border.enclosesInvitation && border.lines.every(line => line === 'solid') && border.pearls === 4 && border.decorative,
-    `${width}: double border and corner pearls do not enclose the invitation ${JSON.stringify(border)}`);
+  check(border.enclosesInvitation && border.decorative
+    && border.lines.every(line => line.top === 0 && line.sides.every(side => side.style === 'solid' && side.width >= .5 && side.width <= 1.5))
+    && border.pearls.length === 2 && border.pearls.every(pearl => pearl.bottomDistance <= 2)
+    && border.pearls.some(pearl => pearl.leftDistance <= 2) && border.pearls.some(pearl => pearl.rightDistance <= 2),
+    `${width}: open-top double border or bottom corner pearls do not enclose the invitation ${JSON.stringify(border)}`);
   for (const panel of linenFlow.panels) {
     check(Math.abs(panel.left-linenFlow.main.left) <= 1 && Math.abs(panel.width-linenFlow.main.width) <= 1,
       `${width}: textile scene has a segmented width ${JSON.stringify(panel)}`);
@@ -340,6 +353,8 @@ async function exerciseViewport(browser, baseURL, width) {
   }
   const sceneDetails = await page.evaluate(() => {
     const frame = document.querySelector('.invitation-border').getBoundingClientRect();
+    const sheet = document.querySelector('.invitation-sheet').getBoundingClientRect();
+    const nominalTop = sheet.top + frame.left - sheet.left;
     const curtains = [...document.querySelectorAll('.hero-curtain')].map(image => {
       const box = image.getBoundingClientRect(), style = getComputedStyle(image);
       const scale = Math.min(box.width / image.naturalWidth, box.height / image.naturalHeight);
@@ -370,6 +385,25 @@ async function exerciseViewport(browser, baseURL, width) {
       const visibleLeft = paintedLeft + alphaEnvelope.left / canvas.width * paintedWidth;
       const visibleRight = paintedLeft + alphaEnvelope.right / canvas.width * paintedWidth;
       const visibleTop = paintedTop + alphaEnvelope.top / canvas.height * paintedHeight;
+      const lineStartY = frame.top + 1;
+      const sourceRow = Math.floor((lineStartY - paintedTop) / paintedHeight * canvas.height);
+      const alphaAt = (x, y) => {
+        const sourceX = Math.floor((x - paintedLeft) / paintedWidth * canvas.width);
+        const sourceY = Math.floor((y - paintedTop) / paintedHeight * canvas.height);
+        return sourceX >= 0 && sourceX < canvas.width && sourceY >= 0 && sourceY < canvas.height
+          ? pixels[(sourceY * canvas.width + sourceX) * 4 + 3] : 0;
+      };
+      const lineStartAlpha = [frame.left + .5, frame.left + 5.5, frame.right - 5.5, frame.right - .5]
+        .map(x => alphaAt(x, lineStartY));
+      const hem = { row: sourceRow, left: canvas.width, right: 0, pixels: 0 };
+      if (sourceRow >= 0 && sourceRow < canvas.height) {
+        for (let x = 0; x < canvas.width; x++) {
+          if (pixels[(sourceRow * canvas.width + x) * 4 + 3] < alphaEnvelope.threshold) continue;
+          hem.left = Math.min(hem.left, x);
+          hem.right = Math.max(hem.right, x + 1);
+          hem.pixels++;
+        }
+      }
       const transform = new DOMMatrixReadOnly(style.transform === 'none' ? undefined : style.transform);
       return { src: image.getAttribute('src'), fit: style.objectFit, position: style.objectPosition, aspectError,
         naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight, paintedWidth, paintedHeight, alphaEnvelope,
@@ -377,7 +411,10 @@ async function exerciseViewport(browser, baseURL, width) {
         upright: transform.a > 0 && transform.d > 0 && Math.abs(transform.b) < .001 && Math.abs(transform.c) < .001,
         boxLeftOverhang: frame.left - paintedLeft, boxRightOverhang: paintedLeft + paintedWidth - frame.right,
         visibleLeftOverhang: frame.left - visibleLeft, visibleRightOverhang: visibleRight - frame.right,
-        topOverhang: frame.top - paintedTop,
+        topOverhang: nominalTop - paintedTop,
+        sideStartRatio: (frame.top - paintedTop) / paintedHeight, lineStartAlpha, hem,
+        hemLeftOverhang: frame.left - (paintedLeft + hem.left / canvas.width * paintedWidth),
+        hemRightOverhang: paintedLeft + hem.right / canvas.width * paintedWidth - frame.right,
         viewportSafe: visibleLeft >= -1 && visibleRight <= innerWidth + 1 && visibleTop + scrollY >= -1 };
     });
     const welcomeArt = document.querySelector('.welcome-border').getBoundingClientRect();
@@ -402,12 +439,13 @@ async function exerciseViewport(browser, baseURL, width) {
           && number.top >= circle.top && number.bottom <= circle.bottom } };
   });
   check(sceneDetails.curtains.length === 1 && sceneDetails.curtains.every(curtain =>
-    curtain.src === 'assets/art/hero-curtain-velvet.webp'
+    curtain.src === 'assets/art/hero-curtain-marine.webp'
       && (curtain.fit === 'contain' || curtain.fit === 'fill' && curtain.aspectError < .012)
-      && curtain.naturalWidth === 1600 && curtain.naturalHeight === 941 && curtain.upright && curtain.decorative && curtain.viewportSafe
+      && curtain.naturalWidth === 1774 && curtain.naturalHeight === 887 && curtain.upright && curtain.decorative && curtain.viewportSafe
       && curtain.alphaEnvelope.pixels > 0 && curtain.topOverhang >= 4 && curtain.topOverhang <= 9
-      && curtain.visibleLeftOverhang >= (width >= 1100 ? 6 : 2) && curtain.visibleRightOverhang >= (width >= 1100 ? 6 : 2)),
-    `${width}: opaque curtain is distorted, clipped, or does not extend beyond both frame sides ${JSON.stringify(sceneDetails.curtains)}`);
+      && Math.abs(curtain.sideStartRatio - .85) <= .005 && curtain.lineStartAlpha.every(alpha => alpha >= 240)
+      && curtain.hem.pixels > 0 && curtain.hemLeftOverhang >= 2 && curtain.hemRightOverhang >= 2),
+    `${width}: marine curtain is distorted, clipped, or fails to hide and overhang the open-top frame ${JSON.stringify(sceneDetails.curtains)}`);
   check(sceneDetails.welcomeGap >= -1, `${width}: welcome ornament covers the message (${sceneDetails.welcomeGap}px gap)`);
   const dayCounter = sceneDetails.countdown;
   check(dayCounter.images === 1 && dayCounter.obsolete === 0 && !/stund|minut/i.test(dayCounter.text)

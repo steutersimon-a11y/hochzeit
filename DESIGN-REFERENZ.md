@@ -20,7 +20,7 @@ Die Recherche vom 27. November 2026 ergänzt den Aufbau der Referenz um Ideen au
 
 Die aktuellen Bilddateien in [assets/loom](assets/loom/README.md) bilden eine gemeinsame Materialwelt: elfenbeinfarbenes Leinen, Salbeigrün, gedämpftes Mauve, Perlen und sichtbare Stickstiche. Jede große dekorative Szene hat genau einen Platz.
 
-Die hochgeladene Aquarellschrift mit „WIR HEIRATEN“, den handgeschriebenen Namen und dem Datum steht mittig auf hellem Leinen. Ein Pfeil führt zur Begrüßung. Der hochgeladene nachtblaue Samtvorhang überspannt den Auftakt und ragt leicht über die äußere Rahmenlinie. Die Schriftgrafik steht mit Abstand unter der mittigen Schleife. Beide Grafiken skalieren proportional und werden vor Beginn der Kartenöffnung geladen.
+Die hochgeladene Aquarellschrift mit „WIR HEIRATEN“, den handgeschriebenen Namen und dem Datum steht mittig auf hellem Leinen. Ein Pfeil führt zur Begrüßung. Der marineblaue Samtvorhang bildet den oberen Abschluss des Auftakts. Die Schriftgrafik steht mit Abstand unter der mittigen Schleife. Beide Grafiken skalieren proportional und werden vor Beginn der Kartenöffnung geladen.
 
 Eine kleine Stickborte aus blauen Knötchen, Blättern und Perlen leitet den Willkommensgruß ein. Im einzelnen nachtblauen Countdown-Medaillon steht die Zahl der verbleibenden Kalendertage. Es folgen beide illustrierten Orte mit ihren Angaben. Die neue Mago-Illustration übernimmt die Architektur, Fenster, Dach und Terrasse des eigenen Repository-Bildes. Die eigene Kirchenillustration wird freigestellt und im Ortsabschnitt vollständig dargestellt. Beide Orte behalten ihre Proportionen.
 
@@ -40,7 +40,7 @@ Die Schrift verwendet durchgehend Nachtblau (`#14263E`). Rauchblau (`#506D8D`) z
 
 ## Durchgehendes Leinen
 
-Zwei durchgezogene Linien in Nacht- und Rauchblau fassen die gesamte geöffnete Einladung ein. Vier kleine elfenbeinfarbene Perlen schmücken die Ecken. Die Säume des Samtvorhangs fallen links und rechts über die Linien. Auf schmalen Displays liegt der Rahmen etwas weiter innen, damit der Überhang vollständig im Bild bleibt.
+Die Doppellinien in Nacht- und Rauchblau beginnen unter den Samtsäumen und laufen seitlich bis zum unteren Rand. Zwei kleine elfenbeinfarbene Perlen schmücken die unteren Ecken.
 
 Eine einzige feine Leinentextur bildet den Hintergrund des gesamten Dokuments. Opener, Begrüßung, Orte und Footer besitzen keinen eigenen deckenden Hintergrund und keine Abschnittsrandnähte. Die Motive wurden intern freigestellt; der Leinenuntergrund bleibt zwischen und hinter ihnen sichtbar. Header und Footer sind ebenfalls transparent.
 

@@ -5,10 +5,14 @@
 @font-face{font-family:Manrope;src:url('assets/fonts/manrope-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}
 :root{--paper:#f6f3ed;--ink:#14263e;--smoke:#506d8d;--blue-wash:#e6ecf2;--line:#c3cbd3;--serif:Cormorant,Georgia,serif;--sans:Manrope,Arial,sans-serif;--script:Cormorant,Georgia,serif}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}body{margin:0;background:var(--paper) url('assets/loom/linen-ivory.webp') repeat;background-size:560px 560px;color:var(--ink);font:clamp(1.125rem, 2.4vw, 1.3125rem)/1.55 var(--serif);-webkit-font-smoothing:antialiased}button,input,textarea{font:inherit;color:inherit}button,a{-webkit-tap-highlight-color:transparent}button{cursor:pointer}a{color:inherit;text-decoration:none}img{display:block;max-width:100%;height:auto}[hidden]{display:none!important}h1,h2,h3,p,figure{margin:0}h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.12;text-wrap:balance}h2{font-size:clamp(2.15rem, 5.7cqw, 3.25rem);letter-spacing:-.018em}h3{font-size:33px}p{white-space:pre-line}em{font-weight:400}button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--smoke);outline-offset:5px}.skip-link{position:fixed;left:20px;top:-100px;z-index:100;background:var(--blue-wash);color:var(--ink);padding:12px}.skip-link:focus{top:12px}main,footer{width:100%;margin:auto}.text-button{display:inline-flex;align-items:center;gap:15px;border:0;border-bottom:1px solid var(--line);background:none;padding:9px 0;font:11px/1.5 var(--sans);letter-spacing:.8px}.primary-button{background:var(--blue-wash);color:var(--ink);border:1px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;gap:30px;padding:15px 30px;min-width:235px;font:11px/1.6 var(--sans);letter-spacing:1px;transition:background .2s}.primary-button:hover{background:#d6e0eb}.text-button>span,.nav-rsvp>span,.primary-button>span{font-size:0;width:14px;height:14px;position:relative;display:inline-block;flex:0 0 14px}.text-button>span:before,.nav-rsvp>span:before,.primary-button>span:before{content:"";position:absolute;left:1px;bottom:2px;width:15px;height:1px;background:currentColor;transform:rotate(-45deg);transform-origin:left center}.text-button>span:after,.nav-rsvp>span:after,.primary-button>span:after{content:"";position:absolute;right:1px;top:2px;width:6px;height:6px;border-top:1px solid currentColor;border-right:1px solid currentColor}
-/* One border follows the full height of the open invitation. */
+/* The double frame emerges from behind the curtain hems. */
 .invitation-sheet {
   --sheet-gutter: clamp(16px, 3vw, 27px);
-  --border-inset: clamp(10px, 2.5vw, 21px);
+  --border-inset: clamp(6px, 1.2vw, 11px);
+  --curtain-overhang: clamp(5px, .9cqw, 8px);
+  --curtain-extension: calc(var(--sheet-gutter) - var(--border-inset) + var(--curtain-overhang));
+  --curtain-span: calc(100cqw + 2 * var(--curtain-extension));
+  --curtain-height: calc(var(--curtain-span) / 2);
   position: relative;
   max-width: calc(880px + 2 * var(--sheet-gutter));
   margin-inline: auto;
@@ -20,22 +24,26 @@
 .invitation-border {
   position: absolute;
   inset: var(--border-inset);
+  top: calc(var(--border-inset) - var(--curtain-overhang) + .85 * var(--curtain-height));
   z-index: 3;
-  border: 1px solid var(--ink);
-  border-radius: 6px;
+  border: solid var(--ink);
+  border-width: 0 1px 1px;
+  border-radius: 0 0 6px 6px;
   pointer-events: none;
 }
 
 .invitation-border::before {
   content: "";
   position: absolute;
-  inset: 4px;
-  border: 1px solid var(--smoke);
-  border-radius: 3px;
+  inset: 0 4px 4px;
+  border: solid var(--smoke);
+  border-width: 0 1px 1px;
+  border-radius: 0 0 3px 3px;
 }
 
 .invitation-border > span {
   position: absolute;
+  bottom: -4px;
   width: 9px;
   height: 9px;
   border-radius: 50%;
@@ -43,20 +51,15 @@
   box-shadow: inset 0 0 0 1px #d4bea65c, 0 1px 2px #14263e48;
 }
 
-.invitation-border > span:nth-child(-n+2) { top: -4px; }
-.invitation-border > span:nth-child(n+3) { bottom: -4px; }
 .invitation-border > span:nth-child(odd) { left: -4px; }
 .invitation-border > span:nth-child(even) { right: -4px; }
 
 /* Each illustration has one place in the invitation; all artwork keeps its proportions. */
 .hero {
-  --curtain-top-overhang: clamp(5px, .9cqw, 8px);
-  --curtain-span: calc(100cqw + 2 * var(--sheet-gutter) - 2px);
-  --curtain-offset: 0px;
   position: relative;
   display: grid;
   align-content: start;
-  min-height: calc(var(--curtain-span) * 941 / 1600 + 1.25rem);
+  min-height: calc(var(--curtain-height) + 1.25rem);
   padding-block: calc(var(--curtain-span) * .17 - .625rem) 3.5rem;
   text-align: center;
 }
@@ -83,9 +86,8 @@
 
 .hero-curtain {
   position: absolute;
-  /* Keep the full curtain inside the page while the velvet crosses the frame. */
-  top: calc(-15px - var(--curtain-top-overhang));
-  left: calc(50% + var(--curtain-offset));
+  top: calc(-15px - var(--curtain-overhang));
+  left: 50%;
   width: var(--curtain-span);
   height: auto;
   max-width: none;
@@ -483,18 +485,6 @@ footer > span { display: block; font: .75rem var(--sans); letter-spacing: .035em
 /* Dialogs and editing retain their existing functions. */
 dialog{width:550px;max-width:calc(100% - 32px);max-height:90svh;padding:42px;border:1px solid var(--line);background:var(--paper);color:var(--ink);overflow:auto;box-shadow:0 25px 90px #14263e35}dialog::backdrop{background:#14263e78;backdrop-filter:blur(7px)}.dialog-close{position:absolute;top:10px;right:15px;border:0;background:none;font-size:29px;line-height:1;padding:8px;min-width:44px;min-height:44px}dialog h2{font-size:clamp(2rem, 7vw, 2.5rem);margin:0 30px 16px}form{display:grid;gap:20px}label{display:flex;flex-direction:column;gap:7px;font:13px/1.65 var(--sans)}input,textarea{width:100%;background:#fffcf6;border:1px solid var(--line);padding:11px;font:16px var(--sans);border-radius:0}input::placeholder,textarea::placeholder{color:var(--ink);opacity:.7}fieldset{border:0;padding:0;margin:0}legend{font:13px var(--sans);margin-bottom:10px}.radio-label{display:flex;flex-direction:row;align-items:center;margin:10px 0;font-size:13px;min-height:36px}.radio-label input{width:auto;accent-color:var(--ink)}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}.form-note,#rsvp-result{font:13px/1.6 var(--sans);color:var(--ink)}#rsvp-note:not(:last-child){margin-bottom:1rem}#photo-dialog{width:auto;max-width:90vw;padding:28px}#large-photo{max-height:78svh;width:auto;height:auto}.editor-bar{position:fixed;bottom:15px;left:15px;right:15px;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:15px;background:var(--blue-wash);color:var(--ink);border:1px solid var(--line);padding:12px 18px;font:11px var(--sans)}.editor-bar button{background:var(--paper);border:0;padding:8px 12px;font:11px var(--sans)}.editor-note{font:11px/1.8 var(--sans);color:var(--ink);margin:15px 0 25px}.image-input small{font-size:10px;color:var(--ink)}#export-html{margin-top:25px}.noscript-note{text-align:center;padding:20px}
 .motion-enabled .reveal{opacity:0;transform:translateY(15px);transition:opacity .8s ease,transform .8s ease}.motion-enabled .reveal:focus-within,.motion-enabled .reveal.is-visible{opacity:1;transform:none}@keyframes soft-arrive{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:none}}
-
-@media (min-width: 950px) {
-  .invitation-sheet {
-    --border-inset: clamp(11px, calc(21px - (100vw - 950px) / 5), 21px);
-  }
-
-  .hero {
-    --curtain-span: min(calc(100vw - 24px), calc(100cqw + 5rem));
-    /* Compensate for the slightly wider transparent margin on the right. */
-    --curtain-offset: 3px;
-  }
-}
 
 @media (min-width: 701px) {
   .hero-copy { width: 64%; }

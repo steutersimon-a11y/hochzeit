@@ -18,7 +18,7 @@ Die sieben Motive sind zwei Leinenhüllen für Handy und Desktop, Elfenbeinsiege
 
 `hero-lettering-blue.webp` ist die verlustfrei konvertierte Fassung der hochgeladenen Datei `Elegante Hochzeitseinladung in Blau.png`. Der Zuschnitt verkürzt den transparenten Außenrand. `hero-lettering.webp` gehört zur früheren Schriftfassung.
 
-`hero-curtain-velvet.webp` ist der hochgeladene `Navy-Velvet-Theatervorhang mit Perlen.png` als verlustfreies WebP. Der Zuschnitt kürzt die vollständig transparenten Seitenränder.
+`hero-curtain-marine.webp` enthält den hochgeladenen `Eleganter marineblauer Samtvorhang mit Perlen.png` pixelgleich als verlustfreies WebP. `hero-curtain-velvet.webp` gehört zur früheren Vorhangfassung.
 
 ## Aquarellbänder und Abschied
 
